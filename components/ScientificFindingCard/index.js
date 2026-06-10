@@ -22,7 +22,7 @@ export default function ScientificFindingCard({ scientificFinding }) {
     <StyledCard>
       <StyledCategory>{category}</StyledCategory>
       <StyledCardTitle>{title_en}</StyledCardTitle>
-      <article>{finding_en}</article>
+      <p>{finding_en}</p>
       <StyledReference>
         {authors.join(", ")} ({year}). {study_title}. {publisher}.
       </StyledReference>
