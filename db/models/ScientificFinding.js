@@ -17,6 +17,10 @@ const scientificFindingSchema = new Schema({
 
 const ScientificFinding =
   mongoose.models.ScientificFinding ||
-  mongoose.model("ScientificFinding", scientificFindingSchema);
+  mongoose.model(
+    "ScientificFinding",
+    scientificFindingSchema,
+    "scientific_findings"
+  );
 
 export default ScientificFinding;
