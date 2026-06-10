@@ -1,7 +1,9 @@
+import ScientificFindingList from "@/components/ScientificFindingList";
+
 export default function HomePage() {
   return (
     <div>
-      <h1>Hello from Next.js</h1>
+      <ScientificFindingList />
     </div>
   );
 }
