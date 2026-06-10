@@ -1,5 +1,5 @@
 import ScientificFindingList from "@/components/ScientificFindingList";
 
-export default function Science({ findings }) {
-  return <ScientificFindingList findings={findings} />;
+export default function Science() {
+  return <ScientificFindingList />;
 }

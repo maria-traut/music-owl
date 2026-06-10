@@ -1,26 +1,36 @@
-import useSWR from "swr";
+import {
+  StyledCard,
+  StyledCategory,
+  StyledCardTitle,
+  StyledTagWrapper,
+  StyledTag,
+  StyledReference,
+} from "./ScientificFindingCard.styled";
 
-const fetcher = (...args) => fetch(...args).then(response.json());
-
-export default function ScientificFindingCard() {
-  const { data: findings } = useSWR("/api/ScientificFinding", fetcher);
-
-  const { title, category, finding, authors, year, source, publisher, tags } =
-    findings;
+export default function ScientificFindingCard({ scientificFinding }) {
+  const {
+    title_en,
+    category,
+    finding_en,
+    authors,
+    year,
+    study_title,
+    publisher,
+    tags,
+  } = scientificFinding;
   return (
-    <li>
-      <p>{category}</p>
-      <h2>{title}</h2>
-      <article>{finding}</article>
-      {authors.map((author) => (
-        <p key={author}>{author}</p>
-      ))}
-      <p>{year}</p>
-      <p>{source}</p>
-      <p>{publisher}</p>
-      {tags.map((tag) => (
-        <p key={tag}>{tag}</p>
-      ))}
-    </li>
+    <StyledCard>
+      <StyledCategory>{category}</StyledCategory>
+      <StyledCardTitle>{title_en}</StyledCardTitle>
+      <article>{finding_en}</article>
+      <StyledReference>
+        {authors.join(", ")} ({year}). {study_title}. {publisher}.
+      </StyledReference>
+      <StyledTagWrapper>
+        {tags.map((tag) => (
+          <StyledTag key={tag}>{tag}</StyledTag>
+        ))}
+      </StyledTagWrapper>
+    </StyledCard>
   );
 }
