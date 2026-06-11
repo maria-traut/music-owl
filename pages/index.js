@@ -1,9 +1,9 @@
-import ScientificFindingList from "@/components/ScientificFindingList";
+import AppInfo from "@/components/AppInfo";
 
 export default function HomePage() {
   return (
     <div>
-      <ScientificFindingList />
+      <AppInfo />
     </div>
   );
 }
