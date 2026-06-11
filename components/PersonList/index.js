@@ -12,7 +12,7 @@ export default function PersonList() {
   const { data: people, isLoading, error } = useSWR("/api/people", fetcher);
 
   if (isLoading) return <p>Loading ...</p>;
-  if (error) return <p>An error occured.</p>;
+  if (error) return <p>An error occurred.</p>;
   if (!people) return <p>People could not be loaded.</p>;
 
   return (
