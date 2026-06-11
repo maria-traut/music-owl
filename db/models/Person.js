@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const personSchema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, maxLength: 50 },
   birth_year: {
     type: Number,
     required: true,
