@@ -3,6 +3,7 @@ import {
   StyledFigure,
   StyledImageWrapper,
   StyledFigcaption,
+  StyledImage,
 } from "./PersonCard.styled";
 
 export default function PersonCard({ person }) {
@@ -10,13 +11,11 @@ export default function PersonCard({ person }) {
   return (
     <StyledFigure>
       <StyledImageWrapper>
-        <Image
+        <StyledImage
 src={photo_url ?? "/placeholder.jpg"}
           alt={`Picture showing ${name}`}
           width={200}
           height={200}
-          style={{ width: "100%", height: "auto" }}
-          priority
         />
       </StyledImageWrapper>
       <StyledFigcaption>
