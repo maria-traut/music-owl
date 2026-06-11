@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Image from "next/image";
 
 export const StyledFigure = styled.figure`
   display: flex;
@@ -17,3 +18,9 @@ export const StyledImageWrapper = styled.div`
 export const StyledFigcaption = styled.figcaption`
   display: flex;
 `;
+
+export const StyledImage = styled(Image)`
+width: 100%,
+height: auto;
+`;
+
