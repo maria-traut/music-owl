@@ -2,16 +2,14 @@ import styled from "styled-components";
 
 export const StyledMain = styled.main`
   width: 100%;
-  padding: 1.9rem;
+  padding: 1rem 1.9rem 1.9rem 1.9rem;
   font-size: 0.875rem;
-  line-height: 1.4;
+  line-height: 1.5;
 `;
 
 export const StyledIntroSection = styled.section`
-  border: 1px solid black;
-  border-radius: 5px;
   padding: 20px;
-  background-color: #e2d6e5;
+  background-color: #e5d6e4;
 `;
 
 export const StyledH2 = styled.h2`
@@ -38,6 +36,6 @@ export const StyledLinkWrapper = styled.span`
 
 export const StyledDivider = styled.hr`
   border: none;
-  border-top: 1.5px solid #e0e0e0;
+  border-top: 1px solid #e0e0e0;
   margin: 20px 0;
 `;
