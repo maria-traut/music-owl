@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import PersonCard from "../PersonCard";
+import { StyledPersonList } from "./PersonList.styled";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -11,10 +12,10 @@ export default function PersonList() {
   if (!people) return <p>People could not be loaded.</p>;
 
   return (
-    <ul>
+    <StyledPersonList>
       {people.map((person) => (
         <PersonCard key={person._id} person={person} />
       ))}
-    </ul>
+    </StyledPersonList>
   );
 }

@@ -13,16 +13,14 @@ export default function PersonCard({ person }) {
         <Image
           src={photo_url ? photo_url : "/placeholder.jpg"}
           alt={`Picture showing ${name}`}
-          width={100}
-          height={100}
-          style={{ width: "100px", height: "auto" }}
+          width={200}
+          height={200}
+          style={{ width: "100%", height: "auto" }}
           priority
         />
       </StyledImageWrapper>
       <StyledFigcaption>
-        <p>
-          {name}, {birth_year}
-        </p>
+        {name}, {birth_year}
       </StyledFigcaption>
     </StyledFigure>
   );
