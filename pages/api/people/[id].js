@@ -12,7 +12,7 @@ export default async function handler(request, response) {
       if (!person) {
         return response.status(404).json({ status: "Person not found" });
       }
-      response.status(200).json(person);
+      return response.status(200).json(person);
     }
   } catch (error) {
     return response.status(500).json({
