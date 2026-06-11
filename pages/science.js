@@ -1,12 +1,12 @@
 import ScientificFindingList from "@/components/ScientificFindingList";
 import Link from "next/link";
 
-export default function HomePage() {
+export default function Science() {
   return (
     <>
-      <Link href="/people">People &#8594;</Link>
+      <Link href="/">&#8592; Back to Homepage</Link>
       <br />
-      <Link href="/science">Science &#8594;</Link>
+      <ScientificFindingList />
     </>
   );
 }
