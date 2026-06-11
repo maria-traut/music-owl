@@ -14,5 +14,5 @@ export default async function handler(request, response) {
       status: "Could not fetch people data.",
     });
   }
-  response.status(405).json({ message: "Method not allowed" });
+  response.status(405).json({ status: "Method not allowed" });
 }
