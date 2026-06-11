@@ -11,7 +11,7 @@ export default function PersonCard({ person }) {
     <StyledFigure>
       <StyledImageWrapper>
         <Image
-          src={photo_url ? photo_url : "/placeholder.jpg"}
+src={photo_url ?? "/placeholder.jpg"}
           alt={`Picture showing ${name}`}
           width={200}
           height={200}
