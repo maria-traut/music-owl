@@ -18,7 +18,9 @@ export default function PersonList() {
   return (
     <StyledPersonList>
       {people.map((person) => (
-        <PersonCard key={person._id} person={person} />
+        <li key={person._id}>
+          <PersonCard person={person} />
+        </li>
       ))}
     </StyledPersonList>
   );

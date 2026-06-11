@@ -2,7 +2,11 @@ import useSWR from "swr";
 import ScientificFindingCard from "../ScientificFindingCard";
 import { StyledList } from "./ScientificFindingList.styled";
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+const fetcher = (...args) =>
+  fetch(...args).then((res) => {
+    if (!res.ok) throw new Error("An error occurred while fetching.");
+    return res.json();
+  });
 
 export default function ScientificFindingList() {
   const {

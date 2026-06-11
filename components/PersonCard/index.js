@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
   StyledFigure,
   StyledImageWrapper,
@@ -12,10 +11,9 @@ export default function PersonCard({ person }) {
     <StyledFigure>
       <StyledImageWrapper>
         <StyledImage
-src={photo_url ?? "/placeholder.jpg"}
+          src={photo_url ?? "/placeholder.jpg"}
           alt={`Picture showing ${name}`}
-          width={200}
-          height={200}
+          fill
         />
       </StyledImageWrapper>
       <StyledFigcaption>

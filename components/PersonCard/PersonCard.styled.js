@@ -12,7 +12,9 @@ export const StyledFigure = styled.figure`
 `;
 
 export const StyledImageWrapper = styled.div`
+  position: relative;
   width: 100%;
+  height: 100px;
 `;
 
 export const StyledFigcaption = styled.figcaption`
@@ -20,7 +22,5 @@ export const StyledFigcaption = styled.figcaption`
 `;
 
 export const StyledImage = styled(Image)`
-width: 100%,
-height: auto;
+  object-fit: cover;
 `;
-

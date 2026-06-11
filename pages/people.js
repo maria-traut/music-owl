@@ -2,6 +2,15 @@ import PersonList from "@/components/PersonList";
 import styled from "styled-components";
 import Link from "next/link";
 
+const StyledMain = styled.main`
+  padding: 20px;
+`;
+
+const StyledSection = styled.section`
+  border: 1px solid black;
+  margin-bottom: 20px;
+`;
+
 export default function People() {
   return (
     <StyledMain>
@@ -17,12 +26,3 @@ export default function People() {
     </StyledMain>
   );
 }
-
-const StyledMain = styled.main`
-  padding: 20px;
-`;
-
-const StyledSection = styled.section`
-  border: 1px solid black;
-  margin-bottom: 20px;
-`;
