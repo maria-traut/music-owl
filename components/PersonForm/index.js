@@ -23,7 +23,7 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
             aria-required="true"
             maxLength={50}
             title="Name must be between 1 and 50 characters"
-          ></StyledInputName>
+          />
         </StyledFormSection>
         <StyledInputAndButtonFlex>
           <StyledFormSection>
