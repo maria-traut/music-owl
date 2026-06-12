@@ -2,18 +2,12 @@ import useSWR from "swr";
 import ScientificFindingCard from "../ScientificFindingCard";
 import { StyledList } from "./ScientificFindingList.styled";
 
-const fetcher = (...args) =>
-  fetch(...args).then((res) => {
-    if (!res.ok) throw new Error("An error occurred while fetching.");
-    return res.json();
-  });
-
 export default function ScientificFindingList() {
   const {
     data: scientificFindings,
     isLoading,
     error,
-  } = useSWR("/api/scientificFindings", fetcher);
+  } = useSWR("/api/scientificFindings");
 
   if (isLoading) return <p>Loading ...</p>;
 
