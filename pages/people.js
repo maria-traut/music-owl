@@ -1,5 +1,6 @@
+import { useState } from "react";
+import { useEffect } from "react";
 import useSWR from "swr";
-import { useLocalStorageState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import PersonForm from "@/components/PersonForm";
@@ -16,6 +17,18 @@ const StyledSection = styled.section`
 
 export default function People() {
   const { mutate } = useSWR("/api/people");
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if (!success) return;
+    const successMessageTimer = setTimeout(() => {
+      setSuccess(false);
+    }, 3000);
+    return () => {
+      clearTimeout(successMessageTimer);
+    };
+  }, [success]);
 
   async function handlePersonCreate(event) {
     event.preventDefault();
@@ -29,11 +42,18 @@ export default function People() {
     if (response.ok) {
       mutate();
       event.target.reset();
+      setSuccess(true);
+      setError(false);
+    } else {
+      setError(true);
+      setSuccess(false);
     }
   }
 
-  function handlePersonFormClear() {
+  function handlePersonFormClear(event) {
     event.target.form.reset();
+    setSuccess(false);
+    setError(false);
   }
 
   return (
@@ -50,6 +70,8 @@ export default function People() {
         onPersonCreate={handlePersonCreate}
         onPersonFormClear={handlePersonFormClear}
       />
+      {success && <p>Person successfully added!</p>}
+      {error && <p>Something went wrong. Please try again.</p>}
       <PersonList />
     </StyledMain>
   );

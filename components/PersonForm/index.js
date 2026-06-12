@@ -16,6 +16,8 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
               name="name"
               required
               aria-required="true"
+              maxLength={50}
+              title="Name must be between 1 and 50 characters"
             ></StyledInputName>
           </StyledFormSection>
           <StyledFormSection>
@@ -24,13 +26,14 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
             </label>
             <StyledInputYear
               type="number"
-              min="1900"
-              max={new Date().getFullYear()}
               id="birth_year"
               name="birth_year"
               maxLength="4"
               required
               aria-required="true"
+              min="1900"
+              max={new Date().getFullYear()}
+              title={`Please enter a year between 1900 and ${new Date().getFullYear()}`}
             ></StyledInputYear>
           </StyledFormSection>
         </StyledFormFlex>
@@ -64,10 +67,16 @@ const StyledFormSection = styled.div`
 
 const StyledInputName = styled.input`
   width: 13rem;
+  &:user-invalid {
+    border: 1px solid red;
+  }
 `;
 
 const StyledInputYear = styled.input`
   width: 6rem;
+  &:user-invalid {
+    border: 1px solid red;
+  }
 `;
 
 const StyledButtonWrapper = styled.div`
