@@ -5,9 +5,8 @@ import styled from "styled-components";
 export const StyledNav = styled.div`
   display: flex;
   justify-content: space-around;
-  gap: 3rem;
+  gap: 1rem;
   width: 100%;
-  padding: 0 1.9rem;
   font-size: 0.875rem;
   line-height: 1.5;
   text-transform: uppercase;
