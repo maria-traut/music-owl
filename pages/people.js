@@ -1,6 +1,7 @@
 import PersonList from "@/components/PersonList";
 import styled from "styled-components";
 import Link from "next/link";
+import PersonForm from "@/components/PersonForm";
 
 const StyledMain = styled.main`
   padding: 20px;
@@ -22,6 +23,7 @@ export default function People() {
           of birth, and optionally a photo.
         </p>
       </StyledSection>
+      <PersonForm />
       <PersonList />
     </StyledMain>
   );
