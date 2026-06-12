@@ -1,15 +1,8 @@
-import useSWR from "swr";
 import styled from "styled-components";
 
-export default function PersonForm() {
-  const { data: people, isLoading, error } = useSWR("/api/people");
-
-  if (isLoading) return <p>Loading ...</p>;
-  if (error) return <p>An error occurred.</p>;
-  if (!people) return <p>People could not be loaded.</p>;
-
+export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
   return (
-    <form>
+    <form onSubmit={onPersonCreate}>
       <fieldset>
         <legend>Add A Person</legend>
         <StyledFormFlex>
@@ -30,7 +23,9 @@ export default function PersonForm() {
               Year Of Birth<span aria-hidden>*</span>
             </label>
             <StyledInputYear
-              type="text"
+              type="number"
+              min="1900"
+              max={new Date().getFullYear()}
               id="birth_year"
               name="birth_year"
               maxLength="4"
@@ -40,8 +35,16 @@ export default function PersonForm() {
           </StyledFormSection>
         </StyledFormFlex>
         <StyledButtonWrapper>
-          <button type="submit">Add</button>
-          <button type="button">Clear</button>
+          <button type="submit" aria-label="Add person">
+            Add
+          </button>
+          <button
+            type="button"
+            aria-label="Clear form"
+            onClick={onPersonFormClear}
+          >
+            Clear
+          </button>
         </StyledButtonWrapper>
       </fieldset>
     </form>
@@ -54,7 +57,7 @@ const StyledFormFlex = styled.div`
   gap: 1rem;
 `;
 
-const StyledFormSection = styled.section`
+const StyledFormSection = styled.div`
   display: flex;
   flex-direction: column;
 `;

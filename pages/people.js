@@ -1,7 +1,9 @@
-import PersonList from "@/components/PersonList";
+import useSWR from "swr";
+import { useLocalStorageState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import PersonForm from "@/components/PersonForm";
+import PersonList from "@/components/PersonList";
 
 const StyledMain = styled.main`
   padding: 20px;
@@ -13,6 +15,27 @@ const StyledSection = styled.section`
 `;
 
 export default function People() {
+  const { mutate } = useSWR("/api/people");
+
+  async function handlePersonCreate(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const personData = Object.fromEntries(formData);
+    const response = await fetch("/api/people", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(personData),
+    });
+    if (response.ok) {
+      mutate();
+      event.target.reset();
+    }
+  }
+
+  function handlePersonFormClear() {
+    event.target.form.reset();
+  }
+
   return (
     <StyledMain>
       <Link href="/">&#8592; Back to Homepage</Link>
@@ -23,7 +46,10 @@ export default function People() {
           of birth, and optionally a photo.
         </p>
       </StyledSection>
-      <PersonForm />
+      <PersonForm
+        onPersonCreate={handlePersonCreate}
+        onPersonFormClear={handlePersonFormClear}
+      />
       <PersonList />
     </StyledMain>
   );
