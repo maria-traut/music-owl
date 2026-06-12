@@ -4,7 +4,7 @@ import useSWR from "swr";
 import Link from "next/link";
 import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
-import { StyledMain, StyledSection } from "./styles";
+import { StyledMain, StyledSection } from "../components/Global/Global.styles";
 
 export default function People() {
   const { mutate } = useSWR("/api/people");

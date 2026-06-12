@@ -1,6 +1,6 @@
 import ScientificFindingList from "@/components/ScientificFindingList";
 import Link from "next/link";
-import { StyledScienceMain } from "./styles";
+import { StyledScienceMain } from "../components/Global/Global.styles";
 
 export default function Science() {
   return (

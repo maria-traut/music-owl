@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { StyledNav } from "./styles";
+import { StyledNav } from "../components/Global/Global.styles";
 
 export default function HomePage() {
   return (
