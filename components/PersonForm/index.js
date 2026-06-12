@@ -39,7 +39,7 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
               min="1900"
               max={new Date().getFullYear()}
               title={`Please enter a year between 1900 and ${new Date().getFullYear()}`}
-            ></StyledInputYear>
+            />
           </StyledFormSection>
           <StyledButtonWrapper>
             <button type="submit" aria-label="Add person">
