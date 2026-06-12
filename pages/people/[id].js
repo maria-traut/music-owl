@@ -8,7 +8,7 @@ export default function Person() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: person, isLoading, error } = useSWR(`/api/people/${id}`);
+  const { data: person, isLoading, error } = useSWR(id ? `/api/people/${id}` : null);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <p>An error occurred.</p>;
