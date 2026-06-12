@@ -45,6 +45,12 @@ export default function People() {
     }
   }
 
+  function handlePersonFormClear(event) {
+    event.target.form.reset();
+    setSuccess(false);
+    setError(false);
+  }
+
   return (
     <StyledMain>
       <Link href="/">&#8592; Back to Homepage</Link>
