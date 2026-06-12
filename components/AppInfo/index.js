@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   StyledMain,
   StyledIntroSection,
@@ -7,17 +8,11 @@ import {
   StyledH2,
   StyledH3,
   StyledDivider,
-  StyledNavbar,
 } from "./AppInfo.styled";
 
 export default function AppInfo() {
   return (
-    <StyledMain>
-      <StyledNavbar>
-        <span>Home</span>
-        <span>People</span>
-        <span>Science</span>
-      </StyledNavbar>
+    <>
       <StyledDivider />
       <StyledIntroSection>
         <StyledH2>What Is Music Owl?</StyledH2>
@@ -27,13 +22,13 @@ export default function AppInfo() {
         </p>
         <p>Here is what you can do:</p>
         <StyledLinkWrapper>
-          <StyledLinkPeople>
+          <StyledLinkPeople href="/people">
             <p>
               Add the people you want to create music lists for. All you need is
               a name and their year of birth.
             </p>
           </StyledLinkPeople>
-          <StyledLinkScience>
+          <StyledLinkScience href="/people">
             <p>
               Explore a curated collection of scientific findings on music,
               memory, and dementia — backed by research from neurology and
@@ -64,6 +59,6 @@ export default function AppInfo() {
           nothing else can.
         </p>
       </section>
-    </StyledMain>
+    </>
   );
 }

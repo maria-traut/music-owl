@@ -1,19 +1,5 @@
 import styled from "styled-components";
-
-export const StyledNavbar = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  text-transform: uppercase;
-  font-family: var(--font-family-sans);
-`;
-
-export const StyledMain = styled.main`
-  width: 100%;
-  padding: 1rem 1.9rem 1.9rem 1.9rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-`;
+import Link from "next/link";
 
 export const StyledIntroSection = styled.section`
   background: transparent;
@@ -35,27 +21,25 @@ export const StyledLinkWrapper = styled.span`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
+
+export const StyledLink = styled(Link)`
+  color: #ffffff;
+  padding: 5px 25px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
   text-decoration: none;
 `;
 
-export const StyledLinkPeople = styled.div`
+export const StyledLinkPeople = styled(StyledLink)`
   background-color: #1b3a5c;
-  color: #ffffff;
-  padding: 5px 25px;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 `;
 
-export const StyledLinkScience = styled.div`
+export const StyledLinkScience = styled(StyledLink)`
   background-color: #e8a838;
-  color: #ffffff;
-  border-radius: 15px;
-  padding: 5px 25px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 `;
 
 export const StyledDivider = styled.hr`
