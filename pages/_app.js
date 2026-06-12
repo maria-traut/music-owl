@@ -1,17 +1,24 @@
 import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
 
+import styled from "styled-components";
+
 const fetcher = (...args) =>
   fetch(...args).then((res) => {
     if (!res.ok) throw new Error("An error occurred while fetching.");
     return res.json();
   });
 
+const StyledH1 = styled.h1`
+  text-align: center;
+  text-transform: uppercase;
+`;
+
 export default function App({ Component, pageProps }) {
   return (
     <SWRConfig value={{ fetcher }}>
       <GlobalStyle />
-      <h1>Music Owl (working title)</h1>
+      <StyledH1>Music Owl</StyledH1>
       <Component {...pageProps} />
     </SWRConfig>
   );

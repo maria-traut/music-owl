@@ -1,11 +1,19 @@
-import Link from "next/link";
-import { StyledNav } from "../components/Global/Global.styles";
+import AppInfo from "@/components/AppInfo";
+import {
+  StyledMain,
+  StyledNav,
+  StyledNavLink,
+} from "@/components/Global/Global.styles";
 
 export default function HomePage() {
   return (
-    <StyledNav>
-      <Link href="/people">People &#8594;</Link>
-      <Link href="/science">Science &#8594;</Link>
-    </StyledNav>
+    <StyledMain>
+      <StyledNav>
+        <StyledNavLink href="/">Home</StyledNavLink>
+        <StyledNavLink href="/people">People</StyledNavLink>
+        <StyledNavLink href="/science">Science</StyledNavLink>
+      </StyledNav>
+      <AppInfo />
+    </StyledMain>
   );
 }
