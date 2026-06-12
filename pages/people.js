@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import useSWR from "swr";
 import Link from "next/link";
 import PersonForm from "@/components/PersonForm";
