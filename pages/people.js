@@ -1,19 +1,10 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import useSWR from "swr";
-import styled from "styled-components";
 import Link from "next/link";
 import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
-
-const StyledMain = styled.main`
-  padding: 20px;
-`;
-
-const StyledSection = styled.section`
-  border: 1px solid black;
-  margin-bottom: 20px;
-`;
+import { StyledMain, StyledSection } from "./styles";
 
 export default function People() {
   const { mutate } = useSWR("/api/people");

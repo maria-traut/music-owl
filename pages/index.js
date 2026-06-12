@@ -1,11 +1,5 @@
 import Link from "next/link";
-import styled from "styled-components";
-
-const StyledNav = styled.nav`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
+import { StyledNav } from "./styles";
 
 export default function HomePage() {
   return (

@@ -12,7 +12,7 @@ export default async function handler(request, response) {
     if (request.method === "POST") {
       const personData = request.body;
       await Person.create(personData);
-      return response.status(201).json({ status: "Person created" });
+      return response.status(201).json({ status: "Person created." });
     }
   } catch (error) {
     return response.status(500).json({
