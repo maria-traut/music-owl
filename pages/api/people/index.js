@@ -16,7 +16,7 @@ export default async function handler(request, response) {
     }
   } catch (error) {
     return response.status(500).json({
-      status: "Could not fetch people data.",
+      status: "Something went wrong. Please try again.",
     });
   }
   response.status(405).json({ status: "Method not allowed" });
