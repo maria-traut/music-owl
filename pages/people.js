@@ -24,26 +24,25 @@ export default function People() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const personData = Object.fromEntries(formData);
-    const response = await fetch("/api/people", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(personData),
-    });
-    if (response.ok) {
-      mutate();
-      event.target.reset();
-      setSuccess(true);
-      setError(false);
-    } else {
+    try {
+      const response = await fetch("/api/people", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(personData),
+      });
+      if (response.ok) {
+        mutate();
+        event.target.reset();
+        setSuccess(true);
+        setError(false);
+      } else {
+        setError(true);
+        setSuccess(false);
+      }
+    } catch {
       setError(true);
       setSuccess(false);
     }
-  }
-
-  function handlePersonFormClear(event) {
-    event.target.form.reset();
-    setSuccess(false);
-    setError(false);
   }
 
   return (
