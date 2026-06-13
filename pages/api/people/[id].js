@@ -14,6 +14,12 @@ export default async function handler(request, response) {
       }
       return response.status(200).json(person);
     }
+
+    if (request.method === "PUT") {
+      const personData = request.body;
+      await Person.findByIdAndUpdate(id, personData);
+      return response.status(200).json({ status: `Person ${id} updated!` });
+    }
   } catch (error) {
     return response.status(500).json({
       status: "Internal Server Error",
