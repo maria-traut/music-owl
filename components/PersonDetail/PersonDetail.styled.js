@@ -30,3 +30,10 @@ export const StyledButtonWrapper = styled.div`
   margin-top: 0.5rem;
   gap: 0.7rem;
 `;
+
+export const StyledMessageAndButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+`;

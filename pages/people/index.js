@@ -65,8 +65,8 @@ export default function People() {
         onPersonCreate={handlePersonCreate}
         onPersonFormClear={handlePersonFormClear}
       />
-      {success && <p>Person successfully added!</p>}
-      {error && <p>Something went wrong. Please try again.</p>}
+      {success && <span>Person successfully added!</span>}
+      {error && <span>Something went wrong. Please try again.</span>}
       <PersonList />
     </StyledMain>
   );

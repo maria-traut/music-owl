@@ -6,8 +6,8 @@ import {
   StyledImageWrapper,
   StyledFigcaption,
   StyledImage,
-  StyledDeleteButton,
   StyledButtonWrapper,
+  StyledMessageAndButtonWrapper,
 } from "./PersonDetail.styled";
 
 export default function PersonDetail({ person }) {
@@ -64,30 +64,33 @@ export default function PersonDetail({ person }) {
           </button>
         </StyledButtonWrapper>
       )}
+
       {confirmDeleteMode && (
         <>
-          <p>{`Do you really want to remove ${name} from your list?`}</p>
-          <StyledButtonWrapper>
-            <button
-              type="button"
-              aria-label="Cancel deletion"
-              onClick={() => setConfirmDeleteMode(false)}
-            >
-              No
-            </button>
-            <button
-              type="button"
-              aria-label="Confirm deletion"
-              onClick={() => {
-                handlePersonDelete();
-                setSuccess(true);
-              }}
-            >
-              Yes
-            </button>
-          </StyledButtonWrapper>
-          {success && <p>Successfully removed!</p>}
-          {error && <p>An error occurred. Please try again.</p>}
+          {success ? (
+            <span>{name} was successfully deleted.</span>
+          ) : (
+            <StyledMessageAndButtonWrapper>
+              <span>{`Do you really want to delete ${name}?`}</span>
+              <StyledButtonWrapper>
+                <button
+                  type="button"
+                  aria-label="Cancel deletion"
+                  onClick={() => setConfirmDeleteMode(false)}
+                >
+                  No
+                </button>
+                <button
+                  type="button"
+                  aria-label="Confirm deletion"
+                  onClick={handlePersonDelete}
+                >
+                  Yes
+                </button>
+              </StyledButtonWrapper>
+              {error && <span>An error occurred. Please try again.</span>}
+            </StyledMessageAndButtonWrapper>
+          )}
         </>
       )}
     </>
