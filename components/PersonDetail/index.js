@@ -41,25 +41,26 @@ export default function PersonDetail({ person }) {
         </StyledFigcaption>
       </StyledFigure>
       {!updateMode && (
-        <button tpye="button" aria-label="Edit person">
+        <button
+          type="button"
+          aria-label="Edit person"
+          onClick={() => setUpdateMode(true)}
+        >
           ✏️
         </button>
       )}
       {updateMode && (
         <>
-          <PersonForm />
+          <PersonForm
+            onPersonUpdate={handlePersonUpdate}
+            defaultValues={{ name, birth_year }}
+          />
           <button
             type="button"
             aria-label="Cancel edit person and close edit form"
+            onClick={() => setUpdateMode(false)}
           >
             Cancel
-          </button>
-          <button
-            type="button"
-            aria-label="Update person data and close edit form"
-            onClick={handlePersonUpdate}
-          >
-            Update
           </button>
         </>
       )}

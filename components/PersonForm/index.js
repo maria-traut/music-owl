@@ -6,9 +6,14 @@ import {
   StyledButtonWrapper,
 } from "./PersonForm.styled";
 
-export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
+export default function PersonForm({
+  onPersonCreate,
+  onPersonFormClear,
+  onPersonUpdate,
+  defaultValues,
+}) {
   return (
-    <form onSubmit={onPersonCreate}>
+    <form onSubmit={onPersonCreate || onPersonUpdate}>
       <fieldset>
         <legend>Add A Person</legend>
         <StyledFormSection>
@@ -23,6 +28,7 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
             aria-required="true"
             maxLength={50}
             title="Name must be between 1 and 50 characters"
+            defaultValue={defaultValues?.name ?? ""}
           />
         </StyledFormSection>
         <StyledInputAndButtonFlex>
@@ -39,6 +45,7 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
               min="1900"
               max={new Date().getFullYear()}
               title={`Please enter a year between 1900 and ${new Date().getFullYear()}`}
+              defaultValue={defaultValues?.birth_year ?? ""}
             />
           </StyledFormSection>
           <StyledButtonWrapper>
