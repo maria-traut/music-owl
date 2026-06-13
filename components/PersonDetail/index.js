@@ -1,11 +1,13 @@
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   StyledFigure,
   StyledImageWrapper,
   StyledFigcaption,
   StyledImage,
+  StyledDeleteButton,
+  StyledButtonWrapper,
 } from "./PersonDetail.styled";
 
 export default function PersonDetail({ person }) {
@@ -21,7 +23,7 @@ export default function PersonDetail({ person }) {
     const successMessageTimer = setTimeout(() => {
       setSuccess(false);
       router.push("/people");
-    }, 3000);
+    }, 2000);
     return () => {
       clearTimeout(successMessageTimer);
     };
@@ -52,38 +54,42 @@ export default function PersonDetail({ person }) {
         </StyledFigcaption>
       </StyledFigure>
       {!confirmDeleteMode && (
-        <button
-          type="button"
-          aria-label="Remove person"
-          onClick={() => setConfirmDeleteMode(true)}
-        >
-          ❌
-        </button>
+        <StyledButtonWrapper>
+          <button
+            type="button"
+            aria-label="Delete person"
+            onClick={() => setConfirmDeleteMode(true)}
+          >
+            ✗
+          </button>
+        </StyledButtonWrapper>
       )}
       {confirmDeleteMode && (
         <>
           <p>{`Do you really want to remove ${name} from your list?`}</p>
-          <button
-            type="button"
-            aria-label="Do not remove person"
-            onClick={() => setConfirmDeleteMode(false)}
-          >
-            No
-          </button>
-          <button
-            type="button"
-            aria-label="Confirm deletion"
-            onClick={() => {
-              handlePersonDelete();
-              setSuccess(true);
-            }}
-          >
-            Yes
-          </button>
+          <StyledButtonWrapper>
+            <button
+              type="button"
+              aria-label="Cancel deletion"
+              onClick={() => setConfirmDeleteMode(false)}
+            >
+              No
+            </button>
+            <button
+              type="button"
+              aria-label="Confirm deletion"
+              onClick={() => {
+                handlePersonDelete();
+                setSuccess(true);
+              }}
+            >
+              Yes
+            </button>
+          </StyledButtonWrapper>
+          {success && <p>Successfully removed!</p>}
+          {error && <p>An error occurred. Please try again.</p>}
         </>
       )}
-      {success && <p>Successfully removed!</p>}
-      {error && <p>An error occurred. Please try again.</p>}
     </>
   );
 }

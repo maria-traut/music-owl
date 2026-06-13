@@ -17,9 +17,9 @@ export default async function handler(request, response) {
 
     if (request.method === "DELETE") {
       await Person.findByIdAndDelete(id);
-      response
+      return response
         .status(200)
-        .json({ status: `Person ${id}}) successfully removed.` });
+        .json({ status: `Person ${id}} successfully deleted.` });
     }
   } catch (error) {
     return response.status(500).json({

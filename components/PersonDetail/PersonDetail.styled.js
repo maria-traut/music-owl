@@ -23,3 +23,10 @@ export const StyledFigcaption = styled.figcaption`
 export const StyledImage = styled(Image)`
   object-fit: cover;
 `;
+
+export const StyledButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  gap: 0.7rem;
+`;
