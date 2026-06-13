@@ -14,6 +14,13 @@ export default async function handler(request, response) {
       }
       return response.status(200).json(person);
     }
+
+    if (request.method === "DELETE") {
+      await Person.findByIdAndDelete(id);
+      response
+        .status(200)
+        .json({ status: `Person ${id}}) successfully removed.` });
+    }
   } catch (error) {
     return response.status(500).json({
       status: "Internal Server Error",
