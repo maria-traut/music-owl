@@ -11,6 +11,7 @@ export default function PersonForm({
   onPersonFormClear,
   onPersonUpdate,
   defaultValues,
+  updateMode,
 }) {
   return (
     <form onSubmit={onPersonCreate || onPersonUpdate}>
@@ -49,16 +50,24 @@ export default function PersonForm({
             />
           </StyledFormSection>
           <StyledButtonWrapper>
-            <button type="submit" aria-label="Add person">
-              Add
-            </button>
-            <button
-              type="button"
-              aria-label="Clear form"
-              onClick={onPersonFormClear}
-            >
-              Clear
-            </button>
+            {updateMode ? (
+              <button type="submit" aria-label="Update person">
+                Update
+              </button>
+            ) : (
+              <>
+                <button type="submit" aria-label="Add person">
+                  Add
+                </button>
+                <button
+                  type="button"
+                  aria-label="Clear form"
+                  onClick={onPersonFormClear}
+                >
+                  Clear
+                </button>
+              </>
+            )}
           </StyledButtonWrapper>
         </StyledInputAndButtonFlex>
       </fieldset>
