@@ -8,7 +8,6 @@ import {
   StyledImage,
 } from "./PersonDetail.styled";
 
-
 export default function PersonDetail({ person }) {
   const router = useRouter();
   const { mutate } = useSWRConfig();
@@ -17,7 +16,7 @@ export default function PersonDetail({ person }) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
- useEffect(() => {
+  useEffect(() => {
     if (!success) return;
     const successMessageTimer = setTimeout(() => {
       setSuccess(false);
@@ -27,7 +26,6 @@ export default function PersonDetail({ person }) {
       clearTimeout(successMessageTimer);
     };
   }, [success]);
-
 
   async function handlePersonDelete() {
     const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
@@ -75,14 +73,17 @@ export default function PersonDetail({ person }) {
           <button
             type="button"
             aria-label="Confirm deletion"
-            onClick={handlePersonDelete} {setSuccess(true)}
+            onClick={() => {
+              handlePersonDelete();
+              setSuccess(true);
+            }}
           >
             Yes
           </button>
         </>
       )}
       {success && <p>Successfully removed!</p>}
-      {error && <p>An Error Occured</p>}
+      {error && <p>An error occurred. Please try again.</p>}
     </>
   );
 }
