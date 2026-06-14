@@ -31,6 +31,6 @@ export const StyledUpdateButton = styled.button`
 export const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 1rem;
-  gap: 0.5rem;
+  margin-top: 0.5rem;
+  gap: 0.7rem;
 `;
