@@ -27,6 +27,7 @@ export const StyledNavLink = styled(Link)`
   }
 
   &:active {
+    text-decoration: underline;
     opacity: 0.7;
   }
 `;
