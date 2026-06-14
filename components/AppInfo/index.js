@@ -25,7 +25,7 @@ export default function AppInfo() {
               a name and their year of birth.
             </p>
           </StyledLinkPeople>
-          <StyledLinkScience href="/people">
+          <StyledLinkScience href="/science">
             <p>
               Explore a curated collection of scientific findings on music,
               memory, and dementia — backed by research from neurology and
