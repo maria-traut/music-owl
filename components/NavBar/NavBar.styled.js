@@ -22,12 +22,14 @@ export const StyledNavLink = styled(Link)`
   text-decoration: none;
   cursor: pointer;
   color: inherit;
+
+  text-decoration: ${({ $isActive }) => ($isActive ? "underline" : "none")};
+
   &:hover {
     text-decoration: underline;
   }
 
   &:active {
-    text-decoration: underline;
     opacity: 0.7;
   }
 `;
