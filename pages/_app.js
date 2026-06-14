@@ -1,7 +1,7 @@
 import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
-
 import styled from "styled-components";
+import NavBar from "@/components/NavBar";
 
 const fetcher = (...args) =>
   fetch(...args).then((res) => {
@@ -19,6 +19,7 @@ export default function App({ Component, pageProps }) {
     <SWRConfig value={{ fetcher }}>
       <GlobalStyle />
       <StyledH1>Music Owl</StyledH1>
+      <NavBar />
       <Component {...pageProps} />
     </SWRConfig>
   );

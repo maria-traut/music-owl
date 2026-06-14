@@ -1,12 +1,10 @@
 import ScientificFindingList from "@/components/ScientificFindingList";
-import Link from "next/link";
-import { StyledScienceMain } from "../components/Global/Global.styles";
+import { StyledMain } from "../components/Global/Global.styles";
 
 export default function Science() {
   return (
-    <StyledScienceMain>
-      <Link href="/">&#8592; Back to Homepage</Link>
+    <StyledMain>
       <ScientificFindingList />
-    </StyledScienceMain>
+    </StyledMain>
   );
 }

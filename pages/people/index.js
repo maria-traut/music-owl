@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import Link from "next/link";
 import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
 import { StyledMain, StyledSection } from "@/components/Global/Global.styles";
@@ -53,7 +52,6 @@ export default function People() {
 
   return (
     <StyledMain>
-      <Link href="/">&#8592; Back to Homepage</Link>
       <StyledSection>
         <h2>My People</h2>
         <p>
