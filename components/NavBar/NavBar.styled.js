@@ -5,12 +5,17 @@ import { StyledDivider } from "../Global/Global.styles";
 export const StyledNav = styled.div`
   display: flex;
   justify-content: center;
-  gap: 4rem;
+  gap: 3.5rem;
   width: 100%;
-  font-size: 0.875rem;
+  padding: 9px 0;
+  font-size: 1rem;
   line-height: 1.5;
   text-transform: uppercase;
   font-family: var(--font-family-sans);
+  position: sticky;
+  top: 0;
+  background-color: var(--app-background);
+  z-index: 100;
 `;
 
 export const StyledNavLink = styled(Link)`
@@ -27,5 +32,5 @@ export const StyledNavLink = styled(Link)`
 `;
 
 export const StyledNavDivider = styled(StyledDivider)`
-  margin: 10px 25px;
+  margin: 5px 25px 10px 25px;
 `;
