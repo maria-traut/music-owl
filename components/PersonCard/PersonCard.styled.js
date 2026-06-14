@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
 
 export const StyledFigure = styled.figure`
   display: flex;
@@ -8,7 +9,8 @@ export const StyledFigure = styled.figure`
   height: 100%;
   width: 100%;
   margin: 0;
-  border: 1px solid black;
+  border-radius: 15px;
+  border: 1px solid #e0e0e0;
 `;
 
 export const StyledImageWrapper = styled.div`
@@ -19,8 +21,19 @@ export const StyledImageWrapper = styled.div`
 
 export const StyledFigcaption = styled.figcaption`
   display: flex;
+  justify-content: center;
+  margin: 0.5rem;
 `;
 
 export const StyledImage = styled(Image)`
   object-fit: cover;
+`;
+
+export const StyledLink = styled(Link)`
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
 `;

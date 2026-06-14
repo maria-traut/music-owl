@@ -4,8 +4,8 @@ import { StyledDivider } from "../Global/Global.styles";
 
 export const StyledNav = styled.div`
   display: flex;
-  justify-content: space-around;
-  gap: 1rem;
+  justify-content: center;
+  gap: 4rem;
   width: 100%;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -27,5 +27,5 @@ export const StyledNavLink = styled(Link)`
 `;
 
 export const StyledNavDivider = styled(StyledDivider)`
-  margin: 0 25px;
+  margin: 10px 25px;
 `;
