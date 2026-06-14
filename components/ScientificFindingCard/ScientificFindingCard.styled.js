@@ -4,7 +4,7 @@ export const StyledCard = styled.li`
   list-style: none;
   border-radius: 15px;
   padding: 20px 25px;
-  background-color: #f0dec0;
+  background-color: #f9d08a;
 `;
 
 export const StyledCategory = styled.p`
