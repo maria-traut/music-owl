@@ -46,6 +46,7 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
             />
           </StyledFormSection>
           <StyledButtonWrapper>
+<<<<<<< HEAD
             <StyledButtonPrimary type="submit" aria-label="Add person">
               Add
             </StyledButtonPrimary>
@@ -56,6 +57,35 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
             >
               Clear
             </StyledButtonSecondary>
+=======
+            {updateMode ? (
+              <>
+                <StyledButtonSecondary
+                  type="button"
+                  aria-label="Cancel edit person and close edit form"
+                  onClick={() => setUpdateMode(false)}
+                >
+                  Cancel
+                </StyledButtonSecondary>
+                <StyledButtonPrimary type="submit" aria-label="Update person">
+                  Update
+                </StyledButtonPrimary>
+              </>
+            ) : (
+              <>
+                <StyledButtonSecondary
+                  type="button"
+                  aria-label="Clear form"
+                  onClick={onPersonFormClear}
+                >
+                  Clear
+                </StyledButtonSecondary>
+                <StyledButtonPrimary type="submit" aria-label="Add person">
+                  Add
+                </StyledButtonPrimary>
+              </>
+            )}
+>>>>>>> 9735efa (add styling)
           </StyledButtonWrapper>
         </StyledInputAndButtonFlex>
       </StyledFieldset>
