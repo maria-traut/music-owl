@@ -8,6 +8,7 @@ import {
   StyledImage,
   StyledButtonWrapper,
   StyledMessageAndButtonWrapper,
+  StyledMessage,
 } from "./PersonDetail.styled";
 
 export default function PersonDetail({ person }) {
@@ -68,10 +69,10 @@ export default function PersonDetail({ person }) {
       {confirmDeleteMode && (
         <>
           {success ? (
-            <span>{name} was successfully deleted.</span>
+            <StyledMessage>{name} was successfully deleted.</StyledMessage>
           ) : (
             <StyledMessageAndButtonWrapper>
-              <span>{`Do you really want to delete ${name}?`}</span>
+              <StyledMessage>{`Do you really want to delete ${name}?`}</StyledMessage>
               <StyledButtonWrapper>
                 <button
                   type="button"

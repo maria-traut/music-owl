@@ -36,6 +36,11 @@ export const StyledSection = styled.section`
   margin-bottom: 20px;
 `;
 
+export const StyledMessage = styled.span`
+  display: inline-block;
+  margin-top: 0.5rem;
+`;
+
 // science
 export const StyledScienceMain = styled.main`
   display: flex;

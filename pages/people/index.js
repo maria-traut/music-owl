@@ -3,7 +3,11 @@ import useSWR from "swr";
 import Link from "next/link";
 import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
-import { StyledMain, StyledSection } from "@/components/Global/Global.styles";
+import {
+  StyledMain,
+  StyledSection,
+  StyledMessage,
+} from "@/components/Global/Global.styles";
 
 export default function People() {
   const { mutate } = useSWR("/api/people");
@@ -65,8 +69,10 @@ export default function People() {
         onPersonCreate={handlePersonCreate}
         onPersonFormClear={handlePersonFormClear}
       />
-      {success && <span>Person successfully added!</span>}
-      {error && <span>Something went wrong. Please try again.</span>}
+      {success && <StyledMessage>Person successfully added!</StyledMessage>}
+      {error && (
+        <StyledMessage>Something went wrong. Please try again.</StyledMessage>
+      )}
       <PersonList />
     </StyledMain>
   );
