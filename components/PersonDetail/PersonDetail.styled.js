@@ -23,3 +23,14 @@ export const StyledFigcaption = styled.figcaption`
 export const StyledImage = styled(Image)`
   object-fit: cover;
 `;
+
+export const StyledUpdateButton = styled.button`
+  transform: scaleX(-1);
+`;
+
+export const StyledButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  gap: 0.5rem;
+`;

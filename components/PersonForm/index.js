@@ -12,11 +12,12 @@ export default function PersonForm({
   onPersonUpdate,
   defaultValues,
   updateMode,
+  setUpdateMode,
 }) {
   return (
     <form onSubmit={onPersonCreate || onPersonUpdate}>
       <fieldset>
-        <legend>Add A Person</legend>
+        {!updateMode ? <legend>Add A Person</legend> : <legend>Edit</legend>}
         <StyledFormSection>
           <label htmlFor="name">
             Name<span aria-hidden>*</span>
@@ -51,9 +52,18 @@ export default function PersonForm({
           </StyledFormSection>
           <StyledButtonWrapper>
             {updateMode ? (
-              <button type="submit" aria-label="Update person">
-                Update
-              </button>
+              <>
+                <button
+                  type="button"
+                  aria-label="Cancel edit person and close edit form"
+                  onClick={() => setUpdateMode(false)}
+                >
+                  Cancel
+                </button>
+                <button type="submit" aria-label="Update person">
+                  Update
+                </button>
+              </>
             ) : (
               <>
                 <button type="submit" aria-label="Add person">
