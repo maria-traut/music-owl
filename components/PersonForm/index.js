@@ -10,7 +10,12 @@ import {
   StyledButtonSecondary,
 } from "./PersonForm.styled";
 
-export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
+export default function PersonForm({
+  onPersonCreate,
+  onPersonFormClear,
+  updateMode,
+  setUpdateMode,
+}) {
   return (
     <form onSubmit={onPersonCreate}>
       <StyledFieldset>
@@ -31,9 +36,9 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
         </StyledFormSection>
         <StyledInputAndButtonFlex>
           <StyledFormSection>
-            <label htmlFor="birth_year">
+            <StyledLabel htmlFor="birth_year">
               Year Of Birth<span aria-hidden>*</span>
-            </label>
+            </StyledLabel>
             <StyledInputYear
               type="number"
               id="birth_year"
@@ -46,18 +51,6 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
             />
           </StyledFormSection>
           <StyledButtonWrapper>
-<<<<<<< HEAD
-            <StyledButtonPrimary type="submit" aria-label="Add person">
-              Add
-            </StyledButtonPrimary>
-            <StyledButtonSecondary
-              type="button"
-              aria-label="Clear form"
-              onClick={onPersonFormClear}
-            >
-              Clear
-            </StyledButtonSecondary>
-=======
             {updateMode ? (
               <>
                 <StyledButtonSecondary
@@ -85,7 +78,6 @@ export default function PersonForm({ onPersonCreate, onPersonFormClear }) {
                 </StyledButtonPrimary>
               </>
             )}
->>>>>>> 9735efa (add styling)
           </StyledButtonWrapper>
         </StyledInputAndButtonFlex>
       </StyledFieldset>

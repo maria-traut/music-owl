@@ -3,7 +3,11 @@ import useSWR from "swr";
 import Link from "next/link";
 import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
-import { StyledMain, StyledSection } from "@/components/Global/Global.styles";
+import {
+  StyledMain,
+  StyledSection,
+  StyledH2People,
+} from "@/components/Global/Global.styles";
 
 export default function People() {
   const { mutate } = useSWR("/api/people");
@@ -55,7 +59,7 @@ export default function People() {
     <StyledMain>
       <Link href="/">&#8592; Back to Homepage</Link>
       <StyledSection>
-        <h2>My People</h2>
+        <StyledH2People>My People</StyledH2People>
         <p>
           Every music list starts with a person. Add them here — a name, a year
           of birth, and optionally a photo.

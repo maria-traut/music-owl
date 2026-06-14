@@ -32,8 +32,14 @@ export const StyledMain = styled.main`
 `;
 
 export const StyledSection = styled.section`
-  border: 1px solid black;
-  margin-bottom: 20px;
+  border-radius: 15px;
+  background-color: #1b3a5c;
+  padding: 5px 25px;
+  color: white;
+`;
+
+export const StyledH2People = styled.h2`
+  color: white;
 `;
 
 // science

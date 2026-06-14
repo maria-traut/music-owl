@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const StyledCard = styled.li`
   list-style: none;
   border: 1px solid grey;
+  border-radius: 15px;
 `;
 
 export const StyledCategory = styled.p`
@@ -24,7 +25,9 @@ export const StyledTagWrapper = styled.ul`
 
 export const StyledTag = styled.li`
   padding: 1px;
-  border: 1px solid grey;
+  border: none;
+  border-radius: 15px;
+  background-color: transparent;
 `;
 
 export const StyledReference = styled.p`
