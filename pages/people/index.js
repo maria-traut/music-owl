@@ -4,8 +4,8 @@ import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
 import {
   StyledMain,
-  StyledPeopleSection,
   StyledH2,
+  StyledPeopleSection,
 } from "@/components/Global/Global.styles";
 
 export default function People() {
