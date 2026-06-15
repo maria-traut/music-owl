@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import useSWR from "swr";
 import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
-import { StyledMain, StyledSection } from "@/components/Global/Global.styles";
+import {
+  StyledMain,
+  StyledH2,
+  StyledPeopleSection,
+} from "@/components/Global/Global.styles";
 
 export default function People() {
   const { mutate } = useSWR("/api/people");
@@ -52,13 +56,13 @@ export default function People() {
 
   return (
     <StyledMain>
-      <StyledSection>
-        <h2>My People</h2>
+      <StyledPeopleSection>
+        <StyledH2>My People</StyledH2>
         <p>
-          Every music list starts with a person. Add them here — a name, a year
-          of birth, and optionally a photo.
+          Every music list starts with a person. Add them here — a name and a
+          year of birth.
         </p>
-      </StyledSection>
+      </StyledPeopleSection>
       <PersonForm
         onPersonCreate={handlePersonCreate}
         onPersonFormClear={handlePersonFormClear}

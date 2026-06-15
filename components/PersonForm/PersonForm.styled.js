@@ -1,5 +1,16 @@
 import styled from "styled-components";
 
+export const StyledFieldset = styled.fieldset`
+  border-radius: 15px;
+  border: 1px solid #2e5f8a;
+  background-color: #ebf3fa;
+`;
+
+export const StyledLabel = styled.label`
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+`;
+
 export const StyledFormSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -8,26 +19,53 @@ export const StyledFormSection = styled.div`
 export const StyledInputAndButtonFlex = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  align-items: center;
 `;
 
-export const StyledInputName = styled.input`
-  width: 13rem;
+export const StyledInput = styled.input`
+  padding: 5px 10px;
+  border-radius: 15px;
+  border: 1px solid #e0e0e0;
   &:user-invalid {
-    border: 1px solid red;
+    border: 1px solid salmon;
   }
 `;
 
-export const StyledInputYear = styled.input`
+export const StyledInputName = styled(StyledInput)`
+  width: 12rem;
+`;
+
+export const StyledInputYear = styled(StyledInput)`
   width: 6rem;
-  &:user-invalid {
-    border: 1px solid red;
-  }
 `;
 
 export const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   margin-top: 1rem;
   gap: 0.5rem;
+`;
+
+export const StyledButton = styled.button`
+  margin: 0;
+  height: 1.2rem;
+  padding: 13px;
+  border: none;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledButtonPrimary = styled(StyledButton)`
+  color: white;
+  background-color: #1b3a5c;
+  border: none;
+`;
+
+export const StyledButtonSecondary = styled(StyledButton)`
+  color: #1b3a5c;
+  background-color: #fafaf8;
+  border: 1px solid #1b3a5c;
 `;

@@ -4,6 +4,10 @@ import {
   StyledInputName,
   StyledInputYear,
   StyledButtonWrapper,
+  StyledFieldset,
+  StyledLabel,
+  StyledButtonPrimary,
+  StyledButtonSecondary,
 } from "./PersonForm.styled";
 
 export default function PersonForm({
@@ -16,12 +20,12 @@ export default function PersonForm({
 }) {
   return (
     <form onSubmit={onPersonCreate || onPersonUpdate}>
-      <fieldset>
+       <StyledFieldset>
         {!updateMode ? <legend>Add A Person</legend> : <legend>Edit</legend>}
         <StyledFormSection>
-          <label htmlFor="name">
+          <StyledLabel htmlFor="name">
             Name<span aria-hidden>*</span>
-          </label>
+          </StyledLabel>
           <StyledInputName
             type="text"
             id="name"
@@ -35,9 +39,9 @@ export default function PersonForm({
         </StyledFormSection>
         <StyledInputAndButtonFlex>
           <StyledFormSection>
-            <label htmlFor="birth_year">
+            <StyledLabel htmlFor="birth_year">
               Year Of Birth<span aria-hidden>*</span>
-            </label>
+            </StyledLabel>
             <StyledInputYear
               type="number"
               id="birth_year"
@@ -52,35 +56,36 @@ export default function PersonForm({
           </StyledFormSection>
           <StyledButtonWrapper>
             {updateMode ? (
-              <>
-                <button
+              <>            
+                <StyledButtonSecondary
                   type="button"
                   aria-label="Cancel edit person and close edit form"
                   onClick={() => setUpdateMode(false)}
                 >
                   Cancel
-                </button>
-                <button type="submit" aria-label="Update person">
+               </StyledButtonSecondary>
+                <StyledButtonPrimary type="submit" aria-label="Update person">
                   Update
-                </button>
+                </StyledButtonPrimary>
               </>
             ) : (
               <>
-                <button type="submit" aria-label="Add person">
-                  Add
-                </button>
-                <button
+                <StyledButtonSecondary
+
                   type="button"
                   aria-label="Clear form"
                   onClick={onPersonFormClear}
                 >
                   Clear
-                </button>
+                </StyledButtonSecondary>
+                <StyledButtonPrimary type="submit" aria-label="Add person">
+                  Add
+                </StyledButtonPrimary>
               </>
             )}
           </StyledButtonWrapper>
         </StyledInputAndButtonFlex>
-      </fieldset>
+      </StyledFieldset>
     </form>
   );
 }

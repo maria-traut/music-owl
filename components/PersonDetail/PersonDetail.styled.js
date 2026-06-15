@@ -7,7 +7,8 @@ export const StyledFigure = styled.figure`
   height: 100%;
   width: 100%;
   margin: 0;
-  border: 1px solid black;
+  border-radius: 15px;
+  border: 1px solid #e0e0e0;
 `;
 
 export const StyledImageWrapper = styled.div`
@@ -18,6 +19,8 @@ export const StyledImageWrapper = styled.div`
 
 export const StyledFigcaption = styled.figcaption`
   display: flex;
+  justify-content: center;
+  margin: 0.5rem;
 `;
 
 export const StyledImage = styled(Image)`
@@ -26,6 +29,7 @@ export const StyledImage = styled(Image)`
 
 export const StyledUpdateButton = styled.button`
   transform: scaleX(-1);
+  border-radius: 15px;
 `;
 
 export const StyledButtonWrapper = styled.div`
