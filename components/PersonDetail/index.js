@@ -58,14 +58,12 @@ export default function PersonDetail({ person }) {
         </StyledButtonWrapper>
       )}
       {updateMode && (
-        <>
           <PersonForm
             onPersonUpdate={handlePersonUpdate}
             defaultValues={{ name, birth_year }}
             updateMode={true}
             setUpdateMode={setUpdateMode}
           />
-        </>
       )}
     </>
   );
