@@ -11,15 +11,14 @@ import {
 } from "./PersonForm.styled";
 
 export default function PersonForm({
-  onPersonCreate,
+  onSubmit,
   onPersonFormClear,
-  onPersonUpdate,
   defaultValues,
   updateMode,
   setUpdateMode,
-}) {
+}) { 
   return (
-    <form onSubmit={onPersonCreate || onPersonUpdate}>
+    <form onSubmit={onSubmit}>
        <StyledFieldset>
         {!updateMode ? <legend>Add A Person</legend> : <legend>Edit</legend>}
         <StyledFormSection>
