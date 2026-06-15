@@ -39,6 +39,10 @@ export const StyledInputYear = styled(StyledInput)`
   width: 6rem;
 `;
 
+export const StyledInputColor = styled(StyledInput)`
+  width: 4rem;
+`;
+
 export const StyledFormButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;

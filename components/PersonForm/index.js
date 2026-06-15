@@ -7,6 +7,7 @@ import {
   StyledFormSection,
   StyledInputName,
   StyledInputYear,
+  StyledInputColor,
   StyledFormButtonWrapper,
   StyledFieldset,
   StyledLabel,
@@ -54,6 +55,10 @@ export default function PersonForm({
               title={`Please enter a year between 1900 and ${new Date().getFullYear()}`}
               defaultValue={defaultValues?.birth_year ?? ""}
             />
+          </StyledFormSection>
+          <StyledFormSection>
+            <StyledLabel htmlFor="color">Color</StyledLabel>
+            <StyledInputColor type="color" name="color" />
           </StyledFormSection>
           <StyledFormButtonWrapper>
             {updateMode ? (
