@@ -8,16 +8,15 @@ export default async function handler(request, response) {
   try {
     if (request.method === "GET") {
       const { personId } = request.query;
-      const playlists = personId
-        ? await Playlist.find({ person_id: personId })
-        : await Playlist.find();
 
+      const query = personId ? { person_id: personId } : {};
+      const playlists = await Playlist.find(query);
       return response.status(200).json(playlists);
     }
   } catch (error) {
-    return response.status(500).json({
-      status: "Something went wrong. Please try again.",
-    });
+    console.error("Error:", error);
+    return response.status(400).json({ status: "Invalid query" });
   }
+
   response.status(405).json({ status: "Method not allowed" });
 }
