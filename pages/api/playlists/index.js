@@ -1,5 +1,6 @@
 import dbConnect from "@/db/connect";
 import Playlist from "@/db/models/Playlist";
+import mongoose from "mongoose";
 
 export default async function handler(request, response) {
   await dbConnect();
@@ -10,6 +11,7 @@ export default async function handler(request, response) {
       const playlists = personId
         ? await Playlist.find({ person_id: personId })
         : await Playlist.find();
+
       return response.status(200).json(playlists);
     }
   } catch (error) {
