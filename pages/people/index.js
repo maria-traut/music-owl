@@ -64,7 +64,7 @@ export default function People() {
         </p>
       </StyledPeopleSection>
       <PersonForm
-        onPersonCreate={handlePersonCreate}
+        onSubmit={handlePersonCreate}
         onPersonFormClear={handlePersonFormClear}
       />
       {success && <p>Person successfully added!</p>}

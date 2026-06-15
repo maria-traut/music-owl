@@ -11,15 +11,16 @@ import {
 } from "./PersonForm.styled";
 
 export default function PersonForm({
-  onPersonCreate,
+  onSubmit,
   onPersonFormClear,
+  defaultValues,
   updateMode,
   setUpdateMode,
-}) {
+}) { 
   return (
-    <form onSubmit={onPersonCreate}>
-      <StyledFieldset>
-        <legend>Add A Person</legend>
+    <form onSubmit={onSubmit}>
+       <StyledFieldset>
+        {!updateMode ? <legend>Add A Person</legend> : <legend>Edit</legend>}
         <StyledFormSection>
           <StyledLabel htmlFor="name">
             Name<span aria-hidden>*</span>
@@ -32,6 +33,7 @@ export default function PersonForm({
             aria-required="true"
             maxLength={50}
             title="Name must be between 1 and 50 characters"
+            defaultValue={defaultValues?.name ?? ""}
           />
         </StyledFormSection>
         <StyledInputAndButtonFlex>
@@ -48,18 +50,19 @@ export default function PersonForm({
               min="1900"
               max={new Date().getFullYear()}
               title={`Please enter a year between 1900 and ${new Date().getFullYear()}`}
+              defaultValue={defaultValues?.birth_year ?? ""}
             />
           </StyledFormSection>
           <StyledButtonWrapper>
             {updateMode ? (
-              <>
+              <>            
                 <StyledButtonSecondary
                   type="button"
                   aria-label="Cancel edit person and close edit form"
                   onClick={() => setUpdateMode(false)}
                 >
                   Cancel
-                </StyledButtonSecondary>
+               </StyledButtonSecondary>
                 <StyledButtonPrimary type="submit" aria-label="Update person">
                   Update
                 </StyledButtonPrimary>
@@ -67,6 +70,7 @@ export default function PersonForm({
             ) : (
               <>
                 <StyledButtonSecondary
+
                   type="button"
                   aria-label="Clear form"
                   onClick={onPersonFormClear}
