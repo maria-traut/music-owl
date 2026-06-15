@@ -17,12 +17,14 @@ export default async function handler(request, response) {
 
     if (request.method === "PUT") {
       const personData = request.body;
-      await Person.findByIdAndUpdate(id, personData);
-      
+      const updatedPerson = await Person.findByIdAndUpdate(id, personData, {
+        new: true,
+      });
+
       if (!updatedPerson) {
-          return response.status(404).json({ status: "Person not found" });
+        return response.status(404).json({ status: "Person not found" });
       }
-      
+
       return response.status(200).json({ status: `Person ${id} updated!` });
     }
   } catch (error) {

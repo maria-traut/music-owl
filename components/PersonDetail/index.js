@@ -31,45 +31,46 @@ export default function PersonDetail({ person }) {
       mutate("/api/people");
       mutate(`/api/people/${_id}`);
       setUpdateMode(false);
+      setUpdateError(null);
     } else {
       setUpdateError("Something went wrong. Please try again.");
     }
-
-    return (
-      <>
-        <StyledFigure>
-          <StyledImageWrapper>
-            <StyledImage
-              src={photo_url ?? "/placeholder.jpg"}
-              alt={`Picture showing ${name}`}
-              fill
-            />
-          </StyledImageWrapper>
-          <StyledFigcaption>
-            {name}, {birth_year}
-          </StyledFigcaption>
-        </StyledFigure>
-        {!updateMode && (
-          <StyledButtonWrapper>
-            <StyledUpdateButton
-              type="button"
-              aria-label="Edit person"
-              onClick={() => setUpdateMode(true)}
-            >
-              &#9998;
-            </StyledUpdateButton>
-          </StyledButtonWrapper>
-        )}
-        {updateMode && (
-          <PersonForm
-            onSubmit={handlePersonUpdate}
-            defaultValues={{ name, birth_year }}
-            updateMode={true}
-            setUpdateMode={setUpdateMode}
-          />
-        )}
-        {updateError && <p role="alert">{updateError}</p>}
-      </>
-    );
   }
+
+  return (
+    <>
+      <StyledFigure>
+        <StyledImageWrapper>
+          <StyledImage
+            src={photo_url ?? "/placeholder.jpg"}
+            alt={`Picture showing ${name}`}
+            fill
+          />
+        </StyledImageWrapper>
+        <StyledFigcaption>
+          {name}, {birth_year}
+        </StyledFigcaption>
+      </StyledFigure>
+      {!updateMode && (
+        <StyledButtonWrapper>
+          <StyledUpdateButton
+            type="button"
+            aria-label="Edit person"
+            onClick={() => setUpdateMode(true)}
+          >
+            &#9998;
+          </StyledUpdateButton>
+        </StyledButtonWrapper>
+      )}
+      {updateMode && (
+        <PersonForm
+          onSubmit={handlePersonUpdate}
+          defaultValues={{ name, birth_year }}
+          updateMode={true}
+          setUpdateMode={setUpdateMode}
+        />
+      )}
+      {updateError && <p role="alert">{updateError}</p>}
+    </>
+  );
 }
