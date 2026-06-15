@@ -14,6 +14,7 @@ export default function PersonDetail({ person }) {
   const { mutate } = useSWRConfig();
   const { name, birth_year, photo_url, _id } = person;
   const [updateMode, setUpdateMode] = useState(false);
+  const [updateError, setUpdateError] = useState(null);
 
   async function handlePersonUpdate(event) {
     event.preventDefault();
@@ -27,11 +28,13 @@ export default function PersonDetail({ person }) {
     });
 
     if (response.ok) {
-      mutate("/api/people");
-      mutate(`/api/people/${_id}`);
-      setUpdateMode(false);
-    }
-  }
+  mutate("/api/people");
+  mutate(`/api/people/${_id}`);
+  setUpdateMode(false);
+} else {
+  setUpdateError("Something went wrong. Please try again.");
+}
+
   return (
     <>
       <StyledFigure>
@@ -65,6 +68,7 @@ export default function PersonDetail({ person }) {
             setUpdateMode={setUpdateMode}
           />
       )}
+    {updateError && <p role="alert">{updateError}</p>}
     </>
   );
 }
