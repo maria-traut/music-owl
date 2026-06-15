@@ -1,12 +1,18 @@
 import ScientificFindingList from "@/components/ScientificFindingList";
-import Link from "next/link";
-import { StyledScienceMain } from "../components/Global/Global.styles";
+import {
+  StyledMain,
+  StyledScienceSection,
+  StyledH2,
+} from "../components/Global/Global.styles";
 
 export default function Science() {
   return (
-    <StyledScienceMain>
-      <Link href="/">&#8592; Back to Homepage</Link>
+    <StyledMain>
+      <StyledScienceSection>
+        <StyledH2>Scientific Findings</StyledH2>
+        <p>Find out more about how music effects our brain.</p>
+      </StyledScienceSection>
       <ScientificFindingList />
-    </StyledScienceMain>
+    </StyledMain>
   );
 }
