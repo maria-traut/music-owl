@@ -1,19 +1,16 @@
-import Link from "next/link";
 import {
-  StyledMain,
   StyledIntroSection,
   StyledLinkWrapper,
   StyledLinkPeople,
   StyledLinkScience,
   StyledH2,
   StyledH3,
-  StyledDivider,
 } from "./AppInfo.styled";
+import { StyledDivider } from "../Global/Global.styles";
 
 export default function AppInfo() {
   return (
     <>
-      <StyledDivider />
       <StyledIntroSection>
         <StyledH2>What Is Music Owl?</StyledH2>
         <p>
@@ -28,7 +25,7 @@ export default function AppInfo() {
               a name and their year of birth.
             </p>
           </StyledLinkPeople>
-          <StyledLinkScience href="/people">
+          <StyledLinkScience href="/science">
             <p>
               Explore a curated collection of scientific findings on music,
               memory, and dementia — backed by research from neurology and

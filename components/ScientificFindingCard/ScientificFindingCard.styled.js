@@ -2,7 +2,9 @@ import styled from "styled-components";
 
 export const StyledCard = styled.li`
   list-style: none;
-  border: 1px solid grey;
+  border-radius: 15px;
+  padding: 20px 25px;
+  background-color: #fde5bb;
 `;
 
 export const StyledCategory = styled.p`
@@ -10,21 +12,23 @@ export const StyledCategory = styled.p`
   text-transform: uppercase;
 `;
 
-export const StyledCardTitle = styled.h2`
-  font-size: 1.25rem;
-  line-height: 1.4;
+export const StyledCardTitle = styled.h3`
+  font-size: 1rem;
+  line-height: 1.3;
 `;
 
 export const StyledTagWrapper = styled.ul`
   all: unset;
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
 `;
 
 export const StyledTag = styled.li`
-  padding: 1px;
-  border: 1px solid grey;
+  font-size: 8px;
+  padding: 5px 6px;
+  border: 1px solid #fafaf8;
+  border-radius: 15px;
 `;
 
 export const StyledReference = styled.p`

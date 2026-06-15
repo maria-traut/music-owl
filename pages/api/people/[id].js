@@ -21,6 +21,19 @@ export default async function handler(request, response) {
         .status(200)
         .json({ status: `Person ${id}} successfully deleted.` });
     }
+
+    if (request.method === "PUT") {
+      const personData = request.body;
+      const updatedPerson = await Person.findByIdAndUpdate(id, personData, {
+        new: true,
+      });
+
+      if (!updatedPerson) {
+        return response.status(404).json({ status: "Person not found" });
+      }
+
+      return response.status(200).json({ status: `Person ${id} updated!` });
+    }
   } catch (error) {
     return response.status(500).json({
       status: "Internal Server Error",

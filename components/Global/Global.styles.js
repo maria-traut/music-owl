@@ -1,39 +1,44 @@
-import Link from "next/link";
 import styled from "styled-components";
 
-//homepage
-export const StyledNav = styled.div`
-  display: flex;
-  justify-content: space-around;
-  gap: 1rem;
-  width: 100%;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  text-transform: uppercase;
-  font-family: var(--font-family-sans);
+export const StyledApp = styled.div`
+  max-width: 480px;
+  margin: 0 auto;
 `;
 
-export const StyledNavLink = styled(Link)`
-  text-decoration: none;
-  cursor: pointer;
-  color: inherit;
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &:active {
-    opacity: 0.7;
-  }
-`;
-
-//people
 export const StyledMain = styled.main`
-  padding: 20px 30px 30px 30px;
+  padding: 2px 25px 25px 25px;
+`;
+
+export const StyledDivider = styled.hr`
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 10px 0;
 `;
 
 export const StyledSection = styled.section`
-  border: 1px solid black;
-  margin-bottom: 20px;
+  padding: 5px 25px;
+  border-radius: 15px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+`;
+
+export const StyledH1 = styled.h1`
+  text-align: center;
+  margin-bottom: 1rem;
+`;
+
+export const StyledH2 = styled.h2`
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+`;
+
+//people
+
+export const StyledPeopleSection = styled(StyledSection)`
+  background-color: #1b3a5c;
+  color: white;
 `;
 
 export const StyledMessage = styled.span`
@@ -42,9 +47,14 @@ export const StyledMessage = styled.span`
 `;
 
 // science
-export const StyledScienceMain = styled.main`
+
+export const StyledScienceMain = styled(StyledMain)`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 30px;
+`;
+
+export const StyledScienceSection = styled(StyledSection)`
+  background-color: #e8a838;
+  color: white;
 `;

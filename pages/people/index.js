@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import useSWR from "swr";
-import Link from "next/link";
 import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
 import {
   StyledMain,
-  StyledSection,
+  StyledH2,
+  StyledPeopleSection,
   StyledMessage,
 } from "@/components/Global/Global.styles";
 
@@ -57,16 +57,15 @@ export default function People() {
 
   return (
     <StyledMain>
-      <Link href="/">&#8592; Back to Homepage</Link>
-      <StyledSection>
-        <h2>My People</h2>
+      <StyledPeopleSection>
+        <StyledH2>My People</StyledH2>
         <p>
-          Every music list starts with a person. Add them here — a name, a year
-          of birth, and optionally a photo.
+          Every music list starts with a person. Add them here — a name and a
+          year of birth.
         </p>
-      </StyledSection>
+      </StyledPeopleSection>
       <PersonForm
-        onPersonCreate={handlePersonCreate}
+        onSubmit={handlePersonCreate}
         onPersonFormClear={handlePersonFormClear}
       />
       {success && <StyledMessage>Person successfully added!</StyledMessage>}
