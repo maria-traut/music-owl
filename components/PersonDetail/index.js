@@ -28,47 +28,48 @@ export default function PersonDetail({ person }) {
     });
 
     if (response.ok) {
-  mutate("/api/people");
-  mutate(`/api/people/${_id}`);
-  setUpdateMode(false);
-} else {
-  setUpdateError("Something went wrong. Please try again.");
-}
-    
-  return (
-    <>
-      <StyledFigure>
-        <StyledImageWrapper>
-          <StyledImage
-            src={photo_url ?? "/placeholder.jpg"}
-            alt={`Picture showing ${name}`}
-            fill
-          />
-        </StyledImageWrapper>
-        <StyledFigcaption>
-          {name}, {birth_year}
-        </StyledFigcaption>
-      </StyledFigure>
-      {!updateMode && (
-        <StyledButtonWrapper>
-          <StyledUpdateButton
-            type="button"
-            aria-label="Edit person"
-            onClick={() => setUpdateMode(true)}
-          >
-            &#9998;
-          </StyledUpdateButton>
-        </StyledButtonWrapper>
-      )}
-      {updateMode && (
+      mutate("/api/people");
+      mutate(`/api/people/${_id}`);
+      setUpdateMode(false);
+    } else {
+      setUpdateError("Something went wrong. Please try again.");
+    }
+
+    return (
+      <>
+        <StyledFigure>
+          <StyledImageWrapper>
+            <StyledImage
+              src={photo_url ?? "/placeholder.jpg"}
+              alt={`Picture showing ${name}`}
+              fill
+            />
+          </StyledImageWrapper>
+          <StyledFigcaption>
+            {name}, {birth_year}
+          </StyledFigcaption>
+        </StyledFigure>
+        {!updateMode && (
+          <StyledButtonWrapper>
+            <StyledUpdateButton
+              type="button"
+              aria-label="Edit person"
+              onClick={() => setUpdateMode(true)}
+            >
+              &#9998;
+            </StyledUpdateButton>
+          </StyledButtonWrapper>
+        )}
+        {updateMode && (
           <PersonForm
-            onSubmit={handlePersonUpdate}    
+            onSubmit={handlePersonUpdate}
             defaultValues={{ name, birth_year }}
             updateMode={true}
             setUpdateMode={setUpdateMode}
           />
-      )}
-    {updateError && <p role="alert">{updateError}</p>}
-    </>
-  );
+        )}
+        {updateError && <p role="alert">{updateError}</p>}
+      </>
+    );
+  }
 }
