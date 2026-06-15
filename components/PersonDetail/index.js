@@ -34,7 +34,7 @@ export default function PersonDetail({ person }) {
 } else {
   setUpdateError("Something went wrong. Please try again.");
 }
-
+    
   return (
     <>
       <StyledFigure>
@@ -62,7 +62,7 @@ export default function PersonDetail({ person }) {
       )}
       {updateMode && (
           <PersonForm
-            onPersonUpdate={handlePersonUpdate}
+            onSubmit={handlePersonUpdate}    
             defaultValues={{ name, birth_year }}
             updateMode={true}
             setUpdateMode={setUpdateMode}
