@@ -15,6 +15,13 @@ export default async function handler(request, response) {
       return response.status(200).json(person);
     }
 
+    if (request.method === "DELETE") {
+      await Person.findByIdAndDelete(id);
+      return response
+        .status(200)
+        .json({ status: `Person ${id} successfully deleted.` });
+    }
+
     if (request.method === "PUT") {
       const personData = request.body;
       const updatedPerson = await Person.findByIdAndUpdate(id, personData, {

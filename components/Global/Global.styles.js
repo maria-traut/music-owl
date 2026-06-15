@@ -34,11 +34,39 @@ export const StyledH2 = styled.h2`
   line-height: 1.3;
 `;
 
+export const StyledMessage = styled.p`
+  display: inline-block;
+  margin-top: 0.5rem;
+`;
+
 //people
 
 export const StyledPeopleSection = styled(StyledSection)`
   background-color: #1b3a5c;
   color: white;
+`;
+
+export const StyledButton = styled.button`
+  margin: 0;
+  height: 1.2rem;
+  padding: 13px;
+  border: none;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledButtonPrimary = styled(StyledButton)`
+  color: white;
+  background-color: #1b3a5c;
+  border: none;
+`;
+
+export const StyledButtonSecondary = styled(StyledButton)`
+  color: #1b3a5c;
+  background-color: #fafaf8;
+  border: 1px solid #1b3a5c;
 `;
 
 // science

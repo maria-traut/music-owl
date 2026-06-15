@@ -6,6 +6,7 @@ import {
   StyledMain,
   StyledH2,
   StyledPeopleSection,
+  StyledMessage,
 } from "@/components/Global/Global.styles";
 
 export default function People() {
@@ -67,8 +68,10 @@ export default function People() {
         onSubmit={handlePersonCreate}
         onPersonFormClear={handlePersonFormClear}
       />
-      {success && <p>Person successfully added!</p>}
-      {error && <p>Something went wrong. Please try again.</p>}
+      {success && <StyledMessage>Person successfully added!</StyledMessage>}
+      {error && (
+        <StyledMessage>Something went wrong. Please try again.</StyledMessage>
+      )}
       <PersonList />
     </StyledMain>
   );

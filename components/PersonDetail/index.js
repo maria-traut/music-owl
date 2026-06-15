@@ -1,26 +1,58 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
+import { useState, useEffect } from "react";
+
 import {
   StyledFigure,
   StyledImageWrapper,
   StyledFigcaption,
   StyledImage,
-  StyledUpdateButton,
   StyledButtonWrapper,
+  StyledMessageAndButtonWrapper,
+  StyledUpdateButton,
+  StyledDeleteButton,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
+import {
+  StyledButtonPrimary,
+  StyledButtonSecondary,
+  StyledMessage,
+} from "../Global/Global.styles";
 
 export default function PersonDetail({ person }) {
+  const router = useRouter();
   const { mutate } = useSWRConfig();
   const { name, birth_year, photo_url, _id } = person;
-  const [updateMode, setUpdateMode] = useState(false);
+  const [activeMode, setActiveMode] = useState(null);
   const [updateError, setUpdateError] = useState(null);
+  const [deleteError, setDeleteError] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    if (!success) return;
+    const successMessageTimer = setTimeout(() => {
+      setSuccess(false);
+      router.push("/people");
+    }, 2000);
+    return () => {
+      clearTimeout(successMessageTimer);
+    };
+  }, [success]);
+
+  async function handlePersonDelete() {
+    const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
+    if (response.ok) {
+      setSuccess(true);
+      mutate("/api/people");
+    } else {
+      setDeleteError(true);
+    }
+  }
 
   async function handlePersonUpdate(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const personData = Object.fromEntries(formData);
-
     const response = await fetch(`/api/people/${_id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -30,7 +62,7 @@ export default function PersonDetail({ person }) {
     if (response.ok) {
       mutate("/api/people");
       mutate(`/api/people/${_id}`);
-      setUpdateMode(false);
+      setActiveMode(null);
       setUpdateError(null);
     } else {
       setUpdateError("Something went wrong. Please try again.");
@@ -51,23 +83,64 @@ export default function PersonDetail({ person }) {
           {name}, {birth_year}
         </StyledFigcaption>
       </StyledFigure>
-      {!updateMode && (
+
+      {!activeMode && (
         <StyledButtonWrapper>
+          <StyledDeleteButton
+            type="button"
+            aria-label="Delete person"
+            onClick={() => setActiveMode("delete")}
+          >
+            ✗
+          </StyledDeleteButton>
           <StyledUpdateButton
             type="button"
             aria-label="Edit person"
-            onClick={() => setUpdateMode(true)}
+            onClick={() => setActiveMode("edit")}
           >
             &#9998;
           </StyledUpdateButton>
         </StyledButtonWrapper>
       )}
-      {updateMode && (
+
+      {activeMode === "delete" && (
+        <>
+          {success ? (
+            <StyledMessage>{name} was successfully deleted.</StyledMessage>
+          ) : (
+            <StyledMessageAndButtonWrapper>
+              <StyledMessage>{`Do you really want to delete ${name}?`}</StyledMessage>
+              <StyledButtonWrapper>
+                <StyledButtonSecondary
+                  type="button"
+                  aria-label="Cancel deletion"
+                  onClick={() => {
+                    setActiveMode(null);
+                    setDeleteError(false);
+                  }}
+                >
+                  No
+                </StyledButtonSecondary>
+                <StyledButtonPrimary
+                  type="button"
+                  aria-label="Confirm deletion"
+                  onClick={handlePersonDelete}
+                >
+                  Yes
+                </StyledButtonPrimary>
+              </StyledButtonWrapper>
+              {deleteError && <span>An error occurred. Please try again.</span>}
+            </StyledMessageAndButtonWrapper>
+          )}
+        </>
+      )}
+
+      {activeMode === "edit" && (
         <PersonForm
           onSubmit={handlePersonUpdate}
           defaultValues={{ name, birth_year }}
           updateMode={true}
-          setUpdateMode={setUpdateMode}
+          setUpdateMode={() => setActiveMode(null)}
         />
       )}
       {updateError && <p role="alert">{updateError}</p>}
