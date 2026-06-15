@@ -72,8 +72,3 @@ export const StyledMessageAndButtonWrapper = styled.div`
   justify-content: space-between;
   gap: 0.5rem;
 `;
-
-export const StyledMessage = styled.span`
-  display: inline-block;
-  margin-top: 0.5rem;
-`;

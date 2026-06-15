@@ -9,7 +9,6 @@ import {
   StyledImage,
   StyledButtonWrapper,
   StyledMessageAndButtonWrapper,
-  StyledMessage,
   StyledUpdateButton,
   StyledDeleteButton,
 } from "./PersonDetail.styled";
@@ -17,6 +16,7 @@ import PersonForm from "../PersonForm";
 import {
   StyledButtonPrimary,
   StyledButtonSecondary,
+  StyledMessage,
 } from "../Global/Global.styles";
 
 export default function PersonDetail({ person }) {
@@ -44,8 +44,7 @@ export default function PersonDetail({ person }) {
     if (response.ok) {
       setSuccess(true);
       mutate("/api/people");
-    }
-    if (!response.ok) {
+    } else {
       setDeleteError(true);
     }
   }
@@ -115,7 +114,10 @@ export default function PersonDetail({ person }) {
                 <StyledButtonSecondary
                   type="button"
                   aria-label="Cancel deletion"
-                  onClick={() => setActiveMode(null)}
+                  onClick={() => {
+                    setActiveMode(null);
+                    setDeleteError(false);
+                  }}
                 >
                   No
                 </StyledButtonSecondary>

@@ -34,16 +34,16 @@ export const StyledH2 = styled.h2`
   line-height: 1.3;
 `;
 
+export const StyledMessage = styled.p`
+  display: inline-block;
+  margin-top: 0.5rem;
+`;
+
 //people
 
 export const StyledPeopleSection = styled(StyledSection)`
   background-color: #1b3a5c;
   color: white;
-`;
-
-export const StyledMessage = styled.span`
-  display: inline-block;
-  margin-top: 0.5rem;
 `;
 
 export const StyledButton = styled.button`

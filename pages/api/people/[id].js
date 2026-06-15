@@ -19,7 +19,7 @@ export default async function handler(request, response) {
       await Person.findByIdAndDelete(id);
       return response
         .status(200)
-        .json({ status: `Person ${id}} successfully deleted.` });
+        .json({ status: `Person ${id} successfully deleted.` });
     }
 
     if (request.method === "PUT") {
