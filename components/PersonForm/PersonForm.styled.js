@@ -39,33 +39,10 @@ export const StyledInputYear = styled(StyledInput)`
   width: 6rem;
 `;
 
-export const StyledButtonWrapper = styled.div`
+export const StyledFormButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-top: 1rem;
   gap: 0.5rem;
-`;
-
-export const StyledButton = styled.button`
-  margin: 0;
-  height: 1.2rem;
-  padding: 13px;
-  border: none;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const StyledButtonPrimary = styled(StyledButton)`
-  color: white;
-  background-color: #1b3a5c;
-  border: none;
-`;
-
-export const StyledButtonSecondary = styled(StyledButton)`
-  color: #1b3a5c;
-  background-color: #fafaf8;
-  border: 1px solid #1b3a5c;
 `;

@@ -11,19 +11,22 @@ import {
   StyledMessageAndButtonWrapper,
   StyledMessage,
   StyledUpdateButton,
-  StyledButtonWrapper,
+  StyledDeleteButton,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
+import {
+  StyledButtonPrimary,
+  StyledButtonSecondary,
+} from "../Global/Global.styles";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
   const { mutate } = useSWRConfig();
   const { name, birth_year, photo_url, _id } = person;
-  const [confirmDeleteMode, setConfirmDeleteMode] = useState(false);
-  const [updateMode, setUpdateMode] = useState(false);
+  const [activeMode, setActiveMode] = useState(null);
   const [updateError, setUpdateError] = useState(null);
+  const [deleteError, setDeleteError] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (!success) return;
@@ -43,7 +46,7 @@ export default function PersonDetail({ person }) {
       mutate("/api/people");
     }
     if (!response.ok) {
-      setError(true);
+      setDeleteError(true);
     }
   }
 
@@ -51,7 +54,6 @@ export default function PersonDetail({ person }) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const personData = Object.fromEntries(formData);
-
     const response = await fetch(`/api/people/${_id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -61,7 +63,7 @@ export default function PersonDetail({ person }) {
     if (response.ok) {
       mutate("/api/people");
       mutate(`/api/people/${_id}`);
-      setUpdateMode(false);
+      setActiveMode(null);
       setUpdateError(null);
     } else {
       setUpdateError("Something went wrong. Please try again.");
@@ -82,19 +84,27 @@ export default function PersonDetail({ person }) {
           {name}, {birth_year}
         </StyledFigcaption>
       </StyledFigure>
-      {!confirmDeleteMode && (
+
+      {!activeMode && (
         <StyledButtonWrapper>
-          <button
+          <StyledDeleteButton
             type="button"
             aria-label="Delete person"
-            onClick={() => setConfirmDeleteMode(true)}
+            onClick={() => setActiveMode("delete")}
           >
             ✗
-          </button>
+          </StyledDeleteButton>
+          <StyledUpdateButton
+            type="button"
+            aria-label="Edit person"
+            onClick={() => setActiveMode("edit")}
+          >
+            &#9998;
+          </StyledUpdateButton>
         </StyledButtonWrapper>
       )}
 
-      {confirmDeleteMode && (
+      {activeMode === "delete" && (
         <>
           {success ? (
             <StyledMessage>{name} was successfully deleted.</StyledMessage>
@@ -102,43 +112,33 @@ export default function PersonDetail({ person }) {
             <StyledMessageAndButtonWrapper>
               <StyledMessage>{`Do you really want to delete ${name}?`}</StyledMessage>
               <StyledButtonWrapper>
-                <button
+                <StyledButtonSecondary
                   type="button"
                   aria-label="Cancel deletion"
-                  onClick={() => setConfirmDeleteMode(false)}
+                  onClick={() => setActiveMode(null)}
                 >
                   No
-                </button>
-                <button
+                </StyledButtonSecondary>
+                <StyledButtonPrimary
                   type="button"
                   aria-label="Confirm deletion"
                   onClick={handlePersonDelete}
                 >
                   Yes
-                </button>
+                </StyledButtonPrimary>
               </StyledButtonWrapper>
-              {error && <span>An error occurred. Please try again.</span>}
+              {deleteError && <span>An error occurred. Please try again.</span>}
             </StyledMessageAndButtonWrapper>
           )}
         </>
       )}
-      {!updateMode && (
-        <StyledButtonWrapper>
-          <StyledUpdateButton
-            type="button"
-            aria-label="Edit person"
-            onClick={() => setUpdateMode(true)}
-          >
-            &#9998;
-          </StyledUpdateButton>
-        </StyledButtonWrapper>
-      )}
-      {updateMode && (
+
+      {activeMode === "edit" && (
         <PersonForm
           onSubmit={handlePersonUpdate}
           defaultValues={{ name, birth_year }}
           updateMode={true}
-          setUpdateMode={setUpdateMode}
+          setUpdateMode={() => setActiveMode(null)}
         />
       )}
       {updateError && <p role="alert">{updateError}</p>}

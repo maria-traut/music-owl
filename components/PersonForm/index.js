@@ -1,13 +1,15 @@
 import {
+  StyledButtonPrimary,
+  StyledButtonSecondary,
+} from "../Global/Global.styles";
+import {
   StyledInputAndButtonFlex,
   StyledFormSection,
   StyledInputName,
   StyledInputYear,
-  StyledButtonWrapper,
+  StyledFormButtonWrapper,
   StyledFieldset,
   StyledLabel,
-  StyledButtonPrimary,
-  StyledButtonSecondary,
 } from "./PersonForm.styled";
 
 export default function PersonForm({
@@ -16,10 +18,10 @@ export default function PersonForm({
   defaultValues,
   updateMode,
   setUpdateMode,
-}) { 
+}) {
   return (
     <form onSubmit={onSubmit}>
-       <StyledFieldset>
+      <StyledFieldset>
         {!updateMode ? <legend>Add A Person</legend> : <legend>Edit</legend>}
         <StyledFormSection>
           <StyledLabel htmlFor="name">
@@ -53,16 +55,16 @@ export default function PersonForm({
               defaultValue={defaultValues?.birth_year ?? ""}
             />
           </StyledFormSection>
-          <StyledButtonWrapper>
+          <StyledFormButtonWrapper>
             {updateMode ? (
-              <>            
+              <>
                 <StyledButtonSecondary
                   type="button"
                   aria-label="Cancel edit person and close edit form"
                   onClick={() => setUpdateMode(false)}
                 >
                   Cancel
-               </StyledButtonSecondary>
+                </StyledButtonSecondary>
                 <StyledButtonPrimary type="submit" aria-label="Update person">
                   Update
                 </StyledButtonPrimary>
@@ -70,7 +72,6 @@ export default function PersonForm({
             ) : (
               <>
                 <StyledButtonSecondary
-
                   type="button"
                   aria-label="Clear form"
                   onClick={onPersonFormClear}
@@ -82,7 +83,7 @@ export default function PersonForm({
                 </StyledButtonPrimary>
               </>
             )}
-          </StyledButtonWrapper>
+          </StyledFormButtonWrapper>
         </StyledInputAndButtonFlex>
       </StyledFieldset>
     </form>

@@ -46,6 +46,29 @@ export const StyledMessage = styled.span`
   margin-top: 0.5rem;
 `;
 
+export const StyledButton = styled.button`
+  margin: 0;
+  height: 1.2rem;
+  padding: 13px;
+  border: none;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledButtonPrimary = styled(StyledButton)`
+  color: white;
+  background-color: #1b3a5c;
+  border: none;
+`;
+
+export const StyledButtonSecondary = styled(StyledButton)`
+  color: #1b3a5c;
+  background-color: #fafaf8;
+  border: 1px solid #1b3a5c;
+`;
+
 // science
 
 export const StyledScienceMain = styled(StyledMain)`

@@ -27,9 +27,36 @@ export const StyledImage = styled(Image)`
   object-fit: cover;
 `;
 
-export const StyledUpdateButton = styled.button`
-  transform: scaleX(-1);
+const StyledUpdateAndDeleteButton = styled.button`
+  background-color: transparent;
+  height: 1.2rem;
+  padding: 13px;
   border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #1b3a5c;
+`;
+
+export const StyledUpdateButton = styled(StyledUpdateAndDeleteButton)`
+  transform: scaleX(-1);
+  &:hover {
+    background-color: #b4d4f7;
+  }
+
+  &:active {
+    background-color: #b4d4f7;
+  }
+`;
+
+export const StyledDeleteButton = styled(StyledUpdateAndDeleteButton)`
+  &:hover {
+    background-color: #e7a5a5;
+  }
+
+  &:active {
+    background-color: #e7a5a5;
+  }
 `;
 
 export const StyledButtonWrapper = styled.div`
