@@ -4,6 +4,7 @@ export const StyledFieldset = styled.fieldset`
   border-radius: 15px;
   border: 1px solid #2e5f8a;
   background-color: #ebf3fa;
+  margin-top: 1rem;
 `;
 
 export const StyledLabel = styled.label`
@@ -40,7 +41,7 @@ export const StyledInputYear = styled(StyledInput)`
 `;
 
 export const StyledInputColor = styled(StyledInput)`
-  width: 4rem;
+  width: 3rem;
 `;
 
 export const StyledFormButtonWrapper = styled.div`

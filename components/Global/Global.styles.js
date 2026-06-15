@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Link from "next/link";
 
 export const StyledApp = styled.div`
   max-width: 480px;
@@ -19,7 +20,7 @@ export const StyledSection = styled.section`
   padding: 5px 25px;
   border-radius: 15px;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 `;
 
 export const StyledH1 = styled.h1`
@@ -37,6 +38,22 @@ export const StyledH2 = styled.h2`
 export const StyledMessage = styled.p`
   display: inline-block;
   margin-top: 0.5rem;
+`;
+
+export const StyledBackLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  padding: 1rem 0;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active {
+    text-decoration: underline;
+  }
 `;
 
 //people

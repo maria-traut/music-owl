@@ -35,7 +35,7 @@ export default function PersonForm({
             required
             aria-required="true"
             maxLength={50}
-            title="Name must be between 1 and 50 characters"
+            title="Name must be between 1 and 50 characters."
             defaultValue={defaultValues?.name ?? ""}
           />
         </StyledFormSection>
@@ -52,13 +52,19 @@ export default function PersonForm({
               aria-required="true"
               min="1900"
               max={new Date().getFullYear()}
-              title={`Please enter a year between 1900 and ${new Date().getFullYear()}`}
+              title={`Please enter a year between 1900 and ${new Date().getFullYear()}.`}
               defaultValue={defaultValues?.birth_year ?? ""}
             />
           </StyledFormSection>
           <StyledFormSection>
-            <StyledLabel htmlFor="color">Color</StyledLabel>
-            <StyledInputColor type="color" name="color" />
+            <StyledLabel htmlFor="color">Colour</StyledLabel>
+            <StyledInputColor
+              type="color"
+              id="color"
+              name="color"
+              title="Please choose a color."
+              defaultValue={defaultValues?.color ?? "#e8a838"}
+            />
           </StyledFormSection>
           <StyledFormButtonWrapper>
             {updateMode ? (

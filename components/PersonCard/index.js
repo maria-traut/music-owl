@@ -1,27 +1,20 @@
 import {
-  StyledFigure,
-  StyledImageWrapper,
-  StyledFigcaption,
-  StyledImage,
+  StyledLink,
+  StyledCard,
+  StyledColoredArea,
+  StyledContent,
 } from "./PersonCard.styled";
-import Link from "next/link";
 
 export default function PersonCard({ person }) {
-  const { name, birth_year, photo_url, _id } = person;
+  const { name, birth_year, _id, color } = person;
   return (
-    <Link href={`/people/${_id}`}>
-      <StyledFigure>
-        <StyledImageWrapper>
-          <StyledImage
-            src={photo_url ?? "/placeholder.jpg"}
-            alt={`Picture showing ${name}`}
-            fill
-          />
-        </StyledImageWrapper>
-        <StyledFigcaption>
+    <StyledLink href={`/people/${_id}`}>
+      <StyledCard>
+        <StyledColoredArea color={color} />
+        <StyledContent>
           {name}, {birth_year}
-        </StyledFigcaption>
-      </StyledFigure>
-    </Link>
+        </StyledContent>
+      </StyledCard>
+    </StyledLink>
   );
 }

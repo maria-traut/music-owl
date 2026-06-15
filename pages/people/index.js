@@ -7,6 +7,7 @@ import {
   StyledH2,
   StyledPeopleSection,
   StyledMessage,
+  StyledDivider,
 } from "@/components/Global/Global.styles";
 
 export default function People() {
@@ -60,10 +61,11 @@ export default function People() {
       <StyledPeopleSection>
         <StyledH2>My People</StyledH2>
         <p>
-          Every music list starts with a person. Add them here — a name and a
-          year of birth.
+          Every music playlist starts with a person. Add them here: a name, a
+          year of birth and their favourite colour.
         </p>
       </StyledPeopleSection>
+      <StyledDivider />
       <PersonForm
         onSubmit={handlePersonCreate}
         onPersonFormClear={handlePersonFormClear}

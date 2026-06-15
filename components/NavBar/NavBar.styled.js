@@ -7,7 +7,7 @@ export const StyledNav = styled.div`
   justify-content: center;
   gap: 3.5rem;
   width: 100%;
-  padding: 9px 0;
+  padding: 8.5px 0;
   font-size: 1rem;
   line-height: 1.5;
   text-transform: uppercase;

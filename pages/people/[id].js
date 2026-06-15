@@ -1,14 +1,17 @@
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import Link from "next/link";
 import PersonDetail from "@/components/PersonDetail";
-import { StyledMain } from "@/components/Global/Global.styles";
+import { StyledMain, StyledBackLink } from "@/components/Global/Global.styles";
 
 export default function Person() {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data: person, isLoading, error } = useSWR(id ? `/api/people/${id}` : null);
+  const {
+    data: person,
+    isLoading,
+    error,
+  } = useSWR(id ? `/api/people/${id}` : null);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <p>An error occurred.</p>;
@@ -16,7 +19,7 @@ export default function Person() {
 
   return (
     <StyledMain>
-      <Link href="/people">&#8592; Back to List</Link>
+      <StyledBackLink href="/people">&#8592; Back to List</StyledBackLink>
       <PersonDetail person={person} />
     </StyledMain>
   );

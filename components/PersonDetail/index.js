@@ -3,10 +3,9 @@ import { useSWRConfig } from "swr";
 import { useState, useEffect } from "react";
 
 import {
-  StyledFigure,
-  StyledImageWrapper,
-  StyledFigcaption,
-  StyledImage,
+  StyledDetailCard,
+  StyledDetailColoredArea,
+  StyledDetailContent,
   StyledButtonWrapper,
   StyledMessageAndButtonWrapper,
   StyledUpdateButton,
@@ -22,7 +21,7 @@ import {
 export default function PersonDetail({ person }) {
   const router = useRouter();
   const { mutate } = useSWRConfig();
-  const { name, birth_year, photo_url, _id } = person;
+  const { name, birth_year, _id, color } = person;
   const [activeMode, setActiveMode] = useState(null);
   const [updateError, setUpdateError] = useState(null);
   const [deleteError, setDeleteError] = useState(false);
@@ -71,18 +70,12 @@ export default function PersonDetail({ person }) {
 
   return (
     <>
-      <StyledFigure>
-        <StyledImageWrapper>
-          <StyledImage
-            src={photo_url ?? "/placeholder.jpg"}
-            alt={`Picture showing ${name}`}
-            fill
-          />
-        </StyledImageWrapper>
-        <StyledFigcaption>
+      <StyledDetailCard>
+        <StyledDetailColoredArea color={color} />
+        <StyledDetailContent>
           {name}, {birth_year}
-        </StyledFigcaption>
-      </StyledFigure>
+        </StyledDetailContent>
+      </StyledDetailCard>
 
       {!activeMode && (
         <StyledButtonWrapper>
@@ -138,7 +131,7 @@ export default function PersonDetail({ person }) {
       {activeMode === "edit" && (
         <PersonForm
           onSubmit={handlePersonUpdate}
-          defaultValues={{ name, birth_year }}
+          defaultValues={{ name, birth_year, color }}
           updateMode={true}
           setUpdateMode={() => setActiveMode(null)}
         />

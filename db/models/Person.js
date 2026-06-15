@@ -10,8 +10,7 @@ const personSchema = new Schema({
     min: 1900,
     max: new Date().getFullYear(),
   },
-  photo_url: { type: String, default: "/placeholder-new.png" },
-  color: { type: String, default: "#4A90E2" },
+  color: { type: String, default: "#1b3a5c" },
 });
 
 const Person = mongoose.models.Person || mongoose.model("Person", personSchema);
