@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
 import { useState, useEffect } from "react";
-import useSWR from "swr";
 
 import {
   StyledFigure,
@@ -29,17 +28,6 @@ export default function PersonDetail({ person }) {
   const [deleteError, setDeleteError] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const {
-    data: playlists,
-    isLoading,
-    error,
-  } = useSWR(`/api/playlists?personId=${_id}`);
-
-  console.log("PersonID:", _id);
-  console.log("URL:", `/api/playlists?personId=${_id}`);
-  console.log("Playlists data:", playlists);
-  console.log("Error:", error);
-
   useEffect(() => {
     if (!success) return;
     const successMessageTimer = setTimeout(() => {
@@ -50,10 +38,6 @@ export default function PersonDetail({ person }) {
       clearTimeout(successMessageTimer);
     };
   }, [success]);
-
-  if (isLoading) return <p>Loading playlists...</p>;
-  if (error) return <p>Error loading playlists.</p>;
-  if (!playlists || playlists.length === 0) return <p>No playlists yet.</p>;
 
   async function handlePersonDelete() {
     const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
@@ -87,18 +71,6 @@ export default function PersonDetail({ person }) {
 
   return (
     <>
-      <div>
-        {playlists.map((playlist) => (
-          <div key={playlist._id}>
-            <h3>{playlist.playlist_title}</h3>
-            {playlist.songs.map((song, index) => (
-              <p key={index}>
-                {index + 1}. {song.title} — {song.artist}
-              </p>
-            ))}
-          </div>
-        ))}
-      </div>
       <StyledFigure>
         <StyledImageWrapper>
           <StyledImage
@@ -162,7 +134,6 @@ export default function PersonDetail({ person }) {
           )}
         </>
       )}
-
       {activeMode === "edit" && (
         <PersonForm
           onSubmit={handlePersonUpdate}

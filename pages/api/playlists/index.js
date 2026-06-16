@@ -9,7 +9,9 @@ export default async function handler(request, response) {
     if (request.method === "GET") {
       const { personId } = request.query;
 
-      const query = personId ? { person_id: personId } : {};
+      const query = personId
+        ? { person_id: new mongoose.Types.ObjectId(personId) }
+        : {};
       const playlists = await Playlist.find(query);
       return response.status(200).json(playlists);
     }
