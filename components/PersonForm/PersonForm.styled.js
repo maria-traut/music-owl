@@ -9,7 +9,6 @@ export const StyledFieldset = styled.fieldset`
 
 export const StyledLabel = styled.label`
   margin-top: 0.5rem;
-  padding-left: 0.5rem;
 `;
 
 export const StyledFormSection = styled.div`

@@ -2,7 +2,8 @@ import {
   StyledLink,
   StyledCard,
   StyledColoredArea,
-  StyledContent,
+  StyledYear,
+  StyledName,
 } from "./PersonCard.styled";
 
 export default function PersonCard({ person }) {
@@ -10,10 +11,10 @@ export default function PersonCard({ person }) {
   return (
     <StyledLink href={`/people/${_id}`}>
       <StyledCard>
-        <StyledColoredArea color={color} />
-        <StyledContent>
-          {name}, {birth_year}
-        </StyledContent>
+        <StyledColoredArea color={color}>
+          <StyledYear>{birth_year}</StyledYear>
+        </StyledColoredArea>
+        <StyledName>{name}</StyledName>
       </StyledCard>
     </StyledLink>
   );

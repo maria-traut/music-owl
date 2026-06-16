@@ -15,11 +15,23 @@ export const StyledCard = styled.article`
 `;
 
 export const StyledColoredArea = styled.div`
+  position: relative;
   height: 5rem;
   background-color: ${({ color }) => color};
 `;
 
-export const StyledContent = styled.div`
+export const StyledYear = styled.div`
+  position: absolute;
+  font-size: 0.65rem;
+  color: white;
+  background-color: #00000022;
+  border-radius: 15px;
+  padding: 2px 6px;
+  right: 0.3rem;
+  bottom: 0.3rem;
+`;
+
+export const StyledName = styled.div`
   display: flex;
   flex-wrap: wrap;
   overflow-wrap: break-word;
