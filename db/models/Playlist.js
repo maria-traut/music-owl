@@ -6,9 +6,9 @@ const songSchema = new Schema(
   {
     title: { type: String, required: true },
     artist: { type: String, required: true },
-    year: { type: Number },
+    year: { type: Number, min: 1900 },
     youtube_id: { type: String },
-    note: { String },
+    note: { type: String, maxLength: 300 },
   },
   { _id: false }
 );
@@ -20,7 +20,7 @@ const playlistSchema = new Schema({
     type: [songSchema],
     validate: {
       validator: (songs) => songs.length > 0 && songs.length <= 20,
-      message: "At playlist must contain between 1 and 20 songs.",
+      message: "A playlist must contain between 1 and 20 songs.",
     },
   },
 });
