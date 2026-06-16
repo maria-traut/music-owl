@@ -3,6 +3,7 @@ import {
   StyledMain,
   StyledScienceSection,
   StyledH2,
+  StyledDivider,
 } from "../components/Global/Global.styles";
 
 export default function Science() {
@@ -12,6 +13,7 @@ export default function Science() {
         <StyledH2>Scientific Findings</StyledH2>
         <p>Find out more about how music effects our brain.</p>
       </StyledScienceSection>
+      <StyledDivider />
       <ScientificFindingList />
     </StyledMain>
   );

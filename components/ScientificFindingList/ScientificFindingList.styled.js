@@ -7,5 +7,5 @@ export const StyledList = styled.ul`
   gap: 10px;
   align-items: center;
   width: 100%;
-  margin: 0 auto;
+  margin: 20px auto 0 auto;
 `;

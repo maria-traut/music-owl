@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Image from "next/image";
 
-export const StyledFigure = styled.figure`
+export const StyledDetailCard = styled.article`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -9,22 +9,34 @@ export const StyledFigure = styled.figure`
   margin: 0;
   border-radius: 15px;
   border: 1px solid #e0e0e0;
+  background-color: #fafaf8;
+  overflow: hidden;
 `;
 
-export const StyledImageWrapper = styled.div`
+export const StyledDetailColoredArea = styled.div`
   position: relative;
-  width: 100%;
-  height: 200px;
+  height: 5rem;
+  background-color: ${({ $color }) => $color};
 `;
 
-export const StyledFigcaption = styled.figcaption`
+export const StyledDetailYear = styled.div`
+  position: absolute;
+  font-size: 0.65rem;
+  color: white;
+  background-color: #00000022;
+  border-radius: 15px;
+  padding: 2px 6px;
+  right: 0.5rem;
+  bottom: 0.5rem;
+`;
+
+export const StyledDetailName = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  overflow-wrap: break-word;
+  word-break: break-word;
   justify-content: center;
   margin: 0.5rem;
-`;
-
-export const StyledImage = styled(Image)`
-  object-fit: cover;
 `;
 
 const StyledUpdateAndDeleteButton = styled.button`
