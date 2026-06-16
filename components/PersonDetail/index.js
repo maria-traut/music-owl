@@ -127,7 +127,6 @@ export default function PersonDetail({ person }) {
           )}
         </>
       )}
-
       {activeMode === "edit" && (
         <PersonForm
           onSubmit={handlePersonUpdate}
