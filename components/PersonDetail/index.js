@@ -20,6 +20,7 @@ import {
   StyledMessage,
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
+import PlaylistForm from "../PlaylistForm";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -141,6 +142,7 @@ export default function PersonDetail({ person }) {
       {updateError && <p role="alert">{updateError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
+        <PlaylistForm />
         <PlaylistList personId={_id} color={color} />
       </section>
     </>
