@@ -72,7 +72,7 @@ export default function PersonDetail({ person }) {
   return (
     <>
       <StyledDetailCard>
-        <StyledDetailColoredArea color={color}>
+        <StyledDetailColoredArea $color={color}>
           <StyledDetailYear>{birth_year}</StyledDetailYear>
         </StyledDetailColoredArea>
         <StyledDetailName>{name}</StyledDetailName>

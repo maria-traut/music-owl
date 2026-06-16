@@ -11,7 +11,7 @@ export default function PersonCard({ person }) {
   return (
     <StyledLink href={`/people/${_id}`}>
       <StyledCard>
-        <StyledColoredArea color={color}>
+        <StyledColoredArea $color={color}>
           <StyledYear>{birth_year}</StyledYear>
         </StyledColoredArea>
         <StyledName>{name}</StyledName>

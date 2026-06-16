@@ -17,7 +17,7 @@ export const StyledCard = styled.article`
 export const StyledColoredArea = styled.div`
   position: relative;
   height: 5rem;
-  background-color: ${({ color }) => color};
+  background-color: ${({ $color }) => $color};
 `;
 
 export const StyledYear = styled.div`
