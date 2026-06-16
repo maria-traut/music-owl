@@ -4,6 +4,9 @@ import {
   StyledPlaylist,
   StyledPlaylistTitle,
   StyledSongList,
+  StyledYoutubeLink,
+  StyledNote,
+  StyledLinkNoteWrapper,
 } from "./PlaylistList.styled";
 
 export default function PlaylistList({ personId, color }) {
@@ -26,7 +29,17 @@ export default function PlaylistList({ personId, color }) {
           <StyledSongList>
             {playlist.songs.map((song) => (
               <li key={song.title}>
-                {song.title} by {song.artist}
+                {song.title} — {song.artist}{" "}
+                <StyledLinkNoteWrapper>
+                  <StyledYoutubeLink
+                    href={`https://www.youtube.com/watch?v=${song.youtube_id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    ▶
+                  </StyledYoutubeLink>
+                  {song.note && <StyledNote>{song.note}</StyledNote>}
+                </StyledLinkNoteWrapper>
               </li>
             ))}
           </StyledSongList>
