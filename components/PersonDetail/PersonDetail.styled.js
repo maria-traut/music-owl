@@ -14,11 +14,23 @@ export const StyledDetailCard = styled.article`
 `;
 
 export const StyledDetailColoredArea = styled.div`
+  position: relative;
   height: 5rem;
   background-color: ${({ color }) => color};
 `;
 
-export const StyledDetailContent = styled.div`
+export const StyledDetailYear = styled.div`
+  position: absolute;
+  font-size: 0.65rem;
+  color: white;
+  background-color: #00000022;
+  border-radius: 15px;
+  padding: 2px 6px;
+  right: 0.5rem;
+  bottom: 0.5rem;
+`;
+
+export const StyledDetailName = styled.div`
   display: flex;
   flex-wrap: wrap;
   overflow-wrap: break-word;

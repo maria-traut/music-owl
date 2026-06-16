@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import {
   StyledDetailCard,
   StyledDetailColoredArea,
-  StyledDetailContent,
+  StyledDetailYear,
+  StyledDetailName,
   StyledButtonWrapper,
   StyledMessageAndButtonWrapper,
   StyledUpdateButton,
@@ -71,10 +72,10 @@ export default function PersonDetail({ person }) {
   return (
     <>
       <StyledDetailCard>
-        <StyledDetailColoredArea color={color} />
-        <StyledDetailContent>
-          {name}, {birth_year}
-        </StyledDetailContent>
+        <StyledDetailColoredArea color={color}>
+          <StyledDetailYear>{birth_year}</StyledDetailYear>
+        </StyledDetailColoredArea>
+        <StyledDetailName>{name}</StyledDetailName>
       </StyledDetailCard>
 
       {!activeMode && (
