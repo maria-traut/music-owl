@@ -84,3 +84,8 @@ export const StyledMessageAndButtonWrapper = styled.div`
   justify-content: space-between;
   gap: 0.5rem;
 `;
+
+export const StyledPlaylistSectionTitle = styled.h3`
+  text-align: center;
+  margin: 2.5rem 0 1rem 0;
+`;
