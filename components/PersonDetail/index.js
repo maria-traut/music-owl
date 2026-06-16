@@ -29,6 +29,7 @@ export default function PersonDetail({ person }) {
   const [activeMode, setActiveMode] = useState(null);
   const [updateError, setUpdateError] = useState(null);
   const [deleteError, setDeleteError] = useState(false);
+  const [playlistError, setPlaylistError] = useState(null);
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -70,6 +71,7 @@ export default function PersonDetail({ person }) {
       setUpdateError("Something went wrong. Please try again.");
     }
   }
+
   async function handlePlaylistCreate(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -78,14 +80,25 @@ export default function PersonDetail({ person }) {
       const response = await fetch("/api/playlists", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(playlistData),
+        body: JSON.stringify({
+          playlist_title: playlistData.playlistTitle,
+          person_id: _id,
+          songs: [
+            {
+              title: playlistData.title,
+              artist: playlistData.artist,
+              youtube_id: playlistData.youtubeId,
+              note: playlistData.note,
+            },
+          ],
+        }),
       });
       if (response.ok) {
-        mutate();
+        mutate(`/api/playlists?personId=${_id}`);
         event.target.reset();
       }
     } catch {
-      setSuccess(false);
+      setPlaylistError("Something went wrong. Please try again.");
     }
   }
 
@@ -157,9 +170,10 @@ export default function PersonDetail({ person }) {
         />
       )}
       {updateError && <p role="alert">{updateError}</p>}
+      {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
-        <PlaylistForm onSubmit={handlePlaylistCreate} />
+        <PlaylistForm personId={_id} onSubmit={handlePlaylistCreate} />
         <PlaylistList personId={_id} color={color} />
       </section>
     </>

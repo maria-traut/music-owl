@@ -18,8 +18,10 @@ export default async function handler(request, response) {
 
     if (request.method === "POST") {
       const playlistData = request.body;
-      await Playlist.create(playlistData);
-      return response.status(201).json({ status: "Playlist created." });
+      const playlist = await Playlist.create(playlistData);
+      return response
+        .status(201)
+        .json({ status: "Playlist created.", playlist });
     }
   } catch (error) {
     console.error("Error:", error);

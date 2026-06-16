@@ -4,9 +4,9 @@ import {
   StyledButtonSecondary,
 } from "../Global/Global.styles";
 
-export default function PlaylistForm() {
+export default function PlaylistForm({ onSubmit }) {
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <StyledFieldset>
         <legend>Add a Playlist</legend>
         <StyledFormSection>
