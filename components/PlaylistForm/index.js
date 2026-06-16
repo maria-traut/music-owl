@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import {
+  StyledButtonPrimary,
+  StyledButtonSecondary,
+} from "../Global/Global.styles";
 
 export default function PlaylistForm() {
   return (
@@ -67,6 +71,14 @@ export default function PlaylistForm() {
             title="Note must be between 1 and 50 characters."
           />
         </StyledFormSection>
+        <StyledFormButtonWrapper>
+          <StyledButtonSecondary type="button" aria-label="Clear form">
+            Clear
+          </StyledButtonSecondary>
+          <StyledButtonPrimary type="submit" aria-label="Add playlist">
+            Add
+          </StyledButtonPrimary>
+        </StyledFormButtonWrapper>
       </StyledFieldset>
     </form>
   );
@@ -94,4 +106,12 @@ const StyledInput = styled.input`
   &:user-invalid {
     border: 1px solid salmon;
   }
+`;
+
+const StyledFormButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 0.5rem;
 `;

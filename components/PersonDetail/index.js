@@ -61,7 +61,6 @@ export default function PersonDetail({ person }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(personData),
     });
-
     if (response.ok) {
       mutate("/api/people");
       mutate(`/api/people/${_id}`);
@@ -69,6 +68,24 @@ export default function PersonDetail({ person }) {
       setUpdateError(null);
     } else {
       setUpdateError("Something went wrong. Please try again.");
+    }
+  }
+  async function handlePlaylistCreate(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const playlistData = Object.fromEntries(formData);
+    try {
+      const response = await fetch("/api/playlists", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(playlistData),
+      });
+      if (response.ok) {
+        mutate();
+        event.target.reset();
+      }
+    } catch {
+      setSuccess(false);
     }
   }
 
@@ -142,7 +159,7 @@ export default function PersonDetail({ person }) {
       {updateError && <p role="alert">{updateError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
-        <PlaylistForm />
+        <PlaylistForm onSubmit={handlePlaylistCreate} />
         <PlaylistList personId={_id} color={color} />
       </section>
     </>

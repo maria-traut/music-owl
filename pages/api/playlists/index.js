@@ -15,6 +15,12 @@ export default async function handler(request, response) {
       const playlists = await Playlist.find(query);
       return response.status(200).json(playlists);
     }
+
+    if (request.method === "POST") {
+      const playlistData = request.body;
+      await Playlist.create(playlistData);
+      return response.status(201).json({ status: "Playlist created." });
+    }
   } catch (error) {
     console.error("Error:", error);
     return response
