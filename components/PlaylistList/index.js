@@ -18,7 +18,11 @@ import {
 } from "../Global/Global.styles";
 import { useState } from "react";
 
-export default function PlaylistList({ personId, color }) {
+export default function PlaylistList({
+  personId,
+  color,
+  handlePlaylistDelete,
+}) {
   const {
     data: playlists,
     isLoading,
