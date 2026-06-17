@@ -93,6 +93,18 @@ export const StyledFormButtonWrapper = styled.div`
   gap: 0.5rem;
 `;
 
+export const StyledButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+`;
+
+export const StyledMessageAndButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 //people
 
 export const StyledPeopleSection = styled(StyledSection)`
@@ -114,7 +126,7 @@ export const StyledButton = styled.button`
 export const StyledButtonPrimary = styled(StyledButton)`
   color: white;
   background-color: #1b3a5c;
-  border: none;
+  border: 1px solid #1b3a5c;
 `;
 
 export const StyledButtonSecondary = styled(StyledButton)`

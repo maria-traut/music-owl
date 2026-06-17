@@ -12,7 +12,7 @@ export const StyledPlaylistList = styled.ul`
 export const StyledPlaylist = styled.li`
   list-style: none;
   width: 100%;
-  padding: 0 1rem 1rem 1.5rem;
+  padding: 1rem 1rem 1rem 1.5rem;
   border: 2px solid ${({ $color }) => $color}88;
   border-radius: 15px;
 `;

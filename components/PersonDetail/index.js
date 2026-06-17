@@ -7,14 +7,14 @@ import {
   StyledDetailColoredArea,
   StyledDetailYear,
   StyledDetailName,
-  StyledButtonWrapper,
-  StyledMessageAndButtonWrapper,
   StyledUpdateButton,
   StyledDeleteButton,
   StyledPlaylistSectionTitle,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
 import {
+  StyledMessageAndButtonWrapper,
+  StyledButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessage,
