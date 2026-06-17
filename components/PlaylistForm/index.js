@@ -10,7 +10,7 @@ import {
 } from "../Global/Global.styles";
 import { StyledSongErrorMessage } from "./PlaylistForm.styled";
 
-export default function PlaylistForm({ onSubmit }) {
+export default function PlaylistForm({ onSubmit, onCancel }) {
   const [songs, setSongs] = useState([]);
   const [songError, setSongError] = useState(null);
   const [currentSong, setCurrentSong] = useState({
@@ -21,10 +21,30 @@ export default function PlaylistForm({ onSubmit }) {
   });
   const [playlistTitle, setPlaylistTitle] = useState("");
 
+  function isDuplicate(song) {
+    return songs.some(
+      (existingSong) =>
+        existingSong.title.toLowerCase() === song.title.toLowerCase() &&
+        existingSong.artist.toLowerCase() === song.artist.toLowerCase()
+    );
+  }
+
   function handleAddSong() {
-    if (!currentSong.title || !currentSong.artist) return;
+    if (!currentSong.title || !currentSong.artist) {
+      setSongError("Please enter at least a title and an artist.");
+      return;
+    }
+    if (isDuplicate(currentSong)) {
+      setSongError("This song is already in the playlist.");
+      return;
+    }
+    if (songs.length >= 20) {
+      setSongError("A playlist can contain a maximum of 20 songs.");
+      return;
+    }
     setSongs([...songs, currentSong]);
     setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
+    setSongError(null);
   }
 
   function handlePlaylistFormClear() {
@@ -39,7 +59,9 @@ export default function PlaylistForm({ onSubmit }) {
     const formData = new FormData(event.target);
     const playlistTitle = formData.get("playlistTitle");
     const allSongs =
-      currentSong.title && currentSong.artist ? [...songs, currentSong] : songs;
+      currentSong.title && currentSong.artist && !isDuplicate(currentSong)
+        ? [...songs, currentSong]
+        : songs;
     if (allSongs.length === 0) {
       setSongError("Please enter at least one song.");
       return;
@@ -50,7 +72,7 @@ export default function PlaylistForm({ onSubmit }) {
   }
 
   return (
-    <fom onSubmit={handleCollectPlaylistData}>
+    <form onSubmit={handleCollectPlaylistData}>
       <StyledFieldset>
         <legend>Add a Playlist</legend>
         <StyledFormSection>
@@ -71,7 +93,7 @@ export default function PlaylistForm({ onSubmit }) {
         </StyledFormSection>
         <p>Add up to 20 Songs</p>
         {songError && (
-          <StyledSongErrorMessage p role="alert">
+          <StyledSongErrorMessage role="alert">
             {songError}
           </StyledSongErrorMessage>
         )}
@@ -150,6 +172,13 @@ export default function PlaylistForm({ onSubmit }) {
         <StyledFormButtonWrapper>
           <StyledButtonSecondary
             type="button"
+            aria-label="Cancel"
+            onClick={onCancel}
+          >
+            Cancel
+          </StyledButtonSecondary>
+          <StyledButtonSecondary
+            type="button"
             aria-label="Clear form"
             onClick={handlePlaylistFormClear}
           >
@@ -160,6 +189,6 @@ export default function PlaylistForm({ onSubmit }) {
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
       </StyledFieldset>
-    </fom>
+    </form>
   );
 }

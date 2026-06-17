@@ -75,8 +75,13 @@ export const StyledInput = styled.input`
   padding: 5px 10px;
   border-radius: 15px;
   border: 1px solid #e0e0e0;
+
+  &:focus {
+    outline: none;
+    border: 2px solid #1b3a5c;
+  }
   &:user-invalid {
-    border: 1px solid salmon;
+    border: 2px solid salmon;
   }
 `;
 

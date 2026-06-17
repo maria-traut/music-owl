@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Image from "next/image";
+import { StyledButton } from "../Global/Global.styles";
 
 export const StyledDetailCard = styled.article`
   display: flex;
@@ -39,19 +39,21 @@ export const StyledDetailName = styled.div`
   margin: 0.5rem;
 `;
 
-const StyledUpdateAndDeleteButton = styled.button`
+const StyledPersonDetailButton = styled.button`
   background-color: transparent;
   height: 1.2rem;
+  width: 2rem;
   padding: 13px;
   border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #1b3a5c;
+  border: 1px solid #e0e0e0;
 `;
 
-export const StyledUpdateButton = styled(StyledUpdateAndDeleteButton)`
+export const StyledUpdateButton = styled(StyledPersonDetailButton)`
   transform: scaleX(-1);
+
   &:hover {
     background-color: #b4d4f7;
   }
@@ -61,7 +63,7 @@ export const StyledUpdateButton = styled(StyledUpdateAndDeleteButton)`
   }
 `;
 
-export const StyledDeleteButton = styled(StyledUpdateAndDeleteButton)`
+export const StyledDeleteButton = styled(StyledPersonDetailButton)`
   &:hover {
     background-color: #e7a5a5;
   }

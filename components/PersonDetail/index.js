@@ -83,6 +83,7 @@ export default function PersonDetail({ person }) {
           songs,
         }),
       });
+
       if (response.ok) {
         mutate(`/api/playlists?personId=${_id}`);
       }
@@ -107,7 +108,7 @@ export default function PersonDetail({ person }) {
             aria-label="Delete person"
             onClick={() => setActiveMode("delete")}
           >
-            ✗
+            x
           </StyledDeleteButton>
           <StyledUpdateButton
             type="button"
@@ -162,10 +163,23 @@ export default function PersonDetail({ person }) {
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
-        <PlaylistForm
-          personId={_id}
-          onSubmit={(songs) => handlePlaylistCreate(songs)}
-        />
+        {!activeMode ? (
+          <StyledButtonWrapper>
+            <StyledButtonSecondary
+              type="button"
+              aria-label="Open Playlist Form"
+              onClick={() => setActiveMode("playlist form")}
+            >
+              + Add Playlist
+            </StyledButtonSecondary>
+          </StyledButtonWrapper>
+        ) : (
+          <PlaylistForm
+            personId={_id}
+            onSubmit={(songs) => handlePlaylistCreate(songs)}
+            onCancel={() => setActiveMode(null)}
+          />
+        )}
         <PlaylistList personId={_id} color={color} />
       </section>
     </>
