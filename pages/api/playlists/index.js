@@ -17,8 +17,13 @@ export default async function handler(request, response) {
     }
 
     if (request.method === "POST") {
-      const playlistData = request.body;
-      const playlist = await Playlist.create(playlistData);
+      const { playlist_title, person_id, songs } = request.body;
+      if (!playlist_title || !person_id || !songs?.length) {
+        return response
+          .status(400)
+          .json({ status: "Missing required fields." });
+      }
+      const playlist = await Playlist.create(request.body);
       return response
         .status(201)
         .json({ status: "Playlist created.", playlist });

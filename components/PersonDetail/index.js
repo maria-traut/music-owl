@@ -30,6 +30,7 @@ export default function PersonDetail({ person }) {
   const [updateError, setUpdateError] = useState(null);
   const [deleteError, setDeleteError] = useState(false);
   const [playlistError, setPlaylistError] = useState(null);
+  const [playlistSuccess, setPlaylistSuccess] = useState(false);
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -42,6 +43,16 @@ export default function PersonDetail({ person }) {
       clearTimeout(successMessageTimer);
     };
   }, [success]);
+
+  useEffect(() => {
+    if (!playlistSuccess) return;
+    const playlistSuccessMessageTimer = setTimeout(() => {
+      setPlaylistSuccess(false);
+    }, 3000);
+    return () => {
+      clearTimeout(playlistSuccessMessageTimer);
+    };
+  }, [playlistSuccess]);
 
   async function handlePersonDelete() {
     const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
@@ -86,9 +97,17 @@ export default function PersonDetail({ person }) {
 
       if (response.ok) {
         mutate(`/api/playlists?personId=${_id}`);
+        setPlaylistSuccess(true);
+
+        setActiveMode(null);
+        return true;
+      } else {
+        setPlaylistError("Something went wrong. Please try again.");
+        return false;
       }
     } catch {
       setPlaylistError("Something went wrong. Please try again.");
+      return false;
     }
   }
 
@@ -163,7 +182,12 @@ export default function PersonDetail({ person }) {
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
-        {!activeMode ? (
+        {activeMode === "playlist form" ? (
+          <PlaylistForm
+            onSubmit={(data) => handlePlaylistCreate(data)}
+            onCancel={() => setActiveMode(null)}
+          />
+        ) : (
           <StyledButtonWrapper>
             <StyledButtonSecondary
               type="button"
@@ -173,12 +197,9 @@ export default function PersonDetail({ person }) {
               + Add Playlist
             </StyledButtonSecondary>
           </StyledButtonWrapper>
-        ) : (
-          <PlaylistForm
-            personId={_id}
-            onSubmit={(songs) => handlePlaylistCreate(songs)}
-            onCancel={() => setActiveMode(null)}
-          />
+        )}
+        {playlistSuccess && (
+          <StyledMessage>Playlist was successfully created.</StyledMessage>
         )}
         <PlaylistList personId={_id} color={color} />
       </section>

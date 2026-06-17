@@ -54,7 +54,7 @@ export default function PlaylistForm({ onSubmit, onCancel }) {
     setSongError(false);
   }
 
-  function handleCollectPlaylistData(event) {
+  async function handleCollectPlaylistData(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const playlistTitle = formData.get("playlistTitle");
@@ -67,8 +67,8 @@ export default function PlaylistForm({ onSubmit, onCancel }) {
       return;
     }
     setSongError(null);
-    onSubmit({ playlistTitle, songs: allSongs });
-    handlePlaylistFormClear();
+    const success = await onSubmit({ playlistTitle, songs: allSongs });
+    if (success) handlePlaylistFormClear();
   }
 
   return (
@@ -135,7 +135,10 @@ export default function PlaylistForm({ onSubmit, onCancel }) {
             title="Youtube ID must be between 1 and 30 characters."
             value={currentSong.youtubeId}
             onChange={(event) =>
-              setCurrentSong({ ...currentSong, youtubeId: event.target.value })
+              setCurrentSong({
+                ...currentSong,
+                youtubeId: event.target.value,
+              })
             }
           />
         </StyledFormSection>
@@ -163,8 +166,8 @@ export default function PlaylistForm({ onSubmit, onCancel }) {
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
         <ol>
-          {songs.map((song, index) => (
-            <li key={index}>
+          {songs.map((song) => (
+            <li key={`${song.title}-${song.artist}`}>
               {song.title} — {song.artist}
             </li>
           ))}
