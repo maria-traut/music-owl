@@ -1,16 +1,16 @@
 import {
+  StyledFieldset,
+  StyledLabel,
+  StyledFormSection,
+  StyledFormButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
 } from "../Global/Global.styles";
 import {
   StyledInputAndButtonFlex,
-  StyledFormSection,
   StyledInputName,
   StyledInputYear,
   StyledInputColor,
-  StyledFormButtonWrapper,
-  StyledFieldset,
-  StyledLabel,
 } from "./PersonForm.styled";
 
 export default function PersonForm({

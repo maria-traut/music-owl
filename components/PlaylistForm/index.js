@@ -1,9 +1,14 @@
 import { useState } from "react";
-import styled from "styled-components";
 import {
+  StyledFieldset,
+  StyledLabel,
+  StyledFormSection,
+  StyledInput,
+  StyledFormButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
 } from "../Global/Global.styles";
+import { StyledSongErrorMessage } from "./PlaylistForm.styled";
 
 export default function PlaylistForm({ onSubmit }) {
   const [songs, setSongs] = useState([]);
@@ -14,11 +19,19 @@ export default function PlaylistForm({ onSubmit }) {
     youtubeId: "",
     note: "",
   });
+  const [playlistTitle, setPlaylistTitle] = useState("");
 
   function handleAddSong() {
     if (!currentSong.title || !currentSong.artist) return;
     setSongs([...songs, currentSong]);
     setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
+  }
+
+  function handlePlaylistFormClear() {
+    setPlaylistTitle("");
+    setSongs([]);
+    setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
+    setSongError(false);
   }
 
   function handleCollectPlaylistData(event) {
@@ -33,10 +46,11 @@ export default function PlaylistForm({ onSubmit }) {
     }
     setSongError(null);
     onSubmit({ playlistTitle, songs: allSongs });
+    handlePlaylistFormClear();
   }
 
   return (
-    <form onSubmit={handleCollectPlaylistData}>
+    <fom onSubmit={handleCollectPlaylistData}>
       <StyledFieldset>
         <legend>Add a Playlist</legend>
         <StyledFormSection>
@@ -51,6 +65,8 @@ export default function PlaylistForm({ onSubmit }) {
             aria-required="true"
             maxLength={50}
             title="Playlist title must be between 1 and 50 characters."
+            value={playlistTitle}
+            onChange={(event) => setPlaylistTitle(event.target.value)}
           ></StyledInput>
         </StyledFormSection>
         <p>Add up to 20 Songs</p>
@@ -132,50 +148,18 @@ export default function PlaylistForm({ onSubmit }) {
           ))}
         </ol>
         <StyledFormButtonWrapper>
-          <StyledButtonSecondary type="button" aria-label="Clear form">
-            Clear
+          <StyledButtonSecondary
+            type="button"
+            aria-label="Clear form"
+            onClick={handlePlaylistFormClear}
+          >
+            Start Over
           </StyledButtonSecondary>
           <StyledButtonPrimary type="submit" aria-label="Add playlist">
             Create Playlist
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
       </StyledFieldset>
-    </form>
+    </fom>
   );
 }
-
-const StyledFieldset = styled.fieldset`
-  border-radius: 15px;
-  border: 1px solid #2e5f8a;
-  margin-top: 1rem;
-`;
-
-const StyledLabel = styled.label`
-  margin-top: 0.5rem;
-`;
-
-const StyledFormSection = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledInput = styled.input`
-  padding: 5px 10px;
-  border-radius: 15px;
-  border: 1px solid #e0e0e0;
-  &:user-invalid {
-    border: 1px solid salmon;
-  }
-`;
-
-const StyledFormButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 1rem;
-  gap: 0.5rem;
-`;
-
-const StyledSongErrorMessage = styled.p`
-  color: salmon;
-`;

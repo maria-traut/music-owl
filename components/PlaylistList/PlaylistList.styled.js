@@ -6,7 +6,7 @@ export const StyledPlaylistList = styled.ul`
   gap: 1rem;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-top: 2rem;
 `;
 
 export const StyledPlaylist = styled.li`
