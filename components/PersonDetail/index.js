@@ -20,6 +20,7 @@ import {
   StyledMessage,
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
+import PlaylistForm from "../PlaylistForm";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -28,6 +29,8 @@ export default function PersonDetail({ person }) {
   const [activeMode, setActiveMode] = useState(null);
   const [updateError, setUpdateError] = useState(null);
   const [deleteError, setDeleteError] = useState(false);
+  const [playlistError, setPlaylistError] = useState(null);
+  const [playlistSuccess, setPlaylistSuccess] = useState(false);
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -40,6 +43,16 @@ export default function PersonDetail({ person }) {
       clearTimeout(successMessageTimer);
     };
   }, [success]);
+
+  useEffect(() => {
+    if (!playlistSuccess) return;
+    const playlistSuccessMessageTimer = setTimeout(() => {
+      setPlaylistSuccess(false);
+    }, 3000);
+    return () => {
+      clearTimeout(playlistSuccessMessageTimer);
+    };
+  }, [playlistSuccess]);
 
   async function handlePersonDelete() {
     const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
@@ -60,7 +73,6 @@ export default function PersonDetail({ person }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(personData),
     });
-
     if (response.ok) {
       mutate("/api/people");
       mutate(`/api/people/${_id}`);
@@ -68,6 +80,34 @@ export default function PersonDetail({ person }) {
       setUpdateError(null);
     } else {
       setUpdateError("Something went wrong. Please try again.");
+    }
+  }
+
+  async function handlePlaylistCreate({ playlistTitle, songs }) {
+    try {
+      const response = await fetch("/api/playlists", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          playlist_title: playlistTitle,
+          person_id: _id,
+          songs,
+        }),
+      });
+
+      if (response.ok) {
+        mutate(`/api/playlists?personId=${_id}`);
+        setPlaylistSuccess(true);
+
+        setActiveMode(null);
+        return true;
+      } else {
+        setPlaylistError("Something went wrong. Please try again.");
+        return false;
+      }
+    } catch {
+      setPlaylistError("Something went wrong. Please try again.");
+      return false;
     }
   }
 
@@ -87,7 +127,7 @@ export default function PersonDetail({ person }) {
             aria-label="Delete person"
             onClick={() => setActiveMode("delete")}
           >
-            ✗
+            x
           </StyledDeleteButton>
           <StyledUpdateButton
             type="button"
@@ -139,8 +179,28 @@ export default function PersonDetail({ person }) {
         />
       )}
       {updateError && <p role="alert">{updateError}</p>}
+      {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
+        {activeMode === "playlist form" ? (
+          <PlaylistForm
+            onSubmit={(data) => handlePlaylistCreate(data)}
+            onCancel={() => setActiveMode(null)}
+          />
+        ) : (
+          <StyledButtonWrapper>
+            <StyledButtonSecondary
+              type="button"
+              aria-label="Open Playlist Form"
+              onClick={() => setActiveMode("playlist form")}
+            >
+              + Add Playlist
+            </StyledButtonSecondary>
+          </StyledButtonWrapper>
+        )}
+        {playlistSuccess && (
+          <StyledMessage>Playlist was successfully created.</StyledMessage>
+        )}
         <PlaylistList personId={_id} color={color} />
       </section>
     </>
