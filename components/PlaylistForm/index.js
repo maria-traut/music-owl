@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import {
   StyledButtonPrimary,
@@ -5,8 +6,37 @@ import {
 } from "../Global/Global.styles";
 
 export default function PlaylistForm({ onSubmit }) {
+  const [songs, setSongs] = useState([]);
+  const [songError, setSongError] = useState(null);
+  const [currentSong, setCurrentSong] = useState({
+    title: "",
+    artist: "",
+    youtubeId: "",
+    note: "",
+  });
+
+  function handleAddSong() {
+    if (!currentSong.title || !currentSong.artist) return;
+    setSongs([...songs, currentSong]);
+    setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
+  }
+
+  function handleCollectPlaylistData(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const playlistTitle = formData.get("playlistTitle");
+    const allSongs =
+      currentSong.title && currentSong.artist ? [...songs, currentSong] : songs;
+    if (allSongs.length === 0) {
+      setSongError("Please enter at least one song.");
+      return;
+    }
+    setSongError(null);
+    onSubmit({ playlistTitle, songs: allSongs });
+  }
+
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleCollectPlaylistData}>
       <StyledFieldset>
         <legend>Add a Playlist</legend>
         <StyledFormSection>
@@ -23,32 +53,38 @@ export default function PlaylistForm({ onSubmit }) {
             title="Playlist title must be between 1 and 50 characters."
           ></StyledInput>
         </StyledFormSection>
+        <p>Add up to 20 Songs</p>
+        {songError && (
+          <StyledSongErrorMessage p role="alert">
+            {songError}
+          </StyledSongErrorMessage>
+        )}
         <StyledFormSection>
-          <StyledLabel htmlFor="title">
-            Title<span aria-hidden>*</span>
-          </StyledLabel>
+          <StyledLabel htmlFor="title">Title</StyledLabel>
           <StyledInput
             type="text"
             id="title"
             name="title"
-            required
-            aria-required="true"
             maxLength={30}
             title="Title must be between 1 and 30 characters."
+            value={currentSong.title}
+            onChange={(event) =>
+              setCurrentSong({ ...currentSong, title: event.target.value })
+            }
           />
         </StyledFormSection>
         <StyledFormSection>
-          <StyledLabel htmlFor="artist">
-            Artist<span aria-hidden>*</span>
-          </StyledLabel>
+          <StyledLabel htmlFor="artist">Artist</StyledLabel>
           <StyledInput
             type="text"
             id="artist"
             name="artist"
-            required
-            aria-required="true"
             maxLength={30}
             title="Artist must be between 1 and 30 characters."
+            value={currentSong.artist}
+            onChange={(event) =>
+              setCurrentSong({ ...currentSong, artist: event.target.value })
+            }
           />
         </StyledFormSection>
         <StyledFormSection>
@@ -59,6 +95,10 @@ export default function PlaylistForm({ onSubmit }) {
             name="youtubeId"
             maxLength={30}
             title="Youtube ID must be between 1 and 30 characters."
+            value={currentSong.youtubeId}
+            onChange={(event) =>
+              setCurrentSong({ ...currentSong, youtubeId: event.target.value })
+            }
           />
         </StyledFormSection>
         <StyledFormSection>
@@ -69,14 +109,34 @@ export default function PlaylistForm({ onSubmit }) {
             name="note"
             maxLength={50}
             title="Note must be between 1 and 50 characters."
+            value={currentSong.note}
+            onChange={(event) =>
+              setCurrentSong({ ...currentSong, note: event.target.value })
+            }
           />
         </StyledFormSection>
+        <StyledFormButtonWrapper>
+          <StyledButtonPrimary
+            type="button"
+            aria-label="Add song"
+            onClick={() => handleAddSong()}
+          >
+            Add Song
+          </StyledButtonPrimary>
+        </StyledFormButtonWrapper>
+        <ol>
+          {songs.map((song, index) => (
+            <li key={index}>
+              {song.title} — {song.artist}
+            </li>
+          ))}
+        </ol>
         <StyledFormButtonWrapper>
           <StyledButtonSecondary type="button" aria-label="Clear form">
             Clear
           </StyledButtonSecondary>
           <StyledButtonPrimary type="submit" aria-label="Add playlist">
-            Add
+            Create Playlist
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
       </StyledFieldset>
@@ -114,4 +174,8 @@ const StyledFormButtonWrapper = styled.div`
   align-items: center;
   margin-top: 1rem;
   gap: 0.5rem;
+`;
+
+const StyledSongErrorMessage = styled.p`
+  color: salmon;
 `;

@@ -72,30 +72,19 @@ export default function PersonDetail({ person }) {
     }
   }
 
-  async function handlePlaylistCreate(event) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const playlistData = Object.fromEntries(formData);
+  async function handlePlaylistCreate({ playlistTitle, songs }) {
     try {
       const response = await fetch("/api/playlists", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          playlist_title: playlistData.playlistTitle,
+          playlist_title: playlistTitle,
           person_id: _id,
-          songs: [
-            {
-              title: playlistData.title,
-              artist: playlistData.artist,
-              youtube_id: playlistData.youtubeId,
-              note: playlistData.note,
-            },
-          ],
+          songs,
         }),
       });
       if (response.ok) {
         mutate(`/api/playlists?personId=${_id}`);
-        event.target.reset();
       }
     } catch {
       setPlaylistError("Something went wrong. Please try again.");
@@ -173,7 +162,10 @@ export default function PersonDetail({ person }) {
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
-        <PlaylistForm personId={_id} onSubmit={handlePlaylistCreate} />
+        <PlaylistForm
+          personId={_id}
+          onSubmit={(songs) => handlePlaylistCreate(songs)}
+        />
         <PlaylistList personId={_id} color={color} />
       </section>
     </>
