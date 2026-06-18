@@ -7,8 +7,6 @@ import {
   StyledDetailColoredArea,
   StyledDetailYear,
   StyledDetailName,
-  StyledUpdateButton,
-  StyledDeleteButton,
   StyledPlaylistSectionTitle,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
@@ -18,6 +16,8 @@ import {
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessage,
+  StyledUpdateButton,
+  StyledDeleteButton,
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";

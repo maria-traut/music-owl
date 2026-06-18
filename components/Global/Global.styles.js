@@ -16,6 +16,12 @@ export const StyledDivider = styled.hr`
   margin: 10px 0;
 `;
 
+export const StyledSongDivider = styled(StyledDivider)`
+  border: none;
+  border-top: 1px solid #1b3a5c;
+  margin: 1rem 0 0 0;
+`;
+
 export const StyledSection = styled.section`
   padding: 5px 25px;
   border-radius: 15px;
@@ -103,6 +109,40 @@ export const StyledMessageAndButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const StyledActionButton = styled.button`
+  background-color: transparent;
+  height: 1.2rem;
+  width: 2rem;
+  padding: 13px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e0e0e0;
+`;
+
+export const StyledUpdateButton = styled(StyledActionButton)`
+  transform: scaleX(-1);
+
+  &:hover {
+    background-color: #b4d4f7;
+  }
+
+  &:active {
+    background-color: #b4d4f7;
+  }
+`;
+
+export const StyledDeleteButton = styled(StyledActionButton)`
+  &:hover {
+    background-color: #e7a5a5;
+  }
+
+  &:active {
+    background-color: #e7a5a5;
+  }
 `;
 
 //people

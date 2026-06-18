@@ -9,7 +9,8 @@ import {
   StyledLinkNoteWrapper,
 } from "./PlaylistList.styled";
 import {
-  StyledButton,
+  StyledUpdateButton,
+  StyledDeleteButton,
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessage,
@@ -50,6 +51,7 @@ export default function PlaylistList({
                 if (success) setEditPlaylistId(null);
               }}
               onCancelEdit={() => setEditPlaylistId(null)}
+              editPlaylistId={editPlaylistId}
             />
           ) : (
             <>
@@ -76,20 +78,20 @@ export default function PlaylistList({
               ) : (
                 <>
                   <StyledButtonWrapper>
-                    <StyledButton
+                    <StyledDeleteButton
                       type="button"
                       aria-label="Delete playlist"
                       onClick={() => setDeletePlaylistId(playlist._id)}
                     >
                       x
-                    </StyledButton>
-                    <StyledButton
+                    </StyledDeleteButton>
+                    <StyledUpdateButton
                       type="button"
                       aria-label="Edit playlist"
                       onClick={() => setEditPlaylistId(playlist._id)}
                     >
                       &#9998;
-                    </StyledButton>
+                    </StyledUpdateButton>
                   </StyledButtonWrapper>
                 </>
               )}
