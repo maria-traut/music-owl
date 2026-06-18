@@ -19,30 +19,43 @@ export default function PersonForm({
   defaultValues,
   updateMode,
   setUpdateMode,
+  setPersonFormMode,
 }) {
   return (
     <form onSubmit={onSubmit}>
       <StyledFieldset>
-        {!updateMode ? <legend>Add A Person</legend> : <legend>Edit</legend>}
-        <StyledFormSection>
-          <StyledLabel htmlFor="name">
-            Name<span aria-hidden>*</span>
-          </StyledLabel>
-          <StyledInputName
-            type="text"
-            id="name"
-            name="name"
-            required
-            aria-required="true"
-            maxLength={50}
-            title="Name must be between 1 and 50 characters."
-            defaultValue={defaultValues?.name ?? ""}
-          />
-        </StyledFormSection>
+        {!updateMode ? <legend>Add a Person</legend> : <legend>Edit</legend>}
+        <StyledInputAndButtonFlex>
+          <StyledFormSection>
+            <StyledLabel htmlFor="name">
+              Name<span aria-hidden>*</span>
+            </StyledLabel>
+            <StyledInputName
+              type="text"
+              id="name"
+              name="name"
+              required
+              aria-required="true"
+              maxLength={50}
+              title="Name must be between 1 and 50 characters."
+              defaultValue={defaultValues?.name ?? ""}
+            />
+          </StyledFormSection>
+          <StyledFormSection>
+            <StyledLabel htmlFor="color">Colour</StyledLabel>
+            <StyledInputColor
+              type="color"
+              id="color"
+              name="color"
+              title="Please choose a color."
+              defaultValue={defaultValues?.color ?? "#e8a838"}
+            />
+          </StyledFormSection>
+        </StyledInputAndButtonFlex>
         <StyledInputAndButtonFlex>
           <StyledFormSection>
             <StyledLabel htmlFor="birth_year">
-              Year Of Birth<span aria-hidden>*</span>
+              Year of Birth<span aria-hidden>*</span>
             </StyledLabel>
             <StyledInputYear
               type="number"
@@ -56,32 +69,30 @@ export default function PersonForm({
               defaultValue={defaultValues?.birth_year ?? ""}
             />
           </StyledFormSection>
-          <StyledFormSection>
-            <StyledLabel htmlFor="color">Colour</StyledLabel>
-            <StyledInputColor
-              type="color"
-              id="color"
-              name="color"
-              title="Please choose a color."
-              defaultValue={defaultValues?.color ?? "#e8a838"}
-            />
-          </StyledFormSection>
+
           <StyledFormButtonWrapper>
             {updateMode ? (
               <>
                 <StyledButtonSecondary
                   type="button"
-                  aria-label="Cancel edit person and close edit form"
+                  aria-label="Cancel edit person and close form"
                   onClick={() => setUpdateMode(false)}
                 >
                   Cancel
                 </StyledButtonSecondary>
                 <StyledButtonPrimary type="submit" aria-label="Update person">
-                  Update
+                  Save
                 </StyledButtonPrimary>
               </>
             ) : (
               <>
+                <StyledButtonSecondary
+                  type="button"
+                  aria-label="Cancel add person and close form"
+                  onClick={() => setPersonFormMode(false)}
+                >
+                  Cancel
+                </StyledButtonSecondary>
                 <StyledButtonSecondary
                   type="button"
                   aria-label="Clear form"
@@ -90,7 +101,7 @@ export default function PersonForm({
                   Clear
                 </StyledButtonSecondary>
                 <StyledButtonPrimary type="submit" aria-label="Add person">
-                  Add
+                  Save
                 </StyledButtonPrimary>
               </>
             )}

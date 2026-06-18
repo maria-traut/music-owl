@@ -188,7 +188,7 @@ export default function PlaylistForm({ onSubmit, onCancel }) {
             Start Over
           </StyledButtonSecondary>
           <StyledButtonPrimary type="submit" aria-label="Add playlist">
-            Create Playlist
+            Save
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
       </StyledFieldset>
