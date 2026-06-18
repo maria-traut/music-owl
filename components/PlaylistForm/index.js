@@ -20,7 +20,6 @@ import {
 export default function PlaylistForm({
   onSubmit,
   onCancel,
-  onCancelEdit,
   defaultValues,
   editPlaylistId,
 }) {
@@ -304,7 +303,7 @@ export default function PlaylistForm({
           <StyledButtonSecondary
             type="button"
             aria-label="Cancel"
-            onClick={onCancel || onCancelEdit}
+            onClick={onCancel}
           >
             Cancel
           </StyledButtonSecondary>

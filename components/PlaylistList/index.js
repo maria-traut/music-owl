@@ -50,7 +50,7 @@ export default function PlaylistList({
                 const success = await handlePlaylistUpdate(playlist._id, data);
                 if (success) setEditPlaylistId(null);
               }}
-              onCancelEdit={() => setEditPlaylistId(null)}
+              onCancel={() => setEditPlaylistId(null)}
               editPlaylistId={editPlaylistId}
             />
           ) : (
