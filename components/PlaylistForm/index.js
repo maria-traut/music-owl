@@ -7,6 +7,7 @@ import {
   StyledFormButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
+  StyledDivider,
 } from "../Global/Global.styles";
 import { StyledSongErrorMessage } from "./PlaylistForm.styled";
 
@@ -177,13 +178,80 @@ export default function PlaylistForm({
             Add Song
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
-        <ol>
-          {songs.map((song) => (
-            <li key={`${song.title}-${song.artist}`}>
-              {song.title} — {song.artist}
-            </li>
-          ))}
-        </ol>
+        {defaultValues ? (
+          songs.map((song) => (
+            <div key={`${song.title}-${song.artist}`}>
+              <StyledFormSection>
+                <StyledLabel>Title</StyledLabel>
+                <StyledInput
+                  value={song.title}
+                  onChange={(event) => {
+                    const updated = songs.map((song, i) =>
+                      i === index
+                        ? { ...song, title: event.target.value }
+                        : song
+                    );
+                    setSongs(updated);
+                  }}
+                />
+              </StyledFormSection>
+              <StyledFormSection>
+                <StyledLabel>Artist</StyledLabel>
+                <StyledInput
+                  value={song.artist}
+                  onChange={(event) => {
+                    const updated = songs.map(
+                      (song, i) =>
+                        (i = index
+                          ? { ...song, artist: event.target.value }
+                          : artist)
+                    );
+                    setSongs(updated);
+                  }}
+                />
+              </StyledFormSection>
+              <StyledFormSection>
+                <StyledLabel>Youtube ID</StyledLabel>
+                <StyledInput
+                  value={song.youtubeId || song.youtube_id || ""}
+                  onChange={(event) => {
+                    const updated = songs.map(
+                      (song, i) =>
+                        (i = index
+                          ? { ...song, youtube_id: event.target.value }
+                          : song)
+                    );
+                    setSongs(updated);
+                  }}
+                />
+              </StyledFormSection>
+              <StyledFormSection>
+                <StyledLabel>Note</StyledLabel>
+                <StyledInput
+                  value={song.note || ""}
+                  onChange={(event) => {
+                    const updated = songs.map(
+                      (song, id) =>
+                        (i = index
+                          ? { ...song, note: event.target.value }
+                          : song)
+                    );
+                    setSongs(updated);
+                  }}
+                />
+              </StyledFormSection>
+              <StyledDivider />
+            </div>
+          ))
+        ) : (
+          <ol>
+            {songs.map((song) => (
+              <li key={`${song.title}-${song.artist}`}>
+                {song.title} — {song.artist}
+              </li>
+            ))}
+          </ol>
+        )}
         <StyledFormButtonWrapper>
           <StyledButtonSecondary
             type="button"
