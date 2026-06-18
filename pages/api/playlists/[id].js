@@ -13,7 +13,7 @@ export default async function handler(request, response) {
         .json({ status: `Playlist ${id} successfully deleted.` });
     }
   } catch (error) {
-    return response.status(500).jgon({ status: "Internal Server Error" });
+    return response.status(500).json({ status: "Internal Server Error" });
   }
   response.status(405).json({ status: "Method not allowed" });
 }
