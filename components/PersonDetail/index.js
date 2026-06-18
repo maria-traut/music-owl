@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
-import useSWR from "swr";
 import { useState, useEffect } from "react";
 
 import {
@@ -23,28 +22,21 @@ import {
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
 
-export default function PersonDetail({
-  person,
-  personId,
-  setPlaylistEditFormMode,
-}) {
+export default function PersonDetail({ person }) {
   const router = useRouter();
   const { mutate } = useSWRConfig();
-  const {
-    data: playlist,
-    isLoading,
-    error,
-  } = useSWR(`/api/playlists?personId=${personId}`);
   const { name, birth_year, _id, color } = person;
-
-  const [playlistUpdateError, setPlaylistUpdateError] = useState(null);
   const [activeMode, setActiveMode] = useState(null);
+
+  const [personDeleteSuccess, setPersonDeleteSuccess] = useState(false);
   const [personUpdateError, setPersonUpdateError] = useState(null);
   const [personDeleteError, setPersonDeleteError] = useState(false);
-  const [playlistError, setPlaylistError] = useState(null);
+
   const [playlistCreateSuccess, setPlaylistCreateSuccess] = useState(false);
+  const [playlistUpdateSuccess, setPlaylistUpdateSuccess] = useState(false);
+  const [playlistError, setPlaylistError] = useState(null);
+  const [playlistUpdateError, setPlaylistUpdateError] = useState(null);
   const [playlistDeleteSuccess, setPlaylistDeleteSuccess] = useState(false);
-  const [personDeleteSuccess, setPersonDeleteSuccess] = useState(false);
 
   useEffect(() => {
     if (!personDeleteSuccess) return;
@@ -128,21 +120,20 @@ export default function PersonDetail({
   }
 
   async function handlePlaylistUpdate(playlistId, { playlistTitle, songs }) {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const playlistData = Object.fromEntries(formData);
     const response = await fetch(`/api/playlists/${playlistId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(playlistData),
+      body: JSON.stringify({ playlist_title: playlistTitle, songs }),
     });
     if (response.ok) {
-      mutate("/api/playlists");
       mutate(`/api/playlists/?personId=${_id}`);
-      setPlaylistEditFormMode(null);
+      setPlaylistUpdateSuccess(true);
+      setTimeout(() => setPlaylistUpdateSuccess(false), 3000);
       setPlaylistUpdateError(null);
+      return true;
     } else {
       setPlaylistUpdateError("Something went wrong. Please try again.");
+      return false;
     }
   }
 
@@ -237,6 +228,9 @@ export default function PersonDetail({
         )}
         {playlistCreateSuccess && (
           <StyledMessage>Playlist was successfully created.</StyledMessage>
+        )}
+        {playlistUpdateSuccess && (
+          <StyledMessage>Playlist was successfully updated.</StyledMessage>
         )}
         {playlistDeleteSuccess && (
           <StyledMessage>Playlist was successfully deleted.</StyledMessage>
