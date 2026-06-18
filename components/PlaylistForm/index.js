@@ -10,8 +10,17 @@ import {
 } from "../Global/Global.styles";
 import { StyledSongErrorMessage } from "./PlaylistForm.styled";
 
-export default function PlaylistForm({ onSubmit, onCancel }) {
-  const [songs, setSongs] = useState([]);
+export default function PlaylistForm({
+  onSubmit,
+  onCancel,
+  onCancelEdit,
+  defaultValues,
+  playlistEditFormMode,
+}) {
+  const [playlistTitle, setPlaylistTitle] = useState(
+    defaultValues?.playlist_title ?? ""
+  );
+  const [songs, setSongs] = useState(defaultValues?.songs ?? []);
   const [songError, setSongError] = useState(null);
   const [currentSong, setCurrentSong] = useState({
     title: "",
@@ -19,7 +28,6 @@ export default function PlaylistForm({ onSubmit, onCancel }) {
     youtubeId: "",
     note: "",
   });
-  const [playlistTitle, setPlaylistTitle] = useState("");
 
   function isDuplicate(song) {
     return songs.some(
@@ -74,7 +82,11 @@ export default function PlaylistForm({ onSubmit, onCancel }) {
   return (
     <form onSubmit={handleCollectPlaylistData}>
       <StyledFieldset>
-        <legend>Add a Playlist</legend>
+        {!playlistEditFormMode ? (
+          <legend>Add a Playlist</legend>
+        ) : (
+          <legend>Edit Playlist</legend>
+        )}
         <StyledFormSection>
           <StyledLabel htmlFor="playlistTitle">
             Playlist Title<span aria-hidden>*</span>
@@ -176,7 +188,7 @@ export default function PlaylistForm({ onSubmit, onCancel }) {
           <StyledButtonSecondary
             type="button"
             aria-label="Cancel"
-            onClick={onCancel}
+            onClick={onCancel || onCancelEdit}
           >
             Cancel
           </StyledButtonSecondary>

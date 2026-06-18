@@ -17,6 +17,7 @@ import {
   StyledMessageAndButtonWrapper,
 } from "../Global/Global.styles";
 import { useState } from "react";
+import PlaylistForm from "../PlaylistForm";
 
 export default function PlaylistList({
   personId,
@@ -29,6 +30,7 @@ export default function PlaylistList({
     error,
   } = useSWR(`/api/playlists?personId=${personId}`);
   const [deletePlaylistId, setDeletePlaylistId] = useState(null);
+  const [playlistEditFormMode, setPlaylistEditFormMode] = useState(false);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <p>An error occurred.</p>;
@@ -39,36 +41,56 @@ export default function PlaylistList({
     <StyledPlaylistList>
       {playlists.map((playlist) => (
         <StyledPlaylist key={playlist._id} $color={color}>
-          {deletePlaylistId === playlist._id ? (
-            <StyledMessageAndButtonWrapper>
-              <StyledMessage>Delete this playlist?</StyledMessage>
-              <StyledButtonWrapper>
-                <StyledButtonSecondary
-                  type="button"
-                  aria-label="Cancel deletion"
-                  onClick={() => setDeletePlaylistId(null)}
-                >
-                  No
-                </StyledButtonSecondary>
-                <StyledButtonPrimary
-                  type="button"
-                  aria-label="Confirm deletion"
-                  onClick={() => handlePlaylistDelete(playlist._id)}
-                >
-                  Yes
-                </StyledButtonPrimary>
-              </StyledButtonWrapper>
-            </StyledMessageAndButtonWrapper>
+          {!playlistEditFormMode ? (
+            <>
+              {deletePlaylistId === playlist._id ? (
+                <StyledMessageAndButtonWrapper>
+                  <StyledMessage>Delete this playlist?</StyledMessage>
+                  <StyledButtonWrapper>
+                    <StyledButtonSecondary
+                      type="button"
+                      aria-label="Cancel deletion"
+                      onClick={() => setDeletePlaylistId(null)}
+                    >
+                      No
+                    </StyledButtonSecondary>
+                    <StyledButtonPrimary
+                      type="button"
+                      aria-label="Confirm deletion"
+                      onClick={() => handlePlaylistDelete(playlist._id)}
+                    >
+                      Yes
+                    </StyledButtonPrimary>
+                  </StyledButtonWrapper>
+                </StyledMessageAndButtonWrapper>
+              ) : (
+                <>
+                  <StyledButtonWrapper>
+                    <StyledButton
+                      type="button"
+                      aria-label="Delete playlist"
+                      onClick={() => setDeletePlaylistId(playlist._id)}
+                    >
+                      x
+                    </StyledButton>
+                    <StyledButton
+                      type="button"
+                      aria-label="Edit playlist"
+                      onClick={() => setPlaylistEditFormMode(true)}
+                    >
+                      &#9998;
+                    </StyledButton>
+                  </StyledButtonWrapper>
+                </>
+              )}
+            </>
           ) : (
-            <StyledButtonWrapper>
-              <StyledButton
-                type="button"
-                aria-label="Delete playlist"
-                onClick={() => setDeletePlaylistId(playlist._id)}
-              >
-                x
-              </StyledButton>
-            </StyledButtonWrapper>
+            <PlaylistForm
+              defaultValues={playlist}
+              onSubmit={(data) => handlePlaylistUpdate(playlist._id, data)}
+              playlistEditFormMode={playlistEditFormMode}
+              onCancelEdit={() => setPlaylistEditFormMode(false)}
+            />
           )}
           <StyledPlaylistTitle>{playlist.playlist_title}</StyledPlaylistTitle>
           <StyledSongList>
