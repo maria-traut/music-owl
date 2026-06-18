@@ -90,13 +90,13 @@ export const StyledFormButtonWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-top: 1rem;
-  gap: 0.5rem;
+  gap: 0.4rem;
 `;
 
 export const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  gap: 0.7rem;
+  gap: 0.4rem;
 `;
 
 export const StyledMessageAndButtonWrapper = styled.div`
@@ -121,6 +121,7 @@ export const StyledButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 `;
 
 export const StyledButtonPrimary = styled(StyledButton)`

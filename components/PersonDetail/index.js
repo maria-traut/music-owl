@@ -149,7 +149,7 @@ export default function PersonDetail({ person }) {
             <StyledMessage>{name} was successfully deleted.</StyledMessage>
           ) : (
             <StyledMessageAndButtonWrapper>
-              <StyledMessage>{`Do you really want to delete ${name}?`}</StyledMessage>
+              <StyledMessage>{`Delete ${name} and go back to 'People'?`}</StyledMessage>
               <StyledButtonWrapper>
                 <StyledButtonSecondary
                   type="button"
@@ -198,7 +198,7 @@ export default function PersonDetail({ person }) {
               aria-label="Open Playlist Form"
               onClick={() => setActiveMode("playlist form")}
             >
-              + Add Playlist
+              + Add a Playlist
             </StyledButtonSecondary>
           </StyledButtonWrapper>
         )}

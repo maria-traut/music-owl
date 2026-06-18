@@ -8,22 +8,26 @@ import {
   StyledPeopleSection,
   StyledMessage,
   StyledDivider,
+  StyledButtonWrapper,
+  StyledButtonSecondary,
 } from "@/components/Global/Global.styles";
 
 export default function People() {
   const { mutate } = useSWR("/api/people");
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [personFormMode, setPersonFormMode] = useState(false);
+  const [personCreateSuccess, setPersonCreateSuccess] = useState(false);
+  const [personCreateError, setPersonCreateError] = useState(false);
 
   useEffect(() => {
-    if (!success) return;
+    if (!personCreateSuccess) return;
     const successMessageTimer = setTimeout(() => {
-      setSuccess(false);
+      setPersonCreateSuccess(false);
+      setPersonFormMode(false);
     }, 3000);
     return () => {
       clearTimeout(successMessageTimer);
     };
-  }, [success]);
+  }, [personCreateSuccess]);
 
   async function handlePersonCreate(event) {
     event.preventDefault();
@@ -38,22 +42,22 @@ export default function People() {
       if (response.ok) {
         mutate();
         event.target.reset();
-        setSuccess(true);
-        setError(false);
+        setPersonCreateSuccess(true);
+        setPersonCreateError(false);
       } else {
-        setError(true);
-        setSuccess(false);
+        setPersonCreateError(true);
+        setPersonCreateSuccess(false);
       }
     } catch {
-      setError(true);
-      setSuccess(false);
+      setPersonCreateError(true);
+      setPersonCreateSuccess(false);
     }
   }
 
   function handlePersonFormClear(event) {
     event.target.form.reset();
-    setSuccess(false);
-    setError(false);
+    setPersonCreateSuccess(false);
+    setPersonCreateError(false);
   }
 
   return (
@@ -66,12 +70,27 @@ export default function People() {
         </p>
       </StyledPeopleSection>
       <StyledDivider />
-      <PersonForm
-        onSubmit={handlePersonCreate}
-        onPersonFormClear={handlePersonFormClear}
-      />
-      {success && <StyledMessage>Person successfully added!</StyledMessage>}
-      {error && (
+      {personFormMode ? (
+        <PersonForm
+          onSubmit={handlePersonCreate}
+          onPersonFormClear={handlePersonFormClear}
+          setPersonFormMode={setPersonFormMode}
+        />
+      ) : (
+        <StyledButtonWrapper>
+          <StyledButtonSecondary
+            type="button"
+            aria-label="Open Person Form"
+            onClick={() => setPersonFormMode(true)}
+          >
+            + Add a Person
+          </StyledButtonSecondary>
+        </StyledButtonWrapper>
+      )}
+      {personCreateSuccess && (
+        <StyledMessage>Person successfully added!</StyledMessage>
+      )}
+      {personCreateError && (
         <StyledMessage>Something went wrong. Please try again.</StyledMessage>
       )}
       <PersonList />

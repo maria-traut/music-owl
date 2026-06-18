@@ -12,7 +12,7 @@ export const StyledInputName = styled(StyledInput)`
 `;
 
 export const StyledInputYear = styled(StyledInput)`
-  width: 6rem;
+  width: 5rem;
 `;
 
 export const StyledInputColor = styled(StyledInput)`
