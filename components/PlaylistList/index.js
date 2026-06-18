@@ -8,13 +8,27 @@ import {
   StyledNote,
   StyledLinkNoteWrapper,
 } from "./PlaylistList.styled";
+import {
+  StyledButton,
+  StyledButtonPrimary,
+  StyledButtonSecondary,
+  StyledMessage,
+  StyledButtonWrapper,
+  StyledMessageAndButtonWrapper,
+} from "../Global/Global.styles";
+import { useState } from "react";
 
-export default function PlaylistList({ personId, color }) {
+export default function PlaylistList({
+  personId,
+  color,
+  handlePlaylistDelete,
+}) {
   const {
     data: playlists,
     isLoading,
     error,
   } = useSWR(`/api/playlists?personId=${personId}`);
+  const [deletePlaylistId, setDeletePlaylistId] = useState(null);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <p>An error occurred.</p>;
@@ -24,7 +38,38 @@ export default function PlaylistList({ personId, color }) {
   return (
     <StyledPlaylistList>
       {playlists.map((playlist) => (
-        <StyledPlaylist key={playlist.playlist_title} $color={color}>
+        <StyledPlaylist key={playlist._id} $color={color}>
+          {deletePlaylistId === playlist._id ? (
+            <StyledMessageAndButtonWrapper>
+              <StyledMessage>Delete this playlist?</StyledMessage>
+              <StyledButtonWrapper>
+                <StyledButtonSecondary
+                  type="button"
+                  aria-label="Cancel deletion"
+                  onClick={() => setDeletePlaylistId(null)}
+                >
+                  No
+                </StyledButtonSecondary>
+                <StyledButtonPrimary
+                  type="button"
+                  aria-label="Confirm deletion"
+                  onClick={() => handlePlaylistDelete(playlist._id)}
+                >
+                  Yes
+                </StyledButtonPrimary>
+              </StyledButtonWrapper>
+            </StyledMessageAndButtonWrapper>
+          ) : (
+            <StyledButtonWrapper>
+              <StyledButton
+                type="button"
+                aria-label="Delete playlist"
+                onClick={() => setDeletePlaylistId(playlist._id)}
+              >
+                x
+              </StyledButton>
+            </StyledButtonWrapper>
+          )}
           <StyledPlaylistTitle>{playlist.playlist_title}</StyledPlaylistTitle>
           <StyledSongList>
             {playlist.songs.map((song) => (

@@ -73,20 +73,6 @@ export const StyledDeleteButton = styled(StyledPersonDetailButton)`
   }
 `;
 
-export const StyledButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 0.5rem;
-  gap: 0.7rem;
-`;
-
-export const StyledMessageAndButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-`;
-
 export const StyledPlaylistSectionTitle = styled.h3`
   text-align: center;
   margin: 2.5rem 0 1rem 0;

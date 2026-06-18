@@ -7,14 +7,14 @@ import {
   StyledDetailColoredArea,
   StyledDetailYear,
   StyledDetailName,
-  StyledButtonWrapper,
-  StyledMessageAndButtonWrapper,
   StyledUpdateButton,
   StyledDeleteButton,
   StyledPlaylistSectionTitle,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
 import {
+  StyledMessageAndButtonWrapper,
+  StyledButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessage,
@@ -30,7 +30,8 @@ export default function PersonDetail({ person }) {
   const [updateError, setUpdateError] = useState(null);
   const [deleteError, setDeleteError] = useState(false);
   const [playlistError, setPlaylistError] = useState(null);
-  const [playlistSuccess, setPlaylistSuccess] = useState(false);
+  const [playlistCreateSuccess, setPlaylistCreateSuccess] = useState(false);
+  const [playlistDeleteSuccess, setPlaylistDeleteSuccess] = useState(false);
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
@@ -43,16 +44,6 @@ export default function PersonDetail({ person }) {
       clearTimeout(successMessageTimer);
     };
   }, [success]);
-
-  useEffect(() => {
-    if (!playlistSuccess) return;
-    const playlistSuccessMessageTimer = setTimeout(() => {
-      setPlaylistSuccess(false);
-    }, 3000);
-    return () => {
-      clearTimeout(playlistSuccessMessageTimer);
-    };
-  }, [playlistSuccess]);
 
   async function handlePersonDelete() {
     const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
@@ -97,8 +88,8 @@ export default function PersonDetail({ person }) {
 
       if (response.ok) {
         mutate(`/api/playlists?personId=${_id}`);
-        setPlaylistSuccess(true);
-
+        setPlaylistCreateSuccess(true);
+        setTimeout(() => setPlaylistCreateSuccess(false), 2000);
         setActiveMode(null);
         return true;
       } else {
@@ -108,6 +99,19 @@ export default function PersonDetail({ person }) {
     } catch {
       setPlaylistError("Something went wrong. Please try again.");
       return false;
+    }
+  }
+
+  async function handlePlaylistDelete(playlistId) {
+    const response = await fetch(`/api/playlists/${playlistId}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      mutate(`/api/playlists?personId=${_id}`);
+      setPlaylistDeleteSuccess(true);
+      setTimeout(() => setPlaylistDeleteSuccess(false), 3000);
+    } else {
+      setPlaylistError("Something went wrong. Please try again.");
     }
   }
 
@@ -198,10 +202,17 @@ export default function PersonDetail({ person }) {
             </StyledButtonSecondary>
           </StyledButtonWrapper>
         )}
-        {playlistSuccess && (
+        {playlistCreateSuccess && (
           <StyledMessage>Playlist was successfully created.</StyledMessage>
         )}
-        <PlaylistList personId={_id} color={color} />
+        {playlistDeleteSuccess && (
+          <StyledMessage>Playlist was successfully deleted.</StyledMessage>
+        )}
+        <PlaylistList
+          personId={_id}
+          color={color}
+          handlePlaylistDelete={handlePlaylistDelete}
+        />
       </section>
     </>
   );
