@@ -31,7 +31,7 @@ export default function PlaylistList({
     error,
   } = useSWR(`/api/playlists?personId=${personId}`);
   const [deletePlaylistId, setDeletePlaylistId] = useState(null);
-  const [playlistEditFormMode, setPlaylistEditFormMode] = useState(false);
+  const [editPlaylistId, setEditPlaylistId] = useState(null);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <p>An error occurred.</p>;
@@ -42,7 +42,16 @@ export default function PlaylistList({
     <StyledPlaylistList>
       {playlists.map((playlist) => (
         <StyledPlaylist key={playlist._id} $color={color}>
-          {!playlistEditFormMode ? (
+          {editPlaylistId === playlist._id ? (
+            <PlaylistForm
+              defaultValues={playlist}
+              onSubmit={async (data) => {
+                const success = await handlePlaylistUpdate(playlist._id, data);
+                if (success) setEditPlaylistId(null);
+              }}
+              onCancelEdit={() => setEditPlaylistId(null)}
+            />
+          ) : (
             <>
               {deletePlaylistId === playlist._id ? (
                 <StyledMessageAndButtonWrapper>
@@ -77,7 +86,7 @@ export default function PlaylistList({
                     <StyledButton
                       type="button"
                       aria-label="Edit playlist"
-                      onClick={() => setPlaylistEditFormMode(true)}
+                      onClick={() => setEditPlaylistId(playlist._id)}
                     >
                       &#9998;
                     </StyledButton>
@@ -85,13 +94,6 @@ export default function PlaylistList({
                 </>
               )}
             </>
-          ) : (
-            <PlaylistForm
-              defaultValues={playlist}
-              onSubmit={(data) => handlePlaylistUpdate(playlist._id, data)}
-              playlistEditFormMode={playlistEditFormMode}
-              onCancelEdit={() => setPlaylistEditFormMode(false)}
-            />
           )}
           <StyledPlaylistTitle>{playlist.playlist_title}</StyledPlaylistTitle>
           <StyledSongList>

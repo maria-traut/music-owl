@@ -7,6 +7,7 @@ import {
   StyledFormButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
+  StyledMessageAndButtonWrapper,
   StyledDivider,
 } from "../Global/Global.styles";
 import { StyledSongErrorMessage } from "./PlaylistForm.styled";
@@ -16,9 +17,9 @@ export default function PlaylistForm({
   onCancel,
   onCancelEdit,
   defaultValues,
-  playlistEditFormMode,
+  editPlaylistId,
 }) {
-  const [playlistTitle, setPlaylistTitle] = useState(
+  const [currentPlaylistTitle, setCurrentPlaylistTitle] = useState(
     defaultValues?.playlist_title ?? ""
   );
   const [songs, setSongs] = useState(defaultValues?.songs ?? []);
@@ -38,7 +39,7 @@ export default function PlaylistForm({
     );
   }
 
-  function handleAddSong() {
+  function handleSongAdd() {
     if (!currentSong.title || !currentSong.artist) {
       setSongError("Please enter at least a title and an artist.");
       return;
@@ -57,16 +58,21 @@ export default function PlaylistForm({
   }
 
   function handlePlaylistFormClear() {
-    setPlaylistTitle("");
+    setCurrentPlaylistTitle("");
     setSongs([]);
     setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
     setSongError(false);
   }
 
-  async function handleCollectPlaylistData(event) {
+  function handleSongDelete(index) {
+    const updated = songs.filter((song, i) => i !== index);
+    setSongs(updated);
+  }
+
+  async function handlePlaylistDataCollect(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const playlistTitle = formData.get("playlistTitle");
+    const playlistTitle = formData.get("playlistTitle") ?? currentPlaylistTitle;
     const allSongs =
       currentSong.title && currentSong.artist && !isDuplicate(currentSong)
         ? [...songs, currentSong]
@@ -81,9 +87,9 @@ export default function PlaylistForm({
   }
 
   return (
-    <form onSubmit={handleCollectPlaylistData}>
+    <form onSubmit={handlePlaylistDataCollect}>
       <StyledFieldset>
-        {!playlistEditFormMode ? (
+        {!editPlaylistId ? (
           <legend>Add a Playlist</legend>
         ) : (
           <legend>Edit Playlist</legend>
@@ -100,8 +106,8 @@ export default function PlaylistForm({
             aria-required="true"
             maxLength={50}
             title="Playlist title must be between 1 and 50 characters."
-            value={playlistTitle}
-            onChange={(event) => setPlaylistTitle(event.target.value)}
+            value={currentPlaylistTitle}
+            onChange={(event) => setCurrentPlaylistTitle(event.target.value)}
           ></StyledInput>
         </StyledFormSection>
         <p>Add up to 20 Songs</p>
@@ -173,23 +179,34 @@ export default function PlaylistForm({
           <StyledButtonPrimary
             type="button"
             aria-label="Add song"
-            onClick={() => handleAddSong()}
+            onClick={() => handleSongAdd()}
           >
             Add Song
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
         {defaultValues ? (
-          songs.map((song) => (
-            <div key={`${song.title}-${song.artist}`}>
+          songs.map((song, index) => (
+            <div key={index}>
+              <StyledDivider />
+              <StyledMessageAndButtonWrapper>
+                <h4>Song {index + 1}</h4>
+                <StyledButtonSecondary
+                  type="button"
+                  aria-label="Delete song"
+                  onClick={() => handleSongDelete(index)}
+                >
+                  Delete Song
+                </StyledButtonSecondary>
+              </StyledMessageAndButtonWrapper>
               <StyledFormSection>
                 <StyledLabel>Title</StyledLabel>
                 <StyledInput
                   value={song.title}
                   onChange={(event) => {
-                    const updated = songs.map((song, i) =>
+                    const updated = songs.map((existingSong, i) =>
                       i === index
-                        ? { ...song, title: event.target.value }
-                        : song
+                        ? { ...existingSong, title: event.target.value }
+                        : existingSong
                     );
                     setSongs(updated);
                   }}
@@ -200,11 +217,10 @@ export default function PlaylistForm({
                 <StyledInput
                   value={song.artist}
                   onChange={(event) => {
-                    const updated = songs.map(
-                      (song, i) =>
-                        (i = index
-                          ? { ...song, artist: event.target.value }
-                          : artist)
+                    const updated = songs.map((existingSong, i) =>
+                      i === index
+                        ? { ...existingSong, artist: event.target.value }
+                        : existingSong
                     );
                     setSongs(updated);
                   }}
@@ -215,11 +231,10 @@ export default function PlaylistForm({
                 <StyledInput
                   value={song.youtubeId || song.youtube_id || ""}
                   onChange={(event) => {
-                    const updated = songs.map(
-                      (song, i) =>
-                        (i = index
-                          ? { ...song, youtube_id: event.target.value }
-                          : song)
+                    const updated = songs.map((existingSong, i) =>
+                      i === index
+                        ? { ...existingSong, youtube_id: event.target.value }
+                        : existingSong
                     );
                     setSongs(updated);
                   }}
@@ -230,17 +245,15 @@ export default function PlaylistForm({
                 <StyledInput
                   value={song.note || ""}
                   onChange={(event) => {
-                    const updated = songs.map(
-                      (song, id) =>
-                        (i = index
-                          ? { ...song, note: event.target.value }
-                          : song)
+                    const updated = songs.map((existingSong, i) =>
+                      i === index
+                        ? { ...existingSong, note: event.target.value }
+                        : existingSong
                     );
                     setSongs(updated);
                   }}
                 />
               </StyledFormSection>
-              <StyledDivider />
             </div>
           ))
         ) : (

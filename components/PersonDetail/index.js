@@ -126,7 +126,7 @@ export default function PersonDetail({ person }) {
       body: JSON.stringify({ playlist_title: playlistTitle, songs }),
     });
     if (response.ok) {
-      mutate(`/api/playlists/?personId=${_id}`);
+      mutate(`/api/playlists?personId=${_id}`);
       setPlaylistUpdateSuccess(true);
       setTimeout(() => setPlaylistUpdateSuccess(false), 3000);
       setPlaylistUpdateError(null);
