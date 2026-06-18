@@ -14,7 +14,7 @@ import {
 
 export default function People() {
   const { mutate } = useSWR("/api/people");
-  const [personFormMode, setPersonFormMode] = useState(null);
+  const [personFormMode, setPersonFormMode] = useState(false);
   const [personCreateSuccess, setPersonCreateSuccess] = useState(false);
   const [personCreateError, setPersonCreateError] = useState(false);
 
