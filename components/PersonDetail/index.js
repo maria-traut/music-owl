@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
+import useSWR from "swr";
 import { useState, useEffect } from "react";
 
 import {
@@ -22,10 +23,21 @@ import {
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
 
-export default function PersonDetail({ person }) {
+export default function PersonDetail({
+  person,
+  personId,
+  setPlaylistEditFormMode,
+}) {
   const router = useRouter();
   const { mutate } = useSWRConfig();
+  const {
+    data: playlist,
+    isLoading,
+    error,
+  } = useSWR(`/api/playlists?personId=${personId}`);
   const { name, birth_year, _id, color } = person;
+
+  const [playlistUpdateError, setPlaylistUpdateError] = useState(null);
   const [activeMode, setActiveMode] = useState(null);
   const [personUpdateError, setPersonUpdateError] = useState(null);
   const [personDeleteError, setPersonDeleteError] = useState(false);
@@ -115,6 +127,25 @@ export default function PersonDetail({ person }) {
     }
   }
 
+  async function handlePlaylistUpdate(playlistId, { playlistTitle, songs }) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const playlistData = Object.fromEntries(formData);
+    const response = await fetch(`/api/playlists/${playlistId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(playlistData),
+    });
+    if (response.ok) {
+      mutate("/api/playlists");
+      mutate(`/api/playlists/?personId=${_id}`);
+      setPlaylistEditFormMode(null);
+      setPlaylistUpdateError(null);
+    } else {
+      setPlaylistUpdateError("Something went wrong. Please try again.");
+    }
+  }
+
   return (
     <>
       <StyledDetailCard>
@@ -184,7 +215,7 @@ export default function PersonDetail({ person }) {
           setUpdateMode={() => setActiveMode(null)}
         />
       )}
-      {personUpdateError && <p role="alert">{personUpdateErrorpdateError}</p>}
+      {personUpdateError && <p role="alert">{personUpdateError}</p>}
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
@@ -210,10 +241,12 @@ export default function PersonDetail({ person }) {
         {playlistDeleteSuccess && (
           <StyledMessage>Playlist was successfully deleted.</StyledMessage>
         )}
+        {playlistUpdateError && <p role="alert">{playlistUpdateError}</p>}
         <PlaylistList
           personId={_id}
           color={color}
           handlePlaylistDelete={handlePlaylistDelete}
+          handlePlaylistUpdate={handlePlaylistUpdate}
         />
       </section>
     </>

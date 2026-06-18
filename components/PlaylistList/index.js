@@ -23,6 +23,7 @@ export default function PlaylistList({
   personId,
   color,
   handlePlaylistDelete,
+  handlePlaylistUpdate,
 }) {
   const {
     data: playlists,
