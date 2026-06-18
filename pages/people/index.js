@@ -22,7 +22,6 @@ export default function People() {
     if (!personCreateSuccess) return;
     const successMessageTimer = setTimeout(() => {
       setPersonCreateSuccess(false);
-      setPersonFormMode(false);
     }, 3000);
     return () => {
       clearTimeout(successMessageTimer);
@@ -42,6 +41,7 @@ export default function People() {
       if (response.ok) {
         mutate();
         event.target.reset();
+        setPersonFormMode(false);
         setPersonCreateSuccess(true);
         setPersonCreateError(false);
       } else {

@@ -27,31 +27,31 @@ export default function PersonDetail({ person }) {
   const { mutate } = useSWRConfig();
   const { name, birth_year, _id, color } = person;
   const [activeMode, setActiveMode] = useState(null);
-  const [updateError, setUpdateError] = useState(null);
-  const [deleteError, setDeleteError] = useState(false);
+  const [personUpdateError, setPersonUpdateError] = useState(null);
+  const [personDeleteError, setPersonDeleteError] = useState(false);
   const [playlistError, setPlaylistError] = useState(null);
   const [playlistCreateSuccess, setPlaylistCreateSuccess] = useState(false);
   const [playlistDeleteSuccess, setPlaylistDeleteSuccess] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [personDeleteSuccess, setPersonDeleteSuccess] = useState(false);
 
   useEffect(() => {
-    if (!success) return;
+    if (!personDeleteSuccess) return;
     const successMessageTimer = setTimeout(() => {
-      setSuccess(false);
+      setPersonDeleteSuccess(false);
       router.push("/people");
     }, 2000);
     return () => {
       clearTimeout(successMessageTimer);
     };
-  }, [success]);
+  }, [personDeleteSuccess]);
 
   async function handlePersonDelete() {
     const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
     if (response.ok) {
-      setSuccess(true);
+      setPersonDeleteSuccess(true);
       mutate("/api/people");
     } else {
-      setDeleteError(true);
+      setPersonDeleteError(true);
     }
   }
 
@@ -68,9 +68,9 @@ export default function PersonDetail({ person }) {
       mutate("/api/people");
       mutate(`/api/people/${_id}`);
       setActiveMode(null);
-      setUpdateError(null);
+      setPersonUpdateError(null);
     } else {
-      setUpdateError("Something went wrong. Please try again.");
+      setPersonUpdateError("Something went wrong. Please try again.");
     }
   }
 
@@ -145,7 +145,7 @@ export default function PersonDetail({ person }) {
 
       {activeMode === "delete" && (
         <>
-          {success ? (
+          {personDeleteSuccess ? (
             <StyledMessage>{name} was successfully deleted.</StyledMessage>
           ) : (
             <StyledMessageAndButtonWrapper>
@@ -156,7 +156,7 @@ export default function PersonDetail({ person }) {
                   aria-label="Cancel deletion"
                   onClick={() => {
                     setActiveMode(null);
-                    setDeleteError(false);
+                    setPersonDeleteError(false);
                   }}
                 >
                   No
@@ -169,7 +169,9 @@ export default function PersonDetail({ person }) {
                   Yes
                 </StyledButtonPrimary>
               </StyledButtonWrapper>
-              {deleteError && <span>An error occurred. Please try again.</span>}
+              {personDeleteError && (
+                <span>An error occurred. Please try again.</span>
+              )}
             </StyledMessageAndButtonWrapper>
           )}
         </>
@@ -182,7 +184,7 @@ export default function PersonDetail({ person }) {
           setUpdateMode={() => setActiveMode(null)}
         />
       )}
-      {updateError && <p role="alert">{updateError}</p>}
+      {personUpdateError && <p role="alert">{personUpdateErrorpdateError}</p>}
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
