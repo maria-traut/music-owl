@@ -8,6 +8,10 @@ import {
   StyledDetailYear,
   StyledDetailName,
   StyledPlaylistSectionTitle,
+  StyledMenuButton,
+  StyledMenuWrapper,
+  StyledMenu,
+  StyledMenuItem,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
 import {
@@ -16,11 +20,10 @@ import {
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessage,
-  StyledUpdateButton,
-  StyledDeleteButton,
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
+import Image from "next/image";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -37,6 +40,8 @@ export default function PersonDetail({ person }) {
   const [playlistError, setPlaylistError] = useState(null);
   const [playlistUpdateError, setPlaylistUpdateError] = useState(null);
   const [playlistDeleteSuccess, setPlaylistDeleteSuccess] = useState(false);
+
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     if (!personDeleteSuccess) return;
@@ -141,29 +146,45 @@ export default function PersonDetail({ person }) {
     <>
       <StyledDetailCard>
         <StyledDetailColoredArea $color={color}>
+          <StyledMenuWrapper>
+            <StyledMenuButton
+              type="button"
+              aria-label="Further options"
+              onClick={() => {
+                setShowMenu(!showMenu);
+              }}
+            >
+              <Image src="/kebab-menu.svg" alt="" width={24} height={24} />
+            </StyledMenuButton>
+            {showMenu && (
+              <StyledMenu>
+                <StyledMenuItem
+                  type="button"
+                  aria-label="Edit person"
+                  onClick={() => {
+                    setActiveMode("edit");
+                    setShowMenu(false);
+                  }}
+                >
+                  Edit person
+                </StyledMenuItem>
+                <StyledMenuItem
+                  type="button"
+                  aria-label="Delete person"
+                  onClick={() => {
+                    setActiveMode("delete");
+                    setShowMenu(false);
+                  }}
+                >
+                  Remove person
+                </StyledMenuItem>
+              </StyledMenu>
+            )}
+          </StyledMenuWrapper>
           <StyledDetailYear>{birth_year}</StyledDetailYear>
         </StyledDetailColoredArea>
         <StyledDetailName>{name}</StyledDetailName>
       </StyledDetailCard>
-
-      {!activeMode && (
-        <StyledButtonWrapper>
-          <StyledDeleteButton
-            type="button"
-            aria-label="Delete person"
-            onClick={() => setActiveMode("delete")}
-          >
-            x
-          </StyledDeleteButton>
-          <StyledUpdateButton
-            type="button"
-            aria-label="Edit person"
-            onClick={() => setActiveMode("edit")}
-          >
-            &#9998;
-          </StyledUpdateButton>
-        </StyledButtonWrapper>
-      )}
 
       {activeMode === "delete" && (
         <>
@@ -171,7 +192,7 @@ export default function PersonDetail({ person }) {
             <StyledMessage>{name} was successfully deleted.</StyledMessage>
           ) : (
             <StyledMessageAndButtonWrapper>
-              <StyledMessage>{`Delete ${name} and go back to 'People'?`}</StyledMessage>
+              <StyledMessage>{`Remove ${name} and go back to 'People'?`}</StyledMessage>
               <StyledButtonWrapper>
                 <StyledButtonSecondary
                   type="button"
@@ -209,7 +230,7 @@ export default function PersonDetail({ person }) {
       {personUpdateError && <p role="alert">{personUpdateError}</p>}
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
-        <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
+        <StyledPlaylistSectionTitle>Playlists</StyledPlaylistSectionTitle>
         {activeMode === "playlist form" ? (
           <PlaylistForm
             onSubmit={(data) => handlePlaylistCreate(data)}

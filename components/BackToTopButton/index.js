@@ -21,12 +21,7 @@ export default function BackToTopButton() {
       aria-label="Scroll back to top"
       onClick={scrollToTop}
     >
-      <Image
-        src="/arrow-up.svg"
-        alt="scroll-to-top-button"
-        width={24}
-        height={24}
-      />
+      <Image src="/arrow-up.svg" alt="" width={24} height={24} />
     </StyledBackToTopButton>
   ) : null;
 }
