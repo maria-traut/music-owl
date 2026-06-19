@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   StyledFieldset,
-  StyledLabel,
   StyledFormSection,
   StyledInput,
   StyledFormButtonWrapper,
@@ -10,6 +9,7 @@ import {
   StyledMessageAndButtonWrapper,
   StyledSongDivider,
   StyledMessage,
+  StyledVisuallyHiddenLabel,
 } from "../Global/Global.styles";
 import {
   StyledSongErrorMessage,
@@ -100,13 +100,14 @@ export default function PlaylistForm({
           <legend>Edit Playlist</legend>
         )}
         <StyledFormSection>
-          <StyledLabel htmlFor="playlistTitle">
+          <StyledVisuallyHiddenLabel htmlFor="playlistTitle">
             Playlist Title<span aria-hidden>*</span>
-          </StyledLabel>
+          </StyledVisuallyHiddenLabel>
           <StyledInput
             type="text"
             id="playlistTitle"
             name="playlistTitle"
+            placeholder="Playlist title"
             required
             aria-required="true"
             maxLength={50}
@@ -122,11 +123,14 @@ export default function PlaylistForm({
           </StyledSongErrorMessage>
         )}
         <StyledFormSection>
-          <StyledLabel htmlFor="title">Title</StyledLabel>
+          <StyledVisuallyHiddenLabel htmlFor="title">
+            Title
+          </StyledVisuallyHiddenLabel>
           <StyledInput
             type="text"
             id="title"
             name="title"
+            placeholder="Song title"
             maxLength={30}
             title="Title must be between 1 and 30 characters."
             value={currentSong.title}
@@ -136,11 +140,14 @@ export default function PlaylistForm({
           />
         </StyledFormSection>
         <StyledFormSection>
-          <StyledLabel htmlFor="artist">Artist</StyledLabel>
+          <StyledVisuallyHiddenLabel htmlFor="artist">
+            Artist
+          </StyledVisuallyHiddenLabel>
           <StyledInput
             type="text"
             id="artist"
             name="artist"
+            placeholder="Artist"
             maxLength={30}
             title="Artist must be between 1 and 30 characters."
             value={currentSong.artist}
@@ -150,11 +157,14 @@ export default function PlaylistForm({
           />
         </StyledFormSection>
         <StyledFormSection>
-          <StyledLabel htmlFor="youtubeId">YouTube ID</StyledLabel>
+          <StyledVisuallyHiddenLabel htmlFor="youtubeId">
+            YouTube ID
+          </StyledVisuallyHiddenLabel>
           <StyledInput
             type="text"
             id="youtubeId"
             name="youtubeId"
+            placeholder="YouTube ID"
             maxLength={30}
             title="Youtube ID must be between 1 and 30 characters."
             value={currentSong.youtubeId}
@@ -167,11 +177,14 @@ export default function PlaylistForm({
           />
         </StyledFormSection>
         <StyledFormSection>
-          <StyledLabel htmlFor="note">Note</StyledLabel>
+          <StyledVisuallyHiddenLabel htmlFor="note">
+            Note
+          </StyledVisuallyHiddenLabel>
           <StyledInput
             type="text"
             id="note"
             name="note"
+            placeholder="Note"
             maxLength={50}
             title="Note must be between 1 and 50 characters."
             value={currentSong.note}
@@ -192,7 +205,7 @@ export default function PlaylistForm({
         <StyledSongDivider />
         {defaultValues ? (
           songs.map((song, index) => (
-  <StyledUpdateForm key={`${song.title}-${song.artist}`}>
+            <StyledUpdateForm key={`${song.title}-${song.artist}`}>
               {songDeleteMode === `${song.title}-${song.artist}` ? (
                 <StyledMessageAndButtonWrapper>
                   <StyledMessage>Delete this song?</StyledMessage>
@@ -231,7 +244,7 @@ export default function PlaylistForm({
               )}
               <StyledSongBlock>
                 <StyledFormSection>
-                  <StyledLabel>Title</StyledLabel>
+                  <StyledVisuallyHiddenLabel>Title</StyledVisuallyHiddenLabel>
                   <StyledInput
                     value={song.title}
                     onChange={(event) => {
@@ -245,7 +258,7 @@ export default function PlaylistForm({
                   />
                 </StyledFormSection>
                 <StyledFormSection>
-                  <StyledLabel>Artist</StyledLabel>
+                  <StyledVisuallyHiddenLabel>Artist</StyledVisuallyHiddenLabel>
                   <StyledInput
                     value={song.artist}
                     onChange={(event) => {
@@ -259,7 +272,9 @@ export default function PlaylistForm({
                   />
                 </StyledFormSection>
                 <StyledFormSection>
-                  <StyledLabel>Youtube ID</StyledLabel>
+                  <StyledVisuallyHiddenLabel>
+                    Youtube ID
+                  </StyledVisuallyHiddenLabel>
                   <StyledInput
                     value={song.youtubeId || song.youtube_id || ""}
                     onChange={(event) => {
@@ -273,7 +288,7 @@ export default function PlaylistForm({
                   />
                 </StyledFormSection>
                 <StyledFormSection>
-                  <StyledLabel>Note</StyledLabel>
+                  <StyledVisuallyHiddenLabel>Note</StyledVisuallyHiddenLabel>
                   <StyledInput
                     value={song.note || ""}
                     onChange={(event) => {
@@ -312,7 +327,7 @@ export default function PlaylistForm({
             aria-label="Clear form"
             onClick={handlePlaylistFormClear}
           >
-            Start Over
+            Reset
           </StyledButtonSecondary>
           <StyledButtonPrimary type="submit" aria-label="Add playlist">
             Save

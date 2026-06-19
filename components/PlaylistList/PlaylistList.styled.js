@@ -15,6 +15,7 @@ export const StyledPlaylist = styled.li`
   padding: 1rem 1rem 1rem 1.5rem;
   border: 2px solid ${({ $color }) => $color}88;
   border-radius: 15px;
+  position: relative;
 `;
 
 export const StyledPlaylistTitle = styled.h4`

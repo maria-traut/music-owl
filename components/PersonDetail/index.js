@@ -8,10 +8,6 @@ import {
   StyledDetailYear,
   StyledDetailName,
   StyledPlaylistSectionTitle,
-  StyledMenuButton,
-  StyledMenuWrapper,
-  StyledMenu,
-  StyledMenuItem,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
 import {
@@ -20,6 +16,10 @@ import {
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessage,
+  StyledMenuButton,
+  StyledMenuWrapper,
+  StyledMenu,
+  StyledMenuItem,
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
@@ -192,7 +192,7 @@ export default function PersonDetail({ person }) {
             <StyledMessage>{name} was successfully deleted.</StyledMessage>
           ) : (
             <StyledMessageAndButtonWrapper>
-              <StyledMessage>{`Remove ${name} and go back to 'People'?`}</StyledMessage>
+              <StyledMessage>Remove and go back?</StyledMessage>
               <StyledButtonWrapper>
                 <StyledButtonSecondary
                   type="button"

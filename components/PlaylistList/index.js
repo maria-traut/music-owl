@@ -1,4 +1,5 @@
 import useSWR from "swr";
+import { useState } from "react";
 import {
   StyledPlaylistList,
   StyledPlaylist,
@@ -9,16 +10,19 @@ import {
   StyledLinkNoteWrapper,
 } from "./PlaylistList.styled";
 import {
-  StyledUpdateButton,
-  StyledDeleteButton,
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessage,
   StyledButtonWrapper,
   StyledMessageAndButtonWrapper,
+  StyledMenuItem,
+  StyledMenuButton,
+  StyledMenu,
+  StyledMenuWrapper,
 } from "../Global/Global.styles";
-import { useState } from "react";
+
 import PlaylistForm from "../PlaylistForm";
+import Image from "next/image";
 
 export default function PlaylistList({
   personId,
@@ -33,6 +37,7 @@ export default function PlaylistList({
   } = useSWR(`/api/playlists?personId=${personId}`);
   const [deletePlaylistId, setDeletePlaylistId] = useState(null);
   const [editPlaylistId, setEditPlaylistId] = useState(null);
+  const [showMenuId, setShowMenuId] = useState(null);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <p>An error occurred.</p>;
@@ -76,22 +81,48 @@ export default function PlaylistList({
                   </StyledButtonWrapper>
                 </StyledMessageAndButtonWrapper>
               ) : (
-                  <StyledButtonWrapper>
-                    <StyledDeleteButton
-                      type="button"
-                      aria-label="Delete playlist"
-                      onClick={() => setDeletePlaylistId(playlist._id)}
-                    >
-                      x
-                    </StyledDeleteButton>
-                    <StyledUpdateButton
-                      type="button"
-                      aria-label="Edit playlist"
-                      onClick={() => setEditPlaylistId(playlist._id)}
-                    >
-                      &#9998;
-                    </StyledUpdateButton>
-                  </StyledButtonWrapper>
+                <StyledMenuWrapper>
+                  <StyledMenuButton
+                    type="button"
+                    aria-label="Further options"
+                    onClick={() =>
+                      setShowMenuId(
+                        showMenuId === playlist._id ? null : playlist._id
+                      )
+                    }
+                  >
+                    <Image
+                      src="/kebab-menu.svg"
+                      alt=""
+                      width={24}
+                      height={24}
+                    />
+                  </StyledMenuButton>
+                  {showMenuId === playlist._id && (
+                    <StyledMenu>
+                      <StyledMenuItem
+                        type="button"
+                        aria-label="Delete playlist"
+                        onClick={() => {
+                          setDeletePlaylistId(playlist._id);
+                          setShowMenuId(null);
+                        }}
+                      >
+                        Delete playlist
+                      </StyledMenuItem>
+                      <StyledMenuItem
+                        type="button"
+                        aria-label="Edit playlist"
+                        onClick={() => {
+                          setEditPlaylistId(playlist._id);
+                          setShowMenuId(null);
+                        }}
+                      >
+                        Edit playlist
+                      </StyledMenuItem>
+                    </StyledMenu>
+                  )}
+                </StyledMenuWrapper>
               )}
             </>
           )}

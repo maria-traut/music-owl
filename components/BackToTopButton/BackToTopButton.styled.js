@@ -14,4 +14,5 @@ export const StyledBackToTopButton = styled(StyledButton)`
   padding: 0;
   overflow: visible;
   z-index: 10;
+  background-color: #eaeae9;
 `;
