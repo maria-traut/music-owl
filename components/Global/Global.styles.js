@@ -65,7 +65,7 @@ export const StyledBackLink = styled(Link)`
 export const StyledFieldset = styled.fieldset`
   border-radius: 15px;
   border: none;
-  background-color: #ededeb;
+  background-color: transparent;
   margin-top: 1rem;
 `;
 
@@ -211,6 +211,7 @@ export const StyledButton = styled.button`
 export const StyledButtonPrimary = styled(StyledButton)`
   color: white;
   background-color: #1b3a5c;
+  width: auto;
   &:hover {
     background: #2459c9;
   }
@@ -220,6 +221,7 @@ export const StyledButtonSecondary = styled(StyledButton)`
   color: #1b3a5c;
   background-color: transparent;
   border: 1px solid #1b3a5c;
+  width: auto;
 `;
 
 // science

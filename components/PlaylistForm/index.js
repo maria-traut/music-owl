@@ -202,47 +202,47 @@ export default function PlaylistForm({
             Add Song
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
-        <StyledSongDivider />
         {defaultValues ? (
           songs.map((song, index) => (
             <StyledUpdateForm key={`${song.title}-${song.artist}`}>
-              {songDeleteMode === `${song.title}-${song.artist}` ? (
-                <StyledMessageAndButtonWrapper>
-                  <StyledMessage>Delete this song?</StyledMessage>
-
-                  <StyledButtonSecondary
-                    type="button"
-                    aria-label="Cancel song deletion"
-                    onClick={() => setSongDeleteMode(null)}
-                  >
-                    No
-                  </StyledButtonSecondary>
-                  <StyledButtonPrimary
-                    type="button"
-                    aria-label="Confirm song deletion"
-                    onClick={() => {
-                      handleSongDelete(index);
-                      setSongDeleteMode(null);
-                    }}
-                  >
-                    Yes
-                  </StyledButtonPrimary>
-                </StyledMessageAndButtonWrapper>
-              ) : (
-                <StyledMessageAndButtonWrapper>
-                  <h4>Song {index + 1}</h4>
-                  <StyledButtonSecondary
-                    type="button"
-                    aria-label="Delete song"
-                    onClick={() =>
-                      setSongDeleteMode(`${song.title}-${song.artist}`)
-                    }
-                  >
-                    Delete Song
-                  </StyledButtonSecondary>
-                </StyledMessageAndButtonWrapper>
-              )}
               <StyledSongBlock>
+                {songDeleteMode === `${song.title}-${song.artist}` ? (
+                  <StyledMessageAndButtonWrapper>
+                    <StyledMessage>Delete this song?</StyledMessage>
+
+                    <StyledButtonSecondary
+                      type="button"
+                      aria-label="Cancel song deletion"
+                      onClick={() => setSongDeleteMode(null)}
+                    >
+                      No
+                    </StyledButtonSecondary>
+                    <StyledButtonPrimary
+                      type="button"
+                      aria-label="Confirm song deletion"
+                      onClick={() => {
+                        handleSongDelete(index);
+                        setSongDeleteMode(null);
+                      }}
+                    >
+                      Yes
+                    </StyledButtonPrimary>
+                  </StyledMessageAndButtonWrapper>
+                ) : (
+                  <StyledMessageAndButtonWrapper>
+                    <h4>Song {index + 1}</h4>
+                    <StyledButtonSecondary
+                      type="button"
+                      aria-label="Delete song"
+                      onClick={() =>
+                        setSongDeleteMode(`${song.title}-${song.artist}`)
+                      }
+                    >
+                      Delete Song
+                    </StyledButtonSecondary>
+                  </StyledMessageAndButtonWrapper>
+                )}
+
                 <StyledFormSection>
                   <StyledVisuallyHiddenLabel>Title</StyledVisuallyHiddenLabel>
                   <StyledInput
@@ -302,7 +302,6 @@ export default function PlaylistForm({
                   />
                 </StyledFormSection>
               </StyledSongBlock>
-              <StyledSongDivider />
             </StyledUpdateForm>
           ))
         ) : (

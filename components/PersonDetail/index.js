@@ -189,7 +189,7 @@ export default function PersonDetail({ person }) {
       {activeMode === "delete" && (
         <>
           {personDeleteSuccess ? (
-            <StyledMessage>{name} was successfully deleted.</StyledMessage>
+            <StyledMessage>{name} was successfully removed.</StyledMessage>
           ) : (
             <StyledMessageAndButtonWrapper>
               <StyledMessage>Remove and go back?</StyledMessage>
@@ -238,13 +238,13 @@ export default function PersonDetail({ person }) {
           />
         ) : (
           <StyledButtonWrapper>
-            <StyledButtonSecondary
+            <StyledButtonPrimary
               type="button"
               aria-label="Open Playlist Form"
               onClick={() => setActiveMode("playlist form")}
             >
-              + Add a Playlist
-            </StyledButtonSecondary>
+              + New Playlist
+            </StyledButtonPrimary>
           </StyledButtonWrapper>
         )}
         {playlistCreateSuccess && (

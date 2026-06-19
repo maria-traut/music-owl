@@ -11,7 +11,8 @@ export const StyledUpdateForm = styled.div`
 `;
 
 export const StyledSongBlock = styled.div`
-  border: 1px solid #e0e0e0;
-  border-radius: 15px;
-  padding: 0.5rem 1rem 1rem 1rem;
+  background-color: white;
+  border-radius: 10px;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
 `;
