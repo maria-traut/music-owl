@@ -5,6 +5,7 @@ import {
   StyledFormSection,
   StyledInput,
   StyledFormButtonWrapper,
+  StyledDeleteButton,
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessageAndButtonWrapper,
@@ -15,6 +16,7 @@ import {
   StyledSongErrorMessage,
   StyledUpdateForm,
   StyledSongBlock,
+  StyledSearchResultList,
 } from "./PlaylistForm.styled";
 
 export default function PlaylistForm({
@@ -35,6 +37,19 @@ export default function PlaylistForm({
     youtubeId: "",
     note: "",
   });
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
+  async function handleSearch() {
+    if (!searchQuery) return;
+    const response = await fetch(
+      `/api/youtube-search?query=${encodeURIComponent(searchQuery)}`
+    );
+    const data = await response.json();
+    console.log("Search results:", data);
+    setSearchResults(data.items || []);
+  }
 
   function isDuplicate(song) {
     return songs.some(
@@ -150,6 +165,36 @@ export default function PlaylistForm({
           />
         </StyledFormSection>
         <StyledFormSection>
+          <StyledLabel htmlFor="search">Search</StyledLabel>
+          <StyledInput
+            type="text"
+            id="search"
+            name="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+          />
+          <StyledDeleteButton type="button" onClick={handleSearch}>
+            Go
+          </StyledDeleteButton>
+          <StyledSearchResultList>
+            {searchResults.map((result) => (
+              <li key={result.id.videoId}>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setCurrentSong({
+                      ...currentSong,
+                      youtubeId: result.id.videoId,
+                    })
+                  }
+                >
+                  {result.snippet.title}
+                </button>
+              </li>
+            ))}
+          </StyledSearchResultList>
+        </StyledFormSection>
+        <StyledFormSection>
           <StyledLabel htmlFor="youtubeId">YouTube ID</StyledLabel>
           <StyledInput
             type="text"
@@ -192,7 +237,7 @@ export default function PlaylistForm({
         <StyledSongDivider />
         {defaultValues ? (
           songs.map((song, index) => (
-  <StyledUpdateForm key={`${song.title}-${song.artist}`}>
+            <StyledUpdateForm key={`${song.title}-${song.artist}`}>
               {songDeleteMode === `${song.title}-${song.artist}` ? (
                 <StyledMessageAndButtonWrapper>
                   <StyledMessage>Delete this song?</StyledMessage>

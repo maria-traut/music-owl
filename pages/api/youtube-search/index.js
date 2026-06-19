@@ -5,10 +5,10 @@ export default async function handler(request, response) {
     return response.status(400).json({ status: "Query is required" });
   }
   try {
-    const response = await fetch(
+    const youtubeResponse = await fetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=5&key=${process.env.YOUTUBE_API_KEY}`
     );
-    const data = await response.json();
+    const data = await youtubeResponse.json();
 
     return response.status(200).json(data);
   } catch (error) {
