@@ -1,11 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-export const StyledIntroSection = styled.section`
-  background: transparent;
-  padding-bottom: 0.6rem;
-`;
-
 export const StyledH2 = styled.h2`
   font-size: 1.25rem;
   font-weight: 600;

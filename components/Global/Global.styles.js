@@ -35,7 +35,6 @@ export const StyledH1 = styled.h1`
 `;
 
 export const StyledH2 = styled.h2`
-  color: white;
   font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.3;
@@ -310,4 +309,9 @@ export const StyledMenuItem = styled.button`
   &:active {
     background: rgba(0, 0, 0, 0.1);
   }
+`;
+
+export const StyledIntroSection = styled.section`
+  background: transparent;
+  padding-bottom: 0.6rem;
 `;

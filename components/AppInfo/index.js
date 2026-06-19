@@ -1,12 +1,14 @@
 import {
-  StyledIntroSection,
   StyledLinkWrapper,
   StyledLinkPeople,
   StyledLinkScience,
-  StyledH2,
   StyledH3,
 } from "./AppInfo.styled";
-import { StyledDivider } from "../Global/Global.styles";
+import {
+  StyledDivider,
+  StyledIntroSection,
+  StyledH2,
+} from "../Global/Global.styles";
 
 export default function AppInfo() {
   return (
