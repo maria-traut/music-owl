@@ -7,8 +7,6 @@ import {
   StyledDetailColoredArea,
   StyledDetailYear,
   StyledDetailName,
-  StyledUpdateButton,
-  StyledDeleteButton,
   StyledPlaylistSectionTitle,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
@@ -18,6 +16,8 @@ import {
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessage,
+  StyledUpdateButton,
+  StyledDeleteButton,
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
@@ -27,12 +27,16 @@ export default function PersonDetail({ person }) {
   const { mutate } = useSWRConfig();
   const { name, birth_year, _id, color } = person;
   const [activeMode, setActiveMode] = useState(null);
+
+  const [personDeleteSuccess, setPersonDeleteSuccess] = useState(false);
   const [personUpdateError, setPersonUpdateError] = useState(null);
   const [personDeleteError, setPersonDeleteError] = useState(false);
-  const [playlistError, setPlaylistError] = useState(null);
+
   const [playlistCreateSuccess, setPlaylistCreateSuccess] = useState(false);
+  const [playlistUpdateSuccess, setPlaylistUpdateSuccess] = useState(false);
+  const [playlistError, setPlaylistError] = useState(null);
+  const [playlistUpdateError, setPlaylistUpdateError] = useState(null);
   const [playlistDeleteSuccess, setPlaylistDeleteSuccess] = useState(false);
-  const [personDeleteSuccess, setPersonDeleteSuccess] = useState(false);
 
   useEffect(() => {
     if (!personDeleteSuccess) return;
@@ -115,6 +119,24 @@ export default function PersonDetail({ person }) {
     }
   }
 
+  async function handlePlaylistUpdate(playlistId, { playlistTitle, songs }) {
+    const response = await fetch(`/api/playlists/${playlistId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ playlist_title: playlistTitle, songs }),
+    });
+    if (response.ok) {
+      mutate(`/api/playlists?personId=${_id}`);
+      setPlaylistUpdateSuccess(true);
+      setTimeout(() => setPlaylistUpdateSuccess(false), 3000);
+      setPlaylistUpdateError(null);
+      return true;
+    } else {
+      setPlaylistUpdateError("Something went wrong. Please try again.");
+      return false;
+    }
+  }
+
   return (
     <>
       <StyledDetailCard>
@@ -184,7 +206,7 @@ export default function PersonDetail({ person }) {
           setUpdateMode={() => setActiveMode(null)}
         />
       )}
-      {personUpdateError && <p role="alert">{personUpdateErrorpdateError}</p>}
+      {personUpdateError && <p role="alert">{personUpdateError}</p>}
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
@@ -207,13 +229,18 @@ export default function PersonDetail({ person }) {
         {playlistCreateSuccess && (
           <StyledMessage>Playlist was successfully created.</StyledMessage>
         )}
+        {playlistUpdateSuccess && (
+          <StyledMessage>Playlist was successfully updated.</StyledMessage>
+        )}
         {playlistDeleteSuccess && (
           <StyledMessage>Playlist was successfully deleted.</StyledMessage>
         )}
+        {playlistUpdateError && <p role="alert">{playlistUpdateError}</p>}
         <PlaylistList
           personId={_id}
           color={color}
           handlePlaylistDelete={handlePlaylistDelete}
+          handlePlaylistUpdate={handlePlaylistUpdate}
         />
       </section>
     </>

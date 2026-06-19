@@ -9,7 +9,8 @@ import {
   StyledLinkNoteWrapper,
 } from "./PlaylistList.styled";
 import {
-  StyledButton,
+  StyledUpdateButton,
+  StyledDeleteButton,
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessage,
@@ -17,11 +18,13 @@ import {
   StyledMessageAndButtonWrapper,
 } from "../Global/Global.styles";
 import { useState } from "react";
+import PlaylistForm from "../PlaylistForm";
 
 export default function PlaylistList({
   personId,
   color,
   handlePlaylistDelete,
+  handlePlaylistUpdate,
 }) {
   const {
     data: playlists,
@@ -29,6 +32,7 @@ export default function PlaylistList({
     error,
   } = useSWR(`/api/playlists?personId=${personId}`);
   const [deletePlaylistId, setDeletePlaylistId] = useState(null);
+  const [editPlaylistId, setEditPlaylistId] = useState(null);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <p>An error occurred.</p>;
@@ -39,36 +43,57 @@ export default function PlaylistList({
     <StyledPlaylistList>
       {playlists.map((playlist) => (
         <StyledPlaylist key={playlist._id} $color={color}>
-          {deletePlaylistId === playlist._id ? (
-            <StyledMessageAndButtonWrapper>
-              <StyledMessage>Delete this playlist?</StyledMessage>
-              <StyledButtonWrapper>
-                <StyledButtonSecondary
-                  type="button"
-                  aria-label="Cancel deletion"
-                  onClick={() => setDeletePlaylistId(null)}
-                >
-                  No
-                </StyledButtonSecondary>
-                <StyledButtonPrimary
-                  type="button"
-                  aria-label="Confirm deletion"
-                  onClick={() => handlePlaylistDelete(playlist._id)}
-                >
-                  Yes
-                </StyledButtonPrimary>
-              </StyledButtonWrapper>
-            </StyledMessageAndButtonWrapper>
+          {editPlaylistId === playlist._id ? (
+            <PlaylistForm
+              defaultValues={playlist}
+              onSubmit={async (data) => {
+                const success = await handlePlaylistUpdate(playlist._id, data);
+                if (success) setEditPlaylistId(null);
+              }}
+              onCancel={() => setEditPlaylistId(null)}
+              editPlaylistId={editPlaylistId}
+            />
           ) : (
-            <StyledButtonWrapper>
-              <StyledButton
-                type="button"
-                aria-label="Delete playlist"
-                onClick={() => setDeletePlaylistId(playlist._id)}
-              >
-                x
-              </StyledButton>
-            </StyledButtonWrapper>
+            <>
+              {deletePlaylistId === playlist._id ? (
+                <StyledMessageAndButtonWrapper>
+                  <StyledMessage>Delete this playlist?</StyledMessage>
+                  <StyledButtonWrapper>
+                    <StyledButtonSecondary
+                      type="button"
+                      aria-label="Cancel deletion"
+                      onClick={() => setDeletePlaylistId(null)}
+                    >
+                      No
+                    </StyledButtonSecondary>
+                    <StyledButtonPrimary
+                      type="button"
+                      aria-label="Confirm deletion"
+                      onClick={() => handlePlaylistDelete(playlist._id)}
+                    >
+                      Yes
+                    </StyledButtonPrimary>
+                  </StyledButtonWrapper>
+                </StyledMessageAndButtonWrapper>
+              ) : (
+                  <StyledButtonWrapper>
+                    <StyledDeleteButton
+                      type="button"
+                      aria-label="Delete playlist"
+                      onClick={() => setDeletePlaylistId(playlist._id)}
+                    >
+                      x
+                    </StyledDeleteButton>
+                    <StyledUpdateButton
+                      type="button"
+                      aria-label="Edit playlist"
+                      onClick={() => setEditPlaylistId(playlist._id)}
+                    >
+                      &#9998;
+                    </StyledUpdateButton>
+                  </StyledButtonWrapper>
+              )}
+            </>
           )}
           <StyledPlaylistTitle>{playlist.playlist_title}</StyledPlaylistTitle>
           <StyledSongList>

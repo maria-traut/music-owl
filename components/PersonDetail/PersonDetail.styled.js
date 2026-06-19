@@ -39,40 +39,6 @@ export const StyledDetailName = styled.div`
   margin: 0.5rem;
 `;
 
-const StyledPersonDetailButton = styled.button`
-  background-color: transparent;
-  height: 1.2rem;
-  width: 2rem;
-  padding: 13px;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #e0e0e0;
-`;
-
-export const StyledUpdateButton = styled(StyledPersonDetailButton)`
-  transform: scaleX(-1);
-
-  &:hover {
-    background-color: #b4d4f7;
-  }
-
-  &:active {
-    background-color: #b4d4f7;
-  }
-`;
-
-export const StyledDeleteButton = styled(StyledPersonDetailButton)`
-  &:hover {
-    background-color: #e7a5a5;
-  }
-
-  &:active {
-    background-color: #e7a5a5;
-  }
-`;
-
 export const StyledPlaylistSectionTitle = styled.h3`
   text-align: center;
   margin: 2.5rem 0 1rem 0;

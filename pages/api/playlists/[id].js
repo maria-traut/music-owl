@@ -12,6 +12,21 @@ export default async function handler(request, response) {
         .status(200)
         .json({ status: `Playlist ${id} successfully deleted.` });
     }
+
+    if (request.method === "PUT") {
+      const playlistData = request.body;
+      const updatedPlaylist = await Playlist.findByIdAndUpdate(
+        id,
+        playlistData,
+        { new: true }
+      );
+      if (!updatedPlaylist) {
+        return response.status(404).json({ status: "Playlist not found" });
+      }
+      return response
+        .status(200)
+        .json({ status: `Playlist ${id} updated!`, updatedPlaylist });
+    }
   } catch (error) {
     return response.status(500).json({ status: "Internal Server Error" });
   }
