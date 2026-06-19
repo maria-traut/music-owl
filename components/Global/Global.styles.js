@@ -116,19 +116,26 @@ export const StyledMessageAndButtonWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const StyledActionButton = styled.button`
-  background-color: transparent;
+export const StyledButton = styled.button`
+  margin: 0;
   height: 1.2rem;
-  width: 2rem;
   padding: 13px;
+  border: none;
   border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  &:disabled {
+    background: #e2e3e3;
+    border: gray;
+    color: gray;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 `;
 
-export const StyledUpdateButton = styled(StyledActionButton)`
+export const StyledUpdateButton = styled(StyledButton)`
   transform: scaleX(-1);
 
   &:hover {
@@ -140,7 +147,7 @@ export const StyledUpdateButton = styled(StyledActionButton)`
   }
 `;
 
-export const StyledDeleteButton = styled(StyledActionButton)`
+export const StyledDeleteButton = styled(StyledButton)`
   &:hover {
     background-color: #e7a5a5;
   }
@@ -155,18 +162,6 @@ export const StyledDeleteButton = styled(StyledActionButton)`
 export const StyledPeopleSection = styled(StyledSection)`
   background-color: #1b3a5c;
   color: white;
-`;
-
-export const StyledButton = styled.button`
-  margin: 0;
-  height: 1.2rem;
-  padding: 13px;
-  border: none;
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 `;
 
 export const StyledButtonPrimary = styled(StyledButton)`

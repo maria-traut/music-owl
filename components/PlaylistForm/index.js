@@ -40,6 +40,7 @@ export default function PlaylistForm({
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [activeSearchIndex, setActiveSearchIndex] = useState(null);
   const [searchError, setSearchError] = useState(null);
 
   async function handleSongSearch() {
@@ -206,6 +207,7 @@ export default function PlaylistForm({
           <StyledButtonWrapper>
             <StyledButtonSecondary
               type="button"
+              disabled={!searchQuery}
               onClick={handleSongSearchClear}
             >
               Clear
@@ -240,8 +242,10 @@ export default function PlaylistForm({
             type="text"
             id="youtubeId"
             name="youtubeId"
-            maxLength={30}
-            title="Youtube ID must be between 1 and 30 characters."
+            maxLength={11}
+            pattern="^[a-zA-Z0-9_-]{11}$"
+            title="Youtube ID must be exactly 11 characters."
+            placeholder="e.g. dQw4w9WgXcQ"
             value={currentSong.youtubeId}
             onChange={(event) =>
               setCurrentSong({
@@ -344,8 +348,69 @@ export default function PlaylistForm({
                   />
                 </StyledFormSection>
                 <StyledFormSection>
+                  <StyledLabel>Search</StyledLabel>
+                  <StyledInput
+                    type="text"
+                    id="search"
+                    name="search"
+                    placeholder="Find on YouTube"
+                    value={searchQuery}
+                    onChange={(event) => setSearchQuery(event.target.value)}
+                  />
+                  <StyledButtonWrapper>
+                    <StyledButtonSecondary
+                      type="button"
+                      disabled={!searchQuery}
+                      onClick={handleSongSearchClear}
+                    >
+                      Clear
+                    </StyledButtonSecondary>
+                    <StyledButtonSecondary
+                      type="button"
+                      onClick={() => {
+                        setActiveSearchIndex(index);
+                        handleSongSearch();
+                      }}
+                    >
+                      Go
+                    </StyledButtonSecondary>
+                  </StyledButtonWrapper>
+                  {activeSearchIndex === index && (
+                    <StyledSearchResultList>
+                      {searchResults.map((result) => (
+                        <li key={result.id.videoId}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updated = songs.map((existingSong, i) =>
+                                i === activeSearchIndex
+                                  ? {
+                                      ...existingSong,
+                                      youtube_id: result.id.videoId,
+                                    }
+                                  : existingSong
+                              );
+
+                              setSongs(updated);
+                              setSearchResults([]);
+                              setSearchQuery("");
+                              setActiveSearchIndex(null);
+                            }}
+                          >
+                            {decodeHtml(result.snippet.title)}
+                          </button>
+                        </li>
+                      ))}
+                    </StyledSearchResultList>
+                  )}
+                </StyledFormSection>
+                <StyledFormSection>
                   <StyledLabel>Youtube ID</StyledLabel>
                   <StyledInput
+                    maxLength={11}
+                    pattern="^[a-zA-Z0-9_-]{11}$"
+                    title="Youtube ID must be exactly 11 characters."
+                    placeholder="e.g. dQw4w9WgXcQ"
                     value={song.youtubeId || song.youtube_id || ""}
                     onChange={(event) => {
                       const updated = songs.map((existingSong, i) =>
