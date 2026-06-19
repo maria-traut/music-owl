@@ -41,14 +41,19 @@ export default function PlaylistForm({
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  async function handleSearch() {
+  async function handleSongSearch() {
     if (!searchQuery) return;
     const response = await fetch(
       `/api/youtube-search?query=${encodeURIComponent(searchQuery)}`
     );
     const data = await response.json();
-    console.log("Search results:", data);
     setSearchResults(data.items || []);
+  }
+
+  function decodeHtml(html) {
+    const textarea = document.createElement("textarea");
+    textarea.innerHTML = html;
+    return textarea.value;
   }
 
   function isDuplicate(song) {
@@ -77,6 +82,11 @@ export default function PlaylistForm({
     setSongError(null);
   }
 
+  function handleSongDelete(index) {
+    const updated = songs.filter((song, i) => i !== index);
+    setSongs(updated);
+  }
+
   function handlePlaylistFormClear() {
     setCurrentPlaylistTitle("");
     setSongs([]);
@@ -84,24 +94,26 @@ export default function PlaylistForm({
     setSongError(false);
   }
 
-  function handleSongDelete(index) {
-    const updated = songs.filter((song, i) => i !== index);
-    setSongs(updated);
-  }
-
   async function handlePlaylistDataCollect(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const playlistTitle = formData.get("playlistTitle") ?? currentPlaylistTitle;
-    const allSongs =
+    const allSongs = (
       currentSong.title && currentSong.artist && !isDuplicate(currentSong)
         ? [...songs, currentSong]
-        : songs;
+        : songs
+    ).map((song) => ({
+      title: song.title,
+      artist: song.artist,
+      youtube_id: song.youtubeId || song.youtube_id || "",
+      note: song.note,
+    }));
     if (allSongs.length === 0) {
       setSongError("Please enter at least one song.");
       return;
     }
     setSongError(null);
+
     const success = await onSubmit({ playlistTitle, songs: allSongs });
     if (success) handlePlaylistFormClear();
   }
@@ -170,10 +182,11 @@ export default function PlaylistForm({
             type="text"
             id="search"
             name="search"
+            placeholder="Find on YouTube"
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
           />
-          <StyledDeleteButton type="button" onClick={handleSearch}>
+          <StyledDeleteButton type="button" onClick={handleSongSearch}>
             Go
           </StyledDeleteButton>
           <StyledSearchResultList>
@@ -181,14 +194,15 @@ export default function PlaylistForm({
               <li key={result.id.videoId}>
                 <button
                   type="button"
-                  onClick={() =>
+                  onClick={() => {
                     setCurrentSong({
                       ...currentSong,
                       youtubeId: result.id.videoId,
-                    })
-                  }
+                    });
+                    setSearchResults([]);
+                  }}
                 >
-                  {result.snippet.title}
+                  {decodeHtml(result.snippet.title)}
                 </button>
               </li>
             ))}
