@@ -5,7 +5,6 @@ import {
   StyledH2,
   StyledDivider,
 } from "../components/Global/Global.styles";
-import BackToTopButton from "@/components/BackToTopButton";
 
 export default function Science() {
   return (
@@ -15,7 +14,6 @@ export default function Science() {
         <p>Find out more about how music effects our brain.</p>
       </StyledScienceSection>
       <StyledDivider />
-      <BackToTopButton />
       <ScientificFindingList />
     </StyledMain>
   );

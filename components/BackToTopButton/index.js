@@ -1,6 +1,7 @@
 import { scrollToTop } from "../Global";
 import { useEffect, useState } from "react";
 import { StyledBackToTopButton } from "./BackToTopButton.styled";
+import Image from "next/image";
 
 export default function BackToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -20,7 +21,12 @@ export default function BackToTopButton() {
       aria-label="Scroll back to top"
       onClick={scrollToTop}
     >
-      TEST
+      <Image
+        src="/arrow-up.svg"
+        alt="scroll-to-top-button"
+        width={24}
+        height={24}
+      />
     </StyledBackToTopButton>
   ) : null;
 }
