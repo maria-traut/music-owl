@@ -46,6 +46,11 @@ export const StyledMessage = styled.p`
   margin-top: 0.5rem;
 `;
 
+export const StyledErrorMessage = styled.p`
+  color: salmon;
+  font-weight: 600;
+`;
+
 export const StyledBackLink = styled(Link)`
   text-decoration: none;
   color: inherit;

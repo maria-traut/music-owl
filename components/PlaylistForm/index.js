@@ -5,15 +5,15 @@ import {
   StyledFormSection,
   StyledInput,
   StyledFormButtonWrapper,
-  StyledDeleteButton,
   StyledButtonPrimary,
   StyledButtonSecondary,
   StyledMessageAndButtonWrapper,
+  StyledButtonWrapper,
   StyledSongDivider,
   StyledMessage,
+  StyledErrorMessage,
 } from "../Global/Global.styles";
 import {
-  StyledSongErrorMessage,
   StyledUpdateForm,
   StyledSongBlock,
   StyledSearchResultList,
@@ -40,14 +40,29 @@ export default function PlaylistForm({
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [searchError, setSearchError] = useState(null);
 
   async function handleSongSearch() {
-    if (!searchQuery) return;
+    if (!searchQuery) {
+      setSearchError("Please enter a search term.");
+      setTimeout(() => setSearchError(false), 3000);
+      return;
+    }
     const response = await fetch(
       `/api/youtube-search?query=${encodeURIComponent(searchQuery)}`
     );
     const data = await response.json();
-    setSearchResults(data.items || []);
+    if (!data.items || data.items.length === 0) {
+      setSearchError("No results found. Try a different search termin.");
+      return;
+    }
+    setSearchError(null);
+    setSearchResults(data.items);
+  }
+
+  function handleSongSearchClear() {
+    setSearchQuery("");
+    setSearchResults([]);
   }
 
   function decodeHtml(html) {
@@ -67,6 +82,7 @@ export default function PlaylistForm({
   function handleSongAdd() {
     if (!currentSong.title || !currentSong.artist) {
       setSongError("Please enter at least a title and an artist.");
+      setTimeout(() => setSongError(false), 3000);
       return;
     }
     if (isDuplicate(currentSong)) {
@@ -144,9 +160,7 @@ export default function PlaylistForm({
         </StyledFormSection>
         <p>Add up to 20 Songs</p>
         {songError && (
-          <StyledSongErrorMessage role="alert">
-            {songError}
-          </StyledSongErrorMessage>
+          <StyledErrorMessage role="alert">{songError}</StyledErrorMessage>
         )}
         <StyledFormSection>
           <StyledLabel htmlFor="title">Title</StyledLabel>
@@ -176,6 +190,9 @@ export default function PlaylistForm({
             }
           />
         </StyledFormSection>
+        {searchError && (
+          <StyledErrorMessage role="alert">{searchError}</StyledErrorMessage>
+        )}
         <StyledFormSection>
           <StyledLabel htmlFor="search">Search</StyledLabel>
           <StyledInput
@@ -186,9 +203,17 @@ export default function PlaylistForm({
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
           />
-          <StyledDeleteButton type="button" onClick={handleSongSearch}>
-            Go
-          </StyledDeleteButton>
+          <StyledButtonWrapper>
+            <StyledButtonSecondary
+              type="button"
+              onClick={handleSongSearchClear}
+            >
+              Clear
+            </StyledButtonSecondary>
+            <StyledButtonSecondary type="button" onClick={handleSongSearch}>
+              Go
+            </StyledButtonSecondary>
+          </StyledButtonWrapper>
           <StyledSearchResultList>
             {searchResults.map((result) => (
               <li key={result.id.videoId}>
@@ -200,6 +225,7 @@ export default function PlaylistForm({
                       youtubeId: result.id.videoId,
                     });
                     setSearchResults([]);
+                    setSearchQuery("");
                   }}
                 >
                   {decodeHtml(result.snippet.title)}

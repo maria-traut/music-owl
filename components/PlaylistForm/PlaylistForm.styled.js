@@ -1,10 +1,5 @@
 import styled from "styled-components";
 
-export const StyledSongErrorMessage = styled.p`
-  color: salmon;
-  font-weight: 700;
-`;
-
 export const StyledUpdateForm = styled.div`
   margin: 0;
   padding: 0;
