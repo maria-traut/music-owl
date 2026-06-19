@@ -76,7 +76,6 @@ export default function PlaylistList({
                   </StyledButtonWrapper>
                 </StyledMessageAndButtonWrapper>
               ) : (
-                <>
                   <StyledButtonWrapper>
                     <StyledDeleteButton
                       type="button"
@@ -93,7 +92,6 @@ export default function PlaylistList({
                       &#9998;
                     </StyledUpdateButton>
                   </StyledButtonWrapper>
-                </>
               )}
             </>
           )}
