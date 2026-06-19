@@ -16,6 +16,7 @@ export default function App({ Component, pageProps }) {
       <StyledApp>
         <StyledH1>Music Owl</StyledH1>
         <NavBar />
+
         <Component {...pageProps} />
       </StyledApp>
     </SWRConfig>
