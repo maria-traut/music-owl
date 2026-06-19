@@ -192,7 +192,7 @@ export default function PlaylistForm({
         <StyledSongDivider />
         {defaultValues ? (
           songs.map((song, index) => (
-            <StyledUpdateForm key={index}>
+  <StyledUpdateForm key={`${song.title}-${song.artist}`}>
               {songDeleteMode === `${song.title}-${song.artist}` ? (
                 <StyledMessageAndButtonWrapper>
                   <StyledMessage>Delete this song?</StyledMessage>
