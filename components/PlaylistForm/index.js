@@ -43,7 +43,7 @@ export default function PlaylistForm({
   const [activeSearchIndex, setActiveSearchIndex] = useState(null);
   const [searchError, setSearchError] = useState(null);
 
-  async function handleSongSearch() {
+  async function handleSongSearch(index = null) {
     if (!searchQuery) {
       setSearchError("Please enter a search term.");
       setTimeout(() => setSearchError(false), 3000);
@@ -54,11 +54,13 @@ export default function PlaylistForm({
     );
     const data = await response.json();
     if (!data.items || data.items.length === 0) {
-      setSearchError("No results found. Try a different search termin.");
+      setSearchResults([]);
+      setSearchError("No results found. Try a different search term.");
       return;
     }
     setSearchError(null);
     setSearchResults(data.items);
+    setActiveSearchIndex(index);
   }
 
   function handleSongSearchClear() {
@@ -369,7 +371,7 @@ export default function PlaylistForm({
                       type="button"
                       onClick={() => {
                         setActiveSearchIndex(index);
-                        handleSongSearch();
+                        handleSongSearch(index);
                       }}
                     >
                       Go
