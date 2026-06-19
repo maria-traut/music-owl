@@ -1,0 +1,17 @@
+export default async function handler(request, response) {
+  const { query } = request.query;
+
+  if (!query) {
+    return response.status(400).json({ status: "Query is required" });
+  }
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=5&key=${process.env.YOUTUBE_API_KEY}`
+    );
+    const data = await response.json();
+
+    return response.status(200).json(data);
+  } catch (error) {
+    return response.status(500).json({ status: "Something went wrong." });
+  }
+}
