@@ -7,6 +7,12 @@ import {
   StyledReference,
 } from "./ScientificFindingCard.styled";
 
+const CATEGORY_COLORS = {
+  Neurology: "#fde5bb",
+  Psychology: "#fbd5d5",
+  "Clinical Research": "#d5e8fb",
+};
+
 export default function ScientificFindingCard({ scientificFinding }) {
   const {
     title_en,
@@ -18,8 +24,9 @@ export default function ScientificFindingCard({ scientificFinding }) {
     publisher,
     tags,
   } = scientificFinding;
+  console.log(category);
   return (
-    <StyledCard>
+    <StyledCard $color={CATEGORY_COLORS[category] ?? "#fde5bb"}>
       <StyledCategory>{category}</StyledCategory>
       <StyledCardTitle>{title_en}</StyledCardTitle>
       <p>{finding_en}</p>

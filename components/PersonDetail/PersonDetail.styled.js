@@ -18,21 +18,20 @@ export const StyledPersonHeader = styled.div`
 export const StyledColorAvatar = styled.span`
   width: 44px;
   height: 44px;
-  border-radius: 15px;
+  border-radius: 8px;
   background: ${({ $color }) => $color};
   flex-shrink: 0;
 `;
 
 export const StyledPersonName = styled.h3`
   font-weight: 500;
-
   margin: 0;
 `;
 
 export const StyledPersonYear = styled.p`
   font-size: 12px;
-
   margin: 0;
+  white-space: nowrap;
 `;
 
 export const StyledPlaylistSectionHeader = styled.div`

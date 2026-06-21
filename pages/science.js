@@ -11,7 +11,10 @@ export default function Science() {
     <StyledMain>
       <StyledIntroSection>
         <StyledH2>Scientific Findings</StyledH2>
-        <p>Find out more about how music effects our brain.</p>
+        <p>
+          The science behind Music Owl — why familiar songs can unlock memories
+          when little else can..
+        </p>
       </StyledIntroSection>
       <StyledDivider />
       <ScientificFindingList />

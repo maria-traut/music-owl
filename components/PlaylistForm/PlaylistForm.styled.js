@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledSongErrorMessage = styled.p`
-  color: salmon;
+  color: #fa8072;
   font-weight: 700;
 `;
 
@@ -28,7 +28,7 @@ export const StyledSongRow = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 0;
+  padding: 10px 0 10px 10px;
 `;
 
 export const StyledSongNumber = styled.span`
@@ -48,4 +48,10 @@ export const StyledSongArtist = styled.p`
   font-size: 12px;
   color: #1b3a5c99;
   margin: 0;
+`;
+
+export const StyledHint = styled.span`
+  font-size: 11px;
+  color: #1b3a5c99;
+  font-weight: 400;
 `;

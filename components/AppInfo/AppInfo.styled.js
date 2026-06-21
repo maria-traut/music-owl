@@ -31,3 +31,7 @@ export const StyledLinkPeople = styled(StyledLink)`
 export const StyledLinkScience = styled(StyledLink)`
   background-color: #e8a838;
 `;
+
+export const StyledLinkPlaylists = styled(StyledLink)`
+  background-color: #4a9b8e;
+`;

@@ -25,6 +25,7 @@ import {
   StyledSongInfo,
   StyledSongTitle,
   StyledSongArtist,
+  StyledHint,
 } from "./PlaylistForm.styled";
 import KebabMenuIcon from "../KebabMenuIcon";
 
@@ -93,6 +94,15 @@ export default function PlaylistForm({
 
   async function handlePlaylistDataCollect(event) {
     event.preventDefault();
+
+    const invalidSong = songs.some((song) => !song.title || !song.artist);
+
+    if (invalidSong) {
+      setSongError("Every song needs at least a title and an artist.");
+
+      return;
+    }
+
     const formData = new FormData(event.target);
     const playlistTitle = formData.get("playlistTitle") || currentPlaylistTitle;
     const allSongs =
@@ -124,7 +134,6 @@ export default function PlaylistForm({
             type="text"
             id="playlistTitle"
             name="playlistTitle"
-            placeholder="e. g. Calm"
             required
             aria-required="true"
             maxLength={50}
@@ -153,7 +162,6 @@ export default function PlaylistForm({
                       <StyledInput
                         value={song.title}
                         aria-required="true"
-                        placeholder="e.g. Let it be"
                         onChange={(event) => {
                           const updated = songs.map((existingSong, i) =>
                             i === index
@@ -172,7 +180,6 @@ export default function PlaylistForm({
                       <StyledInput
                         value={song.artist}
                         aria-required="true"
-                        placeholder="e.g. The Beatles"
                         onChange={(event) => {
                           const updated = songs.map((existingSong, i) =>
                             i === index
@@ -188,10 +195,13 @@ export default function PlaylistForm({
                     </StyledFormSection>
 
                     <StyledFormSection>
-                      <StyledLabel>Youtube ID</StyledLabel>
+                      <StyledLabel>
+                        Youtube ID{" "}
+                        <StyledHint>(from the URL after ?v=)</StyledHint>
+                      </StyledLabel>
                       <StyledInput
                         value={song.youtubeId || song.youtube_id || ""}
-                        placeholder="Youtube ID"
+                        placeholder="e.g. CGj85pVzRJs"
                         onChange={(event) => {
                           const updated = songs.map((existingSong, i) =>
                             i === index
@@ -210,7 +220,6 @@ export default function PlaylistForm({
                       <StyledLabel>Note</StyledLabel>
                       <StyledInput
                         value={song.note || ""}
-                        placeholder="Note"
                         onChange={(event) => {
                           const updated = songs.map((existingSong, i) =>
                             i === index
@@ -317,7 +326,6 @@ export default function PlaylistForm({
                 id="title"
                 name="title"
                 aria-required="true"
-                placeholder="e.g. Let it be"
                 maxLength={30}
                 title="Title must be between 1 and 30 characters."
                 value={currentSong.title}
@@ -336,7 +344,6 @@ export default function PlaylistForm({
                 id="artist"
                 name="artist"
                 aria-required="true"
-                placeholder="e.g. The Beatles"
                 maxLength={30}
                 title="Artist must be between 1 and 30 characters."
                 value={currentSong.artist}
@@ -347,7 +354,9 @@ export default function PlaylistForm({
             </StyledFormSection>
 
             <StyledFormSection>
-              <StyledLabel htmlFor="youtubeId">YouTube ID</StyledLabel>
+              <StyledLabel>
+                Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>
+              </StyledLabel>
               <StyledInput
                 type="text"
                 id="youtubeId"
@@ -371,7 +380,6 @@ export default function PlaylistForm({
                 type="text"
                 id="note"
                 name="note"
-                placeholder="e.g. Most favourite song"
                 maxLength={50}
                 title="Note must be between 1 and 50 characters."
                 value={currentSong.note}
@@ -381,7 +389,7 @@ export default function PlaylistForm({
               />
             </StyledFormSection>
             <StyledFormButtonWrapperLeft>
-              <StyledButtonTertiary
+              <StyledButtonSecondary
                 type="button"
                 aria-label="Save song"
                 onClick={() => {
@@ -390,7 +398,7 @@ export default function PlaylistForm({
                 }}
               >
                 Add to playlist
-              </StyledButtonTertiary>
+              </StyledButtonSecondary>
             </StyledFormButtonWrapperLeft>
           </StyledSongForm>
         )}

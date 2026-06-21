@@ -55,7 +55,6 @@ export default function People() {
   }
 
   function handlePersonFormClear(event) {
-    event.target.form.reset();
     setPersonCreateSuccess(false);
     setPersonCreateError(false);
   }
@@ -69,6 +68,7 @@ export default function People() {
           year of birth and their favourite colour.
         </p>
       </StyledIntroSection>
+      <StyledDivider />
 
       {personFormMode ? (
         <PersonForm
@@ -93,7 +93,7 @@ export default function People() {
       {personCreateError && (
         <StyledMessage>Something went wrong. Please try again.</StyledMessage>
       )}
-      <StyledDivider />
+
       <PersonList />
     </StyledMain>
   );

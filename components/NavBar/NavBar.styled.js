@@ -7,7 +7,7 @@ export const StyledNav = styled.div`
   justify-content: center;
   gap: 3.5rem;
   width: 100%;
-  padding: 8.5px 0;
+  padding: 7px 0;
   font-size: 1rem;
   line-height: 1.5;
   text-transform: uppercase;
@@ -35,5 +35,5 @@ export const StyledNavLink = styled(Link)`
 `;
 
 export const StyledNavDivider = styled(StyledDivider)`
-  margin: 5px 25px 10px 25px;
+  margin: 5px 25px 7px 25px;
 `;

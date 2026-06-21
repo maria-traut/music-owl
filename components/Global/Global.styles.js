@@ -13,7 +13,7 @@ export const StyledMain = styled.main`
 export const StyledDivider = styled.hr`
   border: none;
   border-top: 1px solid #e0e0e0;
-  margin: 10px 0;
+  margin: 2rem 0;
 `;
 
 export const StyledSongDivider = styled(StyledDivider)`
@@ -92,7 +92,7 @@ export const StyledInput = styled.input`
   font-size: 16px;
   padding: 12px 14px;
   min-height: 48px;
-  border-radius: 15px;
+  border-radius: 8px;
   border: 1px solid #e0e0e0;
   -webkit-appearance: none;
   appearance: none;
@@ -117,7 +117,7 @@ export const StyledInput = styled.input`
   }
 
   &:user-invalid {
-    border: 2px solid salmon;
+    border: 2px solid #fa8072;
   }
 `;
 
@@ -155,7 +155,7 @@ const StyledActionButton = styled.button`
   height: 1.2rem;
   width: 2rem;
   padding: 13px;
-  border-radius: 15px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -245,7 +245,7 @@ export const StyledButtonDanger = styled(StyledButton)`
   color: white;
   background-color: #b85450;
   &:hover {
-    background: salmon;
+    background: #8b3d3a;
   }
 `;
 
@@ -297,9 +297,9 @@ export const StyledMenu = styled.div`
   right: 0;
   min-width: 160px;
   background: #fafaf8;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border: 0.5px solid #1b3a5c22;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   padding: 6px;
@@ -339,6 +339,8 @@ export const StyledMenuItem = styled.button`
 `;
 
 export const StyledIntroSection = styled.section`
+  all: unset;
   background: transparent;
-  padding-bottom: 0.6rem;
+  padding: 0;
+  margin: 0;
 `;
