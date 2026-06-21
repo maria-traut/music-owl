@@ -3,11 +3,13 @@ import { useSWRConfig } from "swr";
 import { useState, useEffect } from "react";
 
 import {
-  StyledDetailCard,
-  StyledDetailColoredArea,
-  StyledDetailYear,
-  StyledDetailName,
   StyledPlaylistSectionTitle,
+  StyledPlaylistSectionHeader,
+  StyledPersonHeader,
+  StyledColorAvatar,
+  StyledPersonName,
+  StyledPersonYear,
+  StyledPersonHeaderMenuWrapper,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
 import {
@@ -15,11 +17,12 @@ import {
   StyledButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
+  StyledButtonDanger,
   StyledMessage,
   StyledMenuButton,
-  StyledMenuWrapper,
   StyledMenu,
   StyledMenuItem,
+  StyledDivider,
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
@@ -144,47 +147,44 @@ export default function PersonDetail({ person }) {
 
   return (
     <>
-      <StyledDetailCard>
-        <StyledDetailColoredArea $color={color}>
-          <StyledMenuWrapper>
-            <StyledMenuButton
-              type="button"
-              aria-label="Further options"
-              onClick={() => {
-                setShowMenu(!showMenu);
-              }}
-            >
-              <KebabMenuIcon />
-            </StyledMenuButton>
-            {showMenu && (
-              <StyledMenu>
-                <StyledMenuItem
-                  type="button"
-                  aria-label="Edit person"
-                  onClick={() => {
-                    setActiveMode("edit");
-                    setShowMenu(false);
-                  }}
-                >
-                  Edit person
-                </StyledMenuItem>
-                <StyledMenuItem
-                  type="button"
-                  aria-label="Delete person"
-                  onClick={() => {
-                    setActiveMode("delete");
-                    setShowMenu(false);
-                  }}
-                >
-                  Remove person
-                </StyledMenuItem>
-              </StyledMenu>
-            )}
-          </StyledMenuWrapper>
-          <StyledDetailYear>{birth_year}</StyledDetailYear>
-        </StyledDetailColoredArea>
-        <StyledDetailName>{name}</StyledDetailName>
-      </StyledDetailCard>
+      <StyledPersonHeader>
+        <StyledColorAvatar $color={color} />
+        <StyledPersonName>{name}</StyledPersonName>
+        <StyledPersonYear>* {birth_year}</StyledPersonYear>
+        <StyledPersonHeaderMenuWrapper>
+          <StyledMenuButton
+            type="button"
+            aria-label="Further options"
+            onClick={() => setShowMenu(!showMenu)}
+          >
+            <KebabMenuIcon />
+          </StyledMenuButton>
+          {showMenu && (
+            <StyledMenu>
+              <StyledMenuItem
+                type="button"
+                aria-label="Edit person"
+                onClick={() => {
+                  setActiveMode("edit");
+                  setShowMenu(false);
+                }}
+              >
+                Edit person
+              </StyledMenuItem>
+              <StyledMenuItem
+                type="button"
+                aria-label="Delete person"
+                onClick={() => {
+                  setActiveMode("delete");
+                  setShowMenu(false);
+                }}
+              >
+                Remove person
+              </StyledMenuItem>
+            </StyledMenu>
+          )}
+        </StyledPersonHeaderMenuWrapper>
+      </StyledPersonHeader>
 
       {activeMode === "delete" && (
         <>
@@ -204,13 +204,13 @@ export default function PersonDetail({ person }) {
                 >
                   No
                 </StyledButtonSecondary>
-                <StyledButtonPrimary
+                <StyledButtonDanger
                   type="button"
                   aria-label="Confirm deletion"
                   onClick={handlePersonDelete}
                 >
                   Yes
-                </StyledButtonPrimary>
+                </StyledButtonDanger>
               </StyledButtonWrapper>
               {personDeleteError && (
                 <span>An error occurred. Please try again.</span>
@@ -230,14 +230,10 @@ export default function PersonDetail({ person }) {
       {personUpdateError && <p role="alert">{personUpdateError}</p>}
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
-        <StyledPlaylistSectionTitle>Playlists</StyledPlaylistSectionTitle>
-        {activeMode === "playlist form" ? (
-          <PlaylistForm
-            onSubmit={(data) => handlePlaylistCreate(data)}
-            onCancel={() => setActiveMode(null)}
-          />
-        ) : (
-          <StyledButtonWrapper>
+        <StyledDivider />
+        <StyledPlaylistSectionHeader>
+          <StyledPlaylistSectionTitle>Playlists</StyledPlaylistSectionTitle>
+          {activeMode !== "playlist form" && (
             <StyledButtonPrimary
               type="button"
               aria-label="Open Playlist Form"
@@ -245,8 +241,16 @@ export default function PersonDetail({ person }) {
             >
               + New Playlist
             </StyledButtonPrimary>
-          </StyledButtonWrapper>
+          )}
+        </StyledPlaylistSectionHeader>
+
+        {activeMode === "playlist form" && (
+          <PlaylistForm
+            onSubmit={(data) => handlePlaylistCreate(data)}
+            onCancel={() => setActiveMode(null)}
+          />
         )}
+
         {playlistCreateSuccess && (
           <StyledMessage>Playlist successfully created.</StyledMessage>
         )}
@@ -257,6 +261,7 @@ export default function PersonDetail({ person }) {
           <StyledMessage>Playlist successfully deleted.</StyledMessage>
         )}
         {playlistUpdateError && <p role="alert">{playlistUpdateError}</p>}
+
         <PlaylistList
           personId={_id}
           color={color}

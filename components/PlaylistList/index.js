@@ -10,13 +10,13 @@ import {
   StyledLinkNoteWrapper,
 } from "./PlaylistList.styled";
 import {
-  StyledButtonPrimary,
+  StyledButtonDanger,
   StyledButtonSecondary,
   StyledMessage,
   StyledButtonWrapper,
   StyledMessageAndButtonWrapper,
   StyledMenuItem,
-  StyledMenuButtonDark,
+  StyledMenuButton,
   StyledMenu,
   StyledMenuWrapper,
 } from "../Global/Global.styles";
@@ -64,13 +64,6 @@ export default function PlaylistList({
               <StyledMessageAndButtonWrapper>
                 <StyledMessage>Delete this playlist?</StyledMessage>
                 <StyledButtonWrapper>
-                  <StyledButtonPrimary
-                    type="button"
-                    aria-label="Confirm deletion"
-                    onClick={() => handlePlaylistDelete(playlist._id)}
-                  >
-                    Yes
-                  </StyledButtonPrimary>
                   <StyledButtonSecondary
                     type="button"
                     aria-label="Cancel deletion"
@@ -78,11 +71,18 @@ export default function PlaylistList({
                   >
                     No
                   </StyledButtonSecondary>
+                  <StyledButtonDanger
+                    type="button"
+                    aria-label="Confirm deletion"
+                    onClick={() => handlePlaylistDelete(playlist._id)}
+                  >
+                    Yes
+                  </StyledButtonDanger>
                 </StyledButtonWrapper>
               </StyledMessageAndButtonWrapper>
             ) : (
               <StyledMenuWrapper>
-                <StyledMenuButtonDark
+                <StyledMenuButton
                   type="button"
                   aria-label="Further options"
                   onClick={() =>
@@ -92,7 +92,7 @@ export default function PlaylistList({
                   }
                 >
                   <KebabMenuIcon />
-                </StyledMenuButtonDark>
+                </StyledMenuButton>
                 {showMenuId === playlist._id && (
                   <StyledMenu>
                     <StyledMenuItem

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const StyledApp = styled.div`
   max-width: 480px;
-  margin: 0 auto;
+  margin: 0 auto 2.3rem;
 `;
 
 export const StyledMain = styled.main`
@@ -52,7 +52,8 @@ export const StyledMessage = styled.p`
 
 export const StyledBackLink = styled(Link)`
   text-decoration: none;
-  color: inherit;
+  color: #1b3a5c99;
+  text-decoration: none;
   display: inline-block;
   padding: 1rem 0;
   cursor: pointer;
@@ -240,6 +241,14 @@ export const StyledButtonTertiary = styled(StyledButton)`
   }
 `;
 
+export const StyledButtonDanger = styled(StyledButton)`
+  color: white;
+  background-color: #b85450;
+  &:hover {
+    background: salmon;
+  }
+`;
+
 // science
 
 export const StyledScienceMain = styled(StyledMain)`
@@ -254,29 +263,6 @@ export const StyledScienceSection = styled(StyledSection)`
 `;
 
 export const StyledMenuButton = styled.button`
-  border: none;
-  background: #00000022;
-  color: #fafaf8;
-
-  width: 36px;
-  height: 36px;
-
-  border-radius: 8px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-
-  transition: background 120ms ease;
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.08);
-  }
-`;
-
-export const StyledMenuButtonDark = styled.button`
   border: none;
   background: transparent;
   color: #1b3a5c;

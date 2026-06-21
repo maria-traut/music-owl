@@ -10,7 +10,7 @@ import {
   StyledButtonTertiary,
   StyledMessageAndButtonWrapper,
   StyledLabel,
-  StyledMenuButtonDark,
+  StyledMenuButton,
   StyledMenu,
   StyledMenuItem,
   StyledH4,
@@ -26,7 +26,7 @@ import {
   StyledSongTitle,
   StyledSongArtist,
 } from "./PlaylistForm.styled";
-import Image from "next/image";
+import KebabMenuIcon from "../KebabMenuIcon";
 
 export default function PlaylistForm({
   onSubmit,
@@ -94,7 +94,7 @@ export default function PlaylistForm({
   async function handlePlaylistDataCollect(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const playlistTitle = formData.get("playlistTitle") ?? currentPlaylistTitle;
+    const playlistTitle = formData.get("playlistTitle") || currentPlaylistTitle;
     const allSongs =
       currentSong.title && currentSong.artist && !isDuplicate(currentSong)
         ? [...songs, currentSong]
@@ -237,7 +237,7 @@ export default function PlaylistForm({
                       <StyledSongArtist>{song.artist}</StyledSongArtist>
                     </StyledSongInfo>
                     <StyledMessageAndButtonWrapper>
-                      <StyledMenuButtonDark
+                      <StyledMenuButton
                         type="button"
                         aria-label="Song options"
                         onClick={() =>
@@ -246,13 +246,8 @@ export default function PlaylistForm({
                           )
                         }
                       >
-                        <Image
-                          src="/kebab-menu.svg"
-                          alt=""
-                          width={24}
-                          height={24}
-                        />
-                      </StyledMenuButtonDark>
+                        <KebabMenuIcon />
+                      </StyledMenuButton>
 
                       {activeSongMenu === index && (
                         <StyledMenu>

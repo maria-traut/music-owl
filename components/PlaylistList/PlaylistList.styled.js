@@ -13,7 +13,7 @@ export const StyledPlaylist = styled.li`
   list-style: none;
   width: 100%;
   padding: 1rem 1rem 1rem 1.5rem;
-  border: 2px solid ${({ $color }) => $color}88;
+  border: 3px solid ${({ $color }) => $color}88;
   border-radius: 15px;
   position: relative;
 `;
@@ -52,5 +52,5 @@ export const StyledYoutubeLink = styled.a`
 export const StyledNote = styled.p`
   font-size: 0.8rem;
   font-style: italic;
-  color: #8d99a5;
+  color: #1b3a5c99;
 `;
