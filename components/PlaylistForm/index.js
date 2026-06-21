@@ -65,19 +65,20 @@ export default function PlaylistForm({
     if (!currentSong.title || !currentSong.artist) {
       setSongError("Please enter at least a title and an artist.");
       setTimeout(() => setSongError(null), 3000);
-      return;
+      return false;
     }
     if (isDuplicate(currentSong)) {
       setSongError("This song is already in the playlist.");
-      return;
+      return false;
     }
     if (songs.length >= 20) {
       setSongError("A playlist can contain a maximum of 20 songs.");
-      return;
+      return false;
     }
     setSongs([...songs, currentSong]);
     setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
     setSongError(null);
+    return true;
   }
 
   function handlePlaylistFormClear() {
@@ -151,7 +152,7 @@ export default function PlaylistForm({
 
         {defaultValues ? (
           songs.map((song, index) => (
-            <StyledUpdateForm key={`${song.title}-${song.artist}`}>
+            <StyledUpdateForm key={index}>
               <StyledSongBlock>
                 {songEditMode === index ? (
                   <StyledSongForm>
