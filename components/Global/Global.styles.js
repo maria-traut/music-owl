@@ -63,7 +63,7 @@ export const StyledBackLink = styled(Link)`
 
 export const StyledFieldset = styled.fieldset`
   border-radius: 15px;
-  border: none;
+  border: 1px solid #1b3a5c;
   background-color: transparent;
   margin-top: 1rem;
 `;
@@ -124,6 +124,14 @@ export const StyledInput = styled.input`
 export const StyledFormButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 0.4rem;
+`;
+
+export const StyledFormButtonWrapperLeft = styled.div`
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 1rem;
   gap: 0.4rem;
@@ -213,7 +221,7 @@ export const StyledButtonPrimary = styled(StyledButton)`
   background-color: #1b3a5c;
   width: auto;
   &:hover {
-    background: #2459c9;
+    background: #27507b;
   }
 `;
 
@@ -222,6 +230,15 @@ export const StyledButtonSecondary = styled(StyledButton)`
   background-color: transparent;
   border: 1px solid #1b3a5c;
   width: auto;
+`;
+
+export const StyledButtonTertiary = styled(StyledButton)`
+  color: white;
+  background-color: #4a6fa5;
+  width: auto;
+  &:hover {
+    background: #5985c7;
+  }
 `;
 
 // science

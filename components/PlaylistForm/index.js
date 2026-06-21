@@ -4,10 +4,13 @@ import {
   StyledFormSection,
   StyledInput,
   StyledFormButtonWrapper,
+  StyledFormButtonWrapperLeft,
   StyledButtonPrimary,
   StyledButtonSecondary,
+  StyledButtonTertiary,
   StyledMessageAndButtonWrapper,
   StyledMessage,
+  StyledLabel,
   StyledVisuallyHiddenLabel,
   StyledMenuButtonDark,
   StyledMenu,
@@ -42,7 +45,7 @@ export default function PlaylistForm({
   const [activeSongMenu, setActiveSongMenu] = useState(null);
   const [songEditMode, setSongEditMode] = useState(null);
   const [songDeleteMode, setSongDeleteMode] = useState(null);
-  const [songAddMode, setSongAddMode] = useState(null);
+  const [songAddMode, setSongAddMode] = useState(!defaultValues);
 
   function isDuplicate(song) {
     return songs.some(
@@ -103,19 +106,19 @@ export default function PlaylistForm({
     <form onSubmit={handlePlaylistDataCollect}>
       <StyledFieldset>
         {!editPlaylistId ? (
-          <legend>Add a Playlist</legend>
+          <legend>Create a Playlist</legend>
         ) : (
           <legend>Edit Playlist</legend>
         )}
         <StyledFormSection>
-          <StyledVisuallyHiddenLabel htmlFor="playlistTitle">
+          <StyledLabel htmlFor="playlistTitle">
             Playlist Title<span aria-hidden>*</span>
-          </StyledVisuallyHiddenLabel>
+          </StyledLabel>
           <StyledInput
             type="text"
             id="playlistTitle"
             name="playlistTitle"
-            placeholder="Playlist title"
+            placeholder="e. g. Calm"
             required
             aria-required="true"
             maxLength={50}
@@ -124,7 +127,9 @@ export default function PlaylistForm({
             onChange={(event) => setCurrentPlaylistTitle(event.target.value)}
           ></StyledInput>
         </StyledFormSection>
-        <p>Songs</p>
+        <p aria-label="Songs, required">
+          Songs<span aria-hidden>*</span>
+        </p>
         {songError && (
           <StyledSongErrorMessage role="alert">
             {songError}
@@ -156,6 +161,7 @@ export default function PlaylistForm({
                     <StyledMenu>
                       <StyledMenuItem
                         type="button"
+                        aria-label="Edit song"
                         onClick={() => {
                           setSongEditMode(index);
                           setSongDeleteMode(null);
@@ -167,8 +173,10 @@ export default function PlaylistForm({
 
                       <StyledMenuItem
                         type="button"
+                        aria-label="Delete song"
                         onClick={() => {
-                          setSongDeleteMode(index);
+                          handleSongDelete(index);
+                          setSongDeleteMode(null);
                           setSongEditMode(null);
                           setActiveSongMenu(null);
                         }}
@@ -179,29 +187,7 @@ export default function PlaylistForm({
                   )}
                 </StyledMessageAndButtonWrapper>
 
-                {songDeleteMode === index ? (
-                  <StyledMessageAndButtonWrapper>
-                    <StyledMessage>Delete this song?</StyledMessage>
-
-                    <StyledButtonSecondary
-                      type="button"
-                      aria-label="Cancel song deletion"
-                      onClick={() => setSongDeleteMode(null)}
-                    >
-                      No
-                    </StyledButtonSecondary>
-                    <StyledButtonPrimary
-                      type="button"
-                      aria-label="Confirm song deletion"
-                      onClick={() => {
-                        handleSongDelete(index);
-                        setSongDeleteMode(null);
-                      }}
-                    >
-                      Yes
-                    </StyledButtonPrimary>
-                  </StyledMessageAndButtonWrapper>
-                ) : songEditMode === index ? (
+                {songEditMode === index ? (
                   <>
                     <StyledFormSection>
                       <StyledVisuallyHiddenLabel>
@@ -300,15 +286,18 @@ export default function PlaylistForm({
         )}
 
         {!songAddMode ? (
-          <StyledFormButtonWrapper>
-            <StyledButtonPrimary
+          <StyledFormButtonWrapperLeft>
+            <StyledButtonTertiary
               type="button"
               aria-label="Add song"
-              onClick={() => setSongAddMode(true)}
+              onClick={() => {
+                setSongAddMode(true);
+                setSongError(null);
+              }}
             >
               + New Song
-            </StyledButtonPrimary>
-          </StyledFormButtonWrapper>
+            </StyledButtonTertiary>
+          </StyledFormButtonWrapperLeft>
         ) : (
           <>
             <StyledFormSection>
@@ -385,37 +374,32 @@ export default function PlaylistForm({
                 }
               />
             </StyledFormSection>
-            <StyledFormButtonWrapper>
+            <StyledFormButtonWrapperLeft>
               <StyledButtonSecondary
                 type="button"
                 aria-label="Save song"
-                onClick={() => handleSongAdd()}
+                onClick={() => {
+                  handleSongAdd();
+                  setSongAddMode(false);
+                }}
               >
                 Add to playlist
               </StyledButtonSecondary>
-            </StyledFormButtonWrapper>
-
-            <StyledFormButtonWrapper>
-              <StyledButtonSecondary
-                type="button"
-                aria-label="Cancel"
-                onClick={onCancel}
-              >
-                Cancel
-              </StyledButtonSecondary>
-              <StyledButtonSecondary
-                type="button"
-                aria-label="Clear form"
-                onClick={handlePlaylistFormClear}
-              >
-                Reset
-              </StyledButtonSecondary>
-              <StyledButtonPrimary type="submit" aria-label="Add playlist">
-                Save
-              </StyledButtonPrimary>
-            </StyledFormButtonWrapper>
+            </StyledFormButtonWrapperLeft>
           </>
         )}
+        <StyledFormButtonWrapper>
+          <StyledButtonSecondary
+            type="button"
+            aria-label="Cancel"
+            onClick={onCancel}
+          >
+            Cancel
+          </StyledButtonSecondary>
+          <StyledButtonPrimary type="submit" aria-label="Add playlist">
+            Save
+          </StyledButtonPrimary>
+        </StyledFormButtonWrapper>
       </StyledFieldset>
     </form>
   );
