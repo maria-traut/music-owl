@@ -23,7 +23,7 @@ import {
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
-import Image from "next/image";
+import KebabMenuIcon from "../KebabMenuIcon";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -154,7 +154,7 @@ export default function PersonDetail({ person }) {
                 setShowMenu(!showMenu);
               }}
             >
-              <Image src="/kebab-menu.svg" alt="" width={24} height={24} />
+              <KebabMenuIcon />
             </StyledMenuButton>
             {showMenu && (
               <StyledMenu>

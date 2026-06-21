@@ -136,6 +136,7 @@ export const StyledButtonWrapper = styled.div`
 `;
 
 export const StyledMessageAndButtonWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -239,6 +240,30 @@ export const StyledScienceSection = styled(StyledSection)`
 export const StyledMenuButton = styled.button`
   border: none;
   background: #00000022;
+  color: #fafaf8;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: background 120ms ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+  }
+`;
+
+export const StyledMenuButtonDark = styled.button`
+  border: none;
+  background: transparent;
+  color: #1b3a5c;
 
   width: 36px;
   height: 36px;
@@ -266,7 +291,7 @@ export const StyledMenuWrapper = styled.div`
 
 export const StyledMenu = styled.div`
   position: absolute;
-  top: 40px;
+  top: 100%;
   right: 0;
   min-width: 160px;
   background: #fafaf8;

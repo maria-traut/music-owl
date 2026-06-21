@@ -16,13 +16,13 @@ import {
   StyledButtonWrapper,
   StyledMessageAndButtonWrapper,
   StyledMenuItem,
-  StyledMenuButton,
+  StyledMenuButtonDark,
   StyledMenu,
   StyledMenuWrapper,
 } from "../Global/Global.styles";
 
 import PlaylistForm from "../PlaylistForm";
-import Image from "next/image";
+import KebabMenuIcon from "../KebabMenuIcon";
 
 export default function PlaylistList({
   personId,
@@ -82,7 +82,7 @@ export default function PlaylistList({
                 </StyledMessageAndButtonWrapper>
               ) : (
                 <StyledMenuWrapper>
-                  <StyledMenuButton
+                  <StyledMenuButtonDark
                     type="button"
                     aria-label="Further options"
                     onClick={() =>
@@ -91,13 +91,8 @@ export default function PlaylistList({
                       )
                     }
                   >
-                    <Image
-                      src="/kebab-menu.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                  </StyledMenuButton>
+                    <KebabMenuIcon />
+                  </StyledMenuButtonDark>
                   {showMenuId === playlist._id && (
                     <StyledMenu>
                       <StyledMenuItem
@@ -124,26 +119,29 @@ export default function PlaylistList({
                   )}
                 </StyledMenuWrapper>
               )}
+
+              <StyledPlaylistTitle>
+                {playlist.playlist_title}
+              </StyledPlaylistTitle>
+              <StyledSongList>
+                {playlist.songs.map((song) => (
+                  <li key={song.title}>
+                    {song.title} — {song.artist}{" "}
+                    <StyledLinkNoteWrapper>
+                      <StyledYoutubeLink
+                        href={`https://www.youtube.com/watch?v=${song.youtube_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        ▶
+                      </StyledYoutubeLink>
+                      {song.note && <StyledNote>{song.note}</StyledNote>}
+                    </StyledLinkNoteWrapper>
+                  </li>
+                ))}
+              </StyledSongList>
             </>
           )}
-          <StyledPlaylistTitle>{playlist.playlist_title}</StyledPlaylistTitle>
-          <StyledSongList>
-            {playlist.songs.map((song) => (
-              <li key={song.title}>
-                {song.title} — {song.artist}{" "}
-                <StyledLinkNoteWrapper>
-                  <StyledYoutubeLink
-                    href={`https://www.youtube.com/watch?v=${song.youtube_id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    ▶
-                  </StyledYoutubeLink>
-                  {song.note && <StyledNote>{song.note}</StyledNote>}
-                </StyledLinkNoteWrapper>
-              </li>
-            ))}
-          </StyledSongList>
         </StyledPlaylist>
       ))}
     </StyledPlaylistList>
