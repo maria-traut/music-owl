@@ -9,17 +9,22 @@ import {
   StyledButtonSecondary,
   StyledButtonTertiary,
   StyledMessageAndButtonWrapper,
-  StyledMessage,
   StyledLabel,
-  StyledVisuallyHiddenLabel,
   StyledMenuButtonDark,
   StyledMenu,
   StyledMenuItem,
+  StyledH4,
 } from "../Global/Global.styles";
 import {
   StyledSongErrorMessage,
   StyledUpdateForm,
   StyledSongBlock,
+  StyledSongForm,
+  StyledSongRow,
+  StyledSongNumber,
+  StyledSongInfo,
+  StyledSongTitle,
+  StyledSongArtist,
 } from "./PlaylistForm.styled";
 import Image from "next/image";
 
@@ -58,6 +63,7 @@ export default function PlaylistForm({
   function handleSongAdd() {
     if (!currentSong.title || !currentSong.artist) {
       setSongError("Please enter at least a title and an artist.");
+      setTimeout(() => setSongError(null), 3000);
       return;
     }
     if (isDuplicate(currentSong)) {
@@ -127,9 +133,7 @@ export default function PlaylistForm({
             onChange={(event) => setCurrentPlaylistTitle(event.target.value)}
           ></StyledInput>
         </StyledFormSection>
-        <p aria-label="Songs, required">
-          Songs<span aria-hidden>*</span>
-        </p>
+        <StyledH4>Songs</StyledH4>
         {songError && (
           <StyledSongErrorMessage role="alert">
             {songError}
@@ -140,61 +144,16 @@ export default function PlaylistForm({
           songs.map((song, index) => (
             <StyledUpdateForm key={`${song.title}-${song.artist}`}>
               <StyledSongBlock>
-                <StyledMessageAndButtonWrapper>
-                  <h4>Song {index + 1}</h4>
-                  <StyledMenuButtonDark
-                    type="button"
-                    aria-label="Song options"
-                    onClick={() =>
-                      setActiveSongMenu(activeSongMenu === index ? null : index)
-                    }
-                  >
-                    <Image
-                      src="/kebab-menu.svg"
-                      alt=""
-                      width={24}
-                      height={24}
-                    />
-                  </StyledMenuButtonDark>
-
-                  {activeSongMenu === index && (
-                    <StyledMenu>
-                      <StyledMenuItem
-                        type="button"
-                        aria-label="Edit song"
-                        onClick={() => {
-                          setSongEditMode(index);
-                          setSongDeleteMode(null);
-                          setActiveSongMenu(null);
-                        }}
-                      >
-                        Edit song
-                      </StyledMenuItem>
-
-                      <StyledMenuItem
-                        type="button"
-                        aria-label="Delete song"
-                        onClick={() => {
-                          handleSongDelete(index);
-                          setSongDeleteMode(null);
-                          setSongEditMode(null);
-                          setActiveSongMenu(null);
-                        }}
-                      >
-                        Delete song
-                      </StyledMenuItem>
-                    </StyledMenu>
-                  )}
-                </StyledMessageAndButtonWrapper>
-
                 {songEditMode === index ? (
-                  <>
+                  <StyledSongForm>
                     <StyledFormSection>
-                      <StyledVisuallyHiddenLabel>
-                        Title
-                      </StyledVisuallyHiddenLabel>
+                      <StyledLabel>
+                        Title<span aria-hidden>*</span>
+                      </StyledLabel>
                       <StyledInput
                         value={song.title}
+                        aria-required="true"
+                        placeholder="e.g. Let it be"
                         onChange={(event) => {
                           const updated = songs.map((existingSong, i) =>
                             i === index
@@ -207,15 +166,20 @@ export default function PlaylistForm({
                     </StyledFormSection>
 
                     <StyledFormSection>
-                      <StyledVisuallyHiddenLabel>
-                        Artist
-                      </StyledVisuallyHiddenLabel>
+                      <StyledLabel>
+                        Artist<span aria-hidden>*</span>
+                      </StyledLabel>
                       <StyledInput
                         value={song.artist}
+                        aria-required="true"
+                        placeholder="e.g. The Beatles"
                         onChange={(event) => {
                           const updated = songs.map((existingSong, i) =>
                             i === index
-                              ? { ...existingSong, artist: event.target.value }
+                              ? {
+                                  ...existingSong,
+                                  artist: event.target.value,
+                                }
                               : existingSong
                           );
                           setSongs(updated);
@@ -224,11 +188,10 @@ export default function PlaylistForm({
                     </StyledFormSection>
 
                     <StyledFormSection>
-                      <StyledVisuallyHiddenLabel>
-                        Youtube ID
-                      </StyledVisuallyHiddenLabel>
+                      <StyledLabel>Youtube ID</StyledLabel>
                       <StyledInput
                         value={song.youtubeId || song.youtube_id || ""}
+                        placeholder="Youtube ID"
                         onChange={(event) => {
                           const updated = songs.map((existingSong, i) =>
                             i === index
@@ -244,11 +207,10 @@ export default function PlaylistForm({
                     </StyledFormSection>
 
                     <StyledFormSection>
-                      <StyledVisuallyHiddenLabel>
-                        Note
-                      </StyledVisuallyHiddenLabel>
+                      <StyledLabel>Note</StyledLabel>
                       <StyledInput
                         value={song.note || ""}
+                        placeholder="Note"
                         onChange={(event) => {
                           const updated = songs.map((existingSong, i) =>
                             i === index
@@ -259,18 +221,69 @@ export default function PlaylistForm({
                         }}
                       />
                     </StyledFormSection>
-
-                    <StyledButtonSecondary
-                      onClick={() => setSongEditMode(null)}
-                    >
-                      Done
-                    </StyledButtonSecondary>
-                  </>
+                    <StyledFormButtonWrapperLeft>
+                      <StyledButtonSecondary
+                        onClick={() => setSongEditMode(null)}
+                      >
+                        Done
+                      </StyledButtonSecondary>
+                    </StyledFormButtonWrapperLeft>
+                  </StyledSongForm>
                 ) : (
-                  <>
-                    <p>{song.title}</p>
-                    <p>{song.artist}</p>
-                  </>
+                  <StyledSongRow>
+                    <StyledSongNumber>{index + 1}</StyledSongNumber>
+                    <StyledSongInfo>
+                      <StyledSongTitle>{song.title}</StyledSongTitle>
+                      <StyledSongArtist>{song.artist}</StyledSongArtist>
+                    </StyledSongInfo>
+                    <StyledMessageAndButtonWrapper>
+                      <StyledMenuButtonDark
+                        type="button"
+                        aria-label="Song options"
+                        onClick={() =>
+                          setActiveSongMenu(
+                            activeSongMenu === index ? null : index
+                          )
+                        }
+                      >
+                        <Image
+                          src="/kebab-menu.svg"
+                          alt=""
+                          width={24}
+                          height={24}
+                        />
+                      </StyledMenuButtonDark>
+
+                      {activeSongMenu === index && (
+                        <StyledMenu>
+                          <StyledMenuItem
+                            type="button"
+                            aria-label="Edit song"
+                            onClick={() => {
+                              setSongEditMode(index);
+                              setSongDeleteMode(null);
+                              setActiveSongMenu(null);
+                            }}
+                          >
+                            Edit song
+                          </StyledMenuItem>
+
+                          <StyledMenuItem
+                            type="button"
+                            aria-label="Delete song"
+                            onClick={() => {
+                              handleSongDelete(index);
+                              setSongDeleteMode(null);
+                              setSongEditMode(null);
+                              setActiveSongMenu(null);
+                            }}
+                          >
+                            Delete song
+                          </StyledMenuItem>
+                        </StyledMenu>
+                      )}
+                    </StyledMessageAndButtonWrapper>
+                  </StyledSongRow>
                 )}
               </StyledSongBlock>
             </StyledUpdateForm>
@@ -299,16 +312,17 @@ export default function PlaylistForm({
             </StyledButtonTertiary>
           </StyledFormButtonWrapperLeft>
         ) : (
-          <>
+          <StyledSongForm>
             <StyledFormSection>
-              <StyledVisuallyHiddenLabel htmlFor="title">
-                Title
-              </StyledVisuallyHiddenLabel>
+              <StyledLabel htmlFor="title">
+                Title<span aria-hidden>*</span>
+              </StyledLabel>
               <StyledInput
                 type="text"
                 id="title"
                 name="title"
-                placeholder="Song title"
+                aria-required="true"
+                placeholder="e.g. Let it be"
                 maxLength={30}
                 title="Title must be between 1 and 30 characters."
                 value={currentSong.title}
@@ -319,14 +333,15 @@ export default function PlaylistForm({
             </StyledFormSection>
 
             <StyledFormSection>
-              <StyledVisuallyHiddenLabel htmlFor="artist">
-                Artist
-              </StyledVisuallyHiddenLabel>
+              <StyledLabel htmlFor="artist">
+                Artist<span aria-hidden>*</span>
+              </StyledLabel>
               <StyledInput
                 type="text"
                 id="artist"
                 name="artist"
-                placeholder="Artist"
+                aria-required="true"
+                placeholder="e.g. The Beatles"
                 maxLength={30}
                 title="Artist must be between 1 and 30 characters."
                 value={currentSong.artist}
@@ -337,14 +352,12 @@ export default function PlaylistForm({
             </StyledFormSection>
 
             <StyledFormSection>
-              <StyledVisuallyHiddenLabel htmlFor="youtubeId">
-                YouTube ID
-              </StyledVisuallyHiddenLabel>
+              <StyledLabel htmlFor="youtubeId">YouTube ID</StyledLabel>
               <StyledInput
                 type="text"
                 id="youtubeId"
                 name="youtubeId"
-                placeholder="YouTube ID"
+                placeholder="e.g. CGj85pVzRJs"
                 maxLength={30}
                 title="Youtube ID must be between 1 and 30 characters."
                 value={currentSong.youtubeId}
@@ -358,14 +371,12 @@ export default function PlaylistForm({
             </StyledFormSection>
 
             <StyledFormSection>
-              <StyledVisuallyHiddenLabel htmlFor="note">
-                Note
-              </StyledVisuallyHiddenLabel>
+              <StyledLabel htmlFor="note">Note</StyledLabel>
               <StyledInput
                 type="text"
                 id="note"
                 name="note"
-                placeholder="Note"
+                placeholder="e.g. Most favourite song"
                 maxLength={50}
                 title="Note must be between 1 and 50 characters."
                 value={currentSong.note}
@@ -375,7 +386,7 @@ export default function PlaylistForm({
               />
             </StyledFormSection>
             <StyledFormButtonWrapperLeft>
-              <StyledButtonSecondary
+              <StyledButtonTertiary
                 type="button"
                 aria-label="Save song"
                 onClick={() => {
@@ -384,9 +395,9 @@ export default function PlaylistForm({
                 }}
               >
                 Add to playlist
-              </StyledButtonSecondary>
+              </StyledButtonTertiary>
             </StyledFormButtonWrapperLeft>
-          </>
+          </StyledSongForm>
         )}
         <StyledFormButtonWrapper>
           <StyledButtonSecondary

@@ -248,13 +248,13 @@ export default function PersonDetail({ person }) {
           </StyledButtonWrapper>
         )}
         {playlistCreateSuccess && (
-          <StyledMessage>Playlist was successfully created.</StyledMessage>
+          <StyledMessage>Playlist successfully created.</StyledMessage>
         )}
         {playlistUpdateSuccess && (
-          <StyledMessage>Playlist was successfully updated.</StyledMessage>
+          <StyledMessage>Playlist successfully updated.</StyledMessage>
         )}
         {playlistDeleteSuccess && (
-          <StyledMessage>Playlist was successfully deleted.</StyledMessage>
+          <StyledMessage>Playlist successfully deleted.</StyledMessage>
         )}
         {playlistUpdateError && <p role="alert">{playlistUpdateError}</p>}
         <PlaylistList

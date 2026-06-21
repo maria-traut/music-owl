@@ -10,9 +10,42 @@ export const StyledUpdateForm = styled.div`
   padding: 0;
 `;
 
-export const StyledSongBlock = styled.div`
+export const StyledSongForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  gap: 0.7rem;
+`;
+
+export const StyledSongBlock = styled(StyledSongForm)`
   background-color: white;
-  border-radius: 10px;
-  padding: 0.75rem;
+  border-radius: 12px;
+  padding: 0.5rem;
   margin: 0.5rem 0;
+`;
+
+export const StyledSongRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+`;
+
+export const StyledSongNumber = styled.span`
+  font-size: 12px;
+  min-width: 18px;
+`;
+
+export const StyledSongInfo = styled.div`
+  flex: 1;
+`;
+
+export const StyledSongTitle = styled.p`
+  margin: 0;
+`;
+
+export const StyledSongArtist = styled.p`
+  font-size: 12px;
+  color: #1b3a5c99;
+  margin: 0;
 `;

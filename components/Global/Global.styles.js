@@ -40,6 +40,11 @@ export const StyledH2 = styled.h2`
   line-height: 1.3;
 `;
 
+export const StyledH4 = styled.h4`
+  margin: 1.5rem 0 0 0;
+  font-weight: 500;
+`;
+
 export const StyledMessage = styled.p`
   display: inline-block;
   margin-top: 0.5rem;
@@ -66,21 +71,15 @@ export const StyledFieldset = styled.fieldset`
   border: 1px solid #1b3a5c;
   background-color: transparent;
   margin-top: 1rem;
+  padding: 1rem 0.7rem 0.7rem 0.7rem;
 `;
 
 export const StyledLabel = styled.label`
-  margin-top: 0.5rem;
-`;
-
-export const StyledVisuallyHiddenLabel = styled.label`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+  display: block;
+  font-size: 11px;
+  color: #1b3a5c99;
+  margin-bottom: 2px;
+  margin-left: 4px;
 `;
 
 export const StyledFormSection = styled.div`

@@ -1,12 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-export const StyledH2 = styled.h2`
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.3;
-`;
-
 export const StyledH3 = styled.h3`
   font-size: 1rem;
   line-height: 1.3;

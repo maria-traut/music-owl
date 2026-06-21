@@ -64,13 +64,6 @@ export default function PlaylistList({
               <StyledMessageAndButtonWrapper>
                 <StyledMessage>Delete this playlist?</StyledMessage>
                 <StyledButtonWrapper>
-                  <StyledButtonSecondary
-                    type="button"
-                    aria-label="Cancel deletion"
-                    onClick={() => setDeletePlaylistId(null)}
-                  >
-                    No
-                  </StyledButtonSecondary>
                   <StyledButtonPrimary
                     type="button"
                     aria-label="Confirm deletion"
@@ -78,6 +71,13 @@ export default function PlaylistList({
                   >
                     Yes
                   </StyledButtonPrimary>
+                  <StyledButtonSecondary
+                    type="button"
+                    aria-label="Cancel deletion"
+                    onClick={() => setDeletePlaylistId(null)}
+                  >
+                    No
+                  </StyledButtonSecondary>
                 </StyledButtonWrapper>
               </StyledMessageAndButtonWrapper>
             ) : (
@@ -97,16 +97,6 @@ export default function PlaylistList({
                   <StyledMenu>
                     <StyledMenuItem
                       type="button"
-                      aria-label="Delete playlist"
-                      onClick={() => {
-                        setDeletePlaylistId(playlist._id);
-                        setShowMenuId(null);
-                      }}
-                    >
-                      Delete playlist
-                    </StyledMenuItem>
-                    <StyledMenuItem
-                      type="button"
                       aria-label="Edit playlist"
                       onClick={() => {
                         setEditPlaylistId(playlist._id);
@@ -114,6 +104,16 @@ export default function PlaylistList({
                       }}
                     >
                       Edit playlist
+                    </StyledMenuItem>
+                    <StyledMenuItem
+                      type="button"
+                      aria-label="Delete playlist"
+                      onClick={() => {
+                        setDeletePlaylistId(playlist._id);
+                        setShowMenuId(null);
+                      }}
+                    >
+                      Delete playlist
                     </StyledMenuItem>
                   </StyledMenu>
                 )}
@@ -126,13 +126,15 @@ export default function PlaylistList({
                 <li key={song.title}>
                   {song.title} — {song.artist}{" "}
                   <StyledLinkNoteWrapper>
-                    <StyledYoutubeLink
-                      href={`https://www.youtube.com/watch?v=${song.youtube_id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      ▶
-                    </StyledYoutubeLink>
+                    {song.youtube_id && (
+                      <StyledYoutubeLink
+                        href={`https://www.youtube.com/watch?v=${song.youtube_id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        ▶
+                      </StyledYoutubeLink>
+                    )}
                     {song.note && <StyledNote>{song.note}</StyledNote>}
                   </StyledLinkNoteWrapper>
                 </li>
