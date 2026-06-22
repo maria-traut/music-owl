@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { StyledDivider } from "../Global/Global.styles";
 
 export const StyledNav = styled.div`
   display: flex;
   justify-content: center;
   gap: 3.5rem;
   width: 100%;
-  padding: 7px 0;
+  padding: 7px 0 0 0;
   font-size: 1rem;
   line-height: 1.5;
   text-transform: uppercase;
@@ -34,6 +33,9 @@ export const StyledNavLink = styled(Link)`
   }
 `;
 
-export const StyledNavDivider = styled(StyledDivider)`
-  margin: 5px 25px 7px 25px;
+export const StyledNavDivider = styled.div`
+  border: none;
+  border-top: 1px solid #e0e0e0;
+
+  margin: 8px 25px 7px 25px;
 `;

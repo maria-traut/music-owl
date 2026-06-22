@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledSongErrorMessage = styled.p`
-  color: #fa8072;
+  color: var(--color-danger-text);
   font-weight: 700;
 `;
 
@@ -19,7 +19,7 @@ export const StyledSongForm = styled.div`
 
 export const StyledSongBlock = styled(StyledSongForm)`
   background-color: white;
-  border-radius: 12px;
+  border-radius: var(--radius-element);
   padding: 0.5rem;
   margin: 0.5rem 0;
 `;
@@ -46,12 +46,12 @@ export const StyledSongTitle = styled.p`
 
 export const StyledSongArtist = styled.p`
   font-size: 12px;
-  color: #1b3a5c99;
+  color: var(--color-text-secondary);
   margin: 0;
 `;
 
 export const StyledHint = styled.span`
   font-size: 11px;
-  color: #1b3a5c99;
+  color: var(--color-text-secondary);
   font-weight: 400;
 `;

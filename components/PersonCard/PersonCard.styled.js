@@ -4,7 +4,7 @@ import Link from "next/link";
 export const StyledColoredArea = styled.article`
   width: 100%;
   aspect-ratio: 1;
-  border-radius: 8px;
+  border-radius: var(--radius-element);
   background-color: ${({ $color }) => $color};
   overflow: hidden;
 `;
@@ -29,7 +29,7 @@ export const StyledYear = styled.p`
 
 export const StyledLink = styled(Link)`
   color: var(--text-color);
-  border-radius: 15px;
+  border-radius: var(--radius-card);
   display: flex;
   flex-direction: column;
   gap: 8px;

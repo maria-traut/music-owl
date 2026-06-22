@@ -16,7 +16,7 @@ export const StyledLinkWrapper = styled.span`
 export const StyledLink = styled(Link)`
   color: #ffffff;
   padding: 5px 25px;
-  border-radius: 15px;
+  border-radius: var(--radius-card);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -25,7 +25,7 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledLinkPeople = styled(StyledLink)`
-  background-color: #1b3a5c;
+  background-color: var(--color-primary);
 `;
 
 export const StyledLinkScience = styled(StyledLink)`

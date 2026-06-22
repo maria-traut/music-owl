@@ -13,20 +13,7 @@ export const StyledMain = styled.main`
 export const StyledDivider = styled.hr`
   border: none;
   border-top: 1px solid #e0e0e0;
-  margin: 2rem 0;
-`;
-
-export const StyledSongDivider = styled(StyledDivider)`
-  border: none;
-  border-top: 1px solid #1b3a5c;
-  margin: 1rem 0 0 0;
-`;
-
-export const StyledSection = styled.section`
-  padding: 5px 25px;
-  border-radius: 15px;
-  margin-top: 15px;
-  margin-bottom: 20px;
+  margin: 1.7rem 0;
 `;
 
 export const StyledH1 = styled.h1`
@@ -52,7 +39,7 @@ export const StyledMessage = styled.p`
 
 export const StyledBackLink = styled(Link)`
   text-decoration: none;
-  color: #1b3a5c99;
+  color: var(--color-text-secondary);
   text-decoration: none;
   display: inline-block;
   padding: 1rem 0;
@@ -67,6 +54,8 @@ export const StyledBackLink = styled(Link)`
   }
 `;
 
+// form
+
 export const StyledFieldset = styled.fieldset`
   border-radius: 15px;
   border: 1px solid #1b3a5c;
@@ -78,7 +67,7 @@ export const StyledFieldset = styled.fieldset`
 export const StyledLabel = styled.label`
   display: block;
   font-size: 11px;
-  color: #1b3a5c99;
+  color: var(--color-text-secondary);
   margin-bottom: 2px;
   margin-left: 4px;
 `;
@@ -108,7 +97,7 @@ export const StyledInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #1b3a5c;
+    border-color: var(--color-text-primary);
     box-shadow: 0 0 0 3px rgba(27, 58, 92, 0.15);
   }
 
@@ -137,11 +126,7 @@ export const StyledFormButtonWrapperLeft = styled.div`
   gap: 0.4rem;
 `;
 
-export const StyledButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.4rem;
-`;
+// buttons
 
 export const StyledMessageAndButtonWrapper = styled.div`
   position: relative;
@@ -150,12 +135,18 @@ export const StyledMessageAndButtonWrapper = styled.div`
   justify-content: space-between;
 `;
 
+export const StyledButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+`;
+
 const StyledActionButton = styled.button`
   background-color: transparent;
   height: 1.2rem;
   width: 2rem;
   padding: 13px;
-  border-radius: 8px;
+  border-radius: var(--radius-element);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -184,19 +175,12 @@ export const StyledDeleteButton = styled(StyledActionButton)`
   }
 `;
 
-//people
-
-export const StyledPeopleSection = styled(StyledSection)`
-  background-color: #1b3a5c;
-  color: white;
-`;
-
 export const StyledButton = styled.button`
   background: transparent;
   border: none;
 
   padding: 10px 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-element);
 
   text-align: left;
   font-size: 0.95rem;
@@ -218,7 +202,7 @@ export const StyledButton = styled.button`
 
 export const StyledButtonPrimary = styled(StyledButton)`
   color: white;
-  background-color: #1b3a5c;
+  background-color: var(--color-primary);
   width: auto;
   &:hover {
     background: #27507b;
@@ -226,7 +210,7 @@ export const StyledButtonPrimary = styled(StyledButton)`
 `;
 
 export const StyledButtonSecondary = styled(StyledButton)`
-  color: #1b3a5c;
+  color: var(--color-text-primary);
   background-color: transparent;
   border: 1px solid #1b3a5c;
   width: auto;
@@ -234,7 +218,7 @@ export const StyledButtonSecondary = styled(StyledButton)`
 
 export const StyledButtonTertiary = styled(StyledButton)`
   color: white;
-  background-color: #4a6fa5;
+  background-color: var(--color-secondary);
   width: auto;
   &:hover {
     background: #5985c7;
@@ -243,13 +227,25 @@ export const StyledButtonTertiary = styled(StyledButton)`
 
 export const StyledButtonDanger = styled(StyledButton)`
   color: white;
-  background-color: #b85450;
+  background-color: var(--color-danger);
   &:hover {
     background: #8b3d3a;
   }
 `;
 
-// science
+//
+
+export const StyledSection = styled.section`
+  padding: 5px 25px;
+  border-radius: 15px;
+  margin-top: 0;
+  margin-bottom: 20px;
+`;
+
+export const StyledPeopleSection = styled(StyledSection)`
+  background-color: var(--color-primary);
+  color: white;
+`;
 
 export const StyledScienceMain = styled(StyledMain)`
   display: flex;
@@ -262,15 +258,24 @@ export const StyledScienceSection = styled(StyledSection)`
   color: white;
 `;
 
+export const StyledIntroSection = styled.section`
+  all: unset;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+`;
+
+// menu
+
 export const StyledMenuButton = styled.button`
   border: none;
   background: transparent;
-  color: #1b3a5c;
+  color: var(--color-text-primary);
 
   width: 36px;
   height: 36px;
 
-  border-radius: 8px;
+  border-radius: var(--radius-element);
 
   display: flex;
   align-items: center;
@@ -320,11 +325,12 @@ export const StyledMenu = styled.div`
 
 export const StyledMenuItem = styled.button`
   background: transparent;
+  color: var(--color-text-primary);
   border: none;
   padding: 10px 12px;
   border-radius: 8px;
   text-align: left;
-  font-size: 0.95rem;
+  font-size: 1rem;
   cursor: pointer;
   width: 100%;
   transition: background 120ms ease;
@@ -336,11 +342,4 @@ export const StyledMenuItem = styled.button`
   &:active {
     background: rgba(0, 0, 0, 0.1);
   }
-`;
-
-export const StyledIntroSection = styled.section`
-  all: unset;
-  background: transparent;
-  padding: 0;
-  margin: 0;
 `;

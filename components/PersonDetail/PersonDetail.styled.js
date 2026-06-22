@@ -18,7 +18,7 @@ export const StyledPersonHeader = styled.div`
 export const StyledColorAvatar = styled.span`
   width: 44px;
   height: 44px;
-  border-radius: 8px;
+  border-radius: var(--radius-element);
   background: ${({ $color }) => $color};
   flex-shrink: 0;
 `;
