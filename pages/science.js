@@ -13,7 +13,7 @@ export default function Science() {
         <StyledH2>Scientific Findings</StyledH2>
         <p>
           The science behind Music Owl — why familiar songs can unlock memories
-          when little else can..
+          when little else can.
         </p>
       </StyledIntroSection>
       <StyledDivider />

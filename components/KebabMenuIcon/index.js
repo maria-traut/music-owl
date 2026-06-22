@@ -1,11 +1,13 @@
-export default function KebabMenuIcon() {
+export default function KebabMenuIcon({ onClick }) {
   return (
     <svg
+      onClick={onClick}
       width="24"
       height="24"
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ cursor: "pointer" }}
     >
       <g clipPath="url(#clip0_105_1875)">
         <rect

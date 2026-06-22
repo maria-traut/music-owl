@@ -291,9 +291,7 @@ export const StyledMenuButton = styled.button`
 `;
 
 export const StyledMenuWrapper = styled.div`
-  position: absolute;
-  top: 12px;
-  right: 12px;
+  position: relative;
 `;
 
 export const StyledMenu = styled.div`
@@ -301,7 +299,7 @@ export const StyledMenu = styled.div`
   top: 100%;
   right: 0;
   min-width: 160px;
-  background: #fafaf8;
+  background: white;
   border: 0.5px solid #1b3a5c22;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);

@@ -26,7 +26,7 @@ import {
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
-import KebabMenuIcon from "../KebabMenuIcon";
+import KebabMenu from "../KebabMenu";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -152,37 +152,32 @@ export default function PersonDetail({ person }) {
         <StyledPersonName>{name}</StyledPersonName>
         <StyledPersonYear>* {birth_year}</StyledPersonYear>
         <StyledPersonHeaderMenuWrapper>
-          <StyledMenuButton
-            type="button"
-            aria-label="Further options"
-            onClick={() => setShowMenu(!showMenu)}
+          <KebabMenu
+            isOpen={showMenu}
+            onOpen={() => setShowMenu(true)}
+            onClose={() => setShowMenu(false)}
           >
-            <KebabMenuIcon />
-          </StyledMenuButton>
-          {showMenu && (
-            <StyledMenu>
-              <StyledMenuItem
-                type="button"
-                aria-label="Edit person"
-                onClick={() => {
-                  setActiveMode("edit");
-                  setShowMenu(false);
-                }}
-              >
-                Edit person
-              </StyledMenuItem>
-              <StyledMenuItem
-                type="button"
-                aria-label="Delete person"
-                onClick={() => {
-                  setActiveMode("delete");
-                  setShowMenu(false);
-                }}
-              >
-                Remove person
-              </StyledMenuItem>
-            </StyledMenu>
-          )}
+            <StyledMenuItem
+              type="button"
+              aria-label="Edit person"
+              onClick={() => {
+                setActiveMode("edit");
+                setShowMenu(false);
+              }}
+            >
+              Edit person
+            </StyledMenuItem>
+            <StyledMenuItem
+              type="button"
+              aria-label="Delete person"
+              onClick={() => {
+                setActiveMode("delete");
+                setShowMenu(false);
+              }}
+            >
+              Remove person
+            </StyledMenuItem>
+          </KebabMenu>
         </StyledPersonHeaderMenuWrapper>
       </StyledPersonHeader>
 

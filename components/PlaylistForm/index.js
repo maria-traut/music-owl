@@ -10,8 +10,6 @@ import {
   StyledButtonTertiary,
   StyledMessageAndButtonWrapper,
   StyledLabel,
-  StyledMenuButton,
-  StyledMenu,
   StyledMenuItem,
   StyledH4,
 } from "../Global/Global.styles";
@@ -27,7 +25,7 @@ import {
   StyledSongArtist,
   StyledHint,
 } from "./PlaylistForm.styled";
-import KebabMenuIcon from "../KebabMenuIcon";
+import KebabMenu from "../KebabMenu";
 
 export default function PlaylistForm({
   onSubmit,
@@ -247,46 +245,36 @@ export default function PlaylistForm({
                       <StyledSongArtist>{song.artist}</StyledSongArtist>
                     </StyledSongInfo>
                     <StyledMessageAndButtonWrapper>
-                      <StyledMenuButton
-                        type="button"
-                        aria-label="Song options"
-                        onClick={() =>
-                          setActiveSongMenu(
-                            activeSongMenu === index ? null : index
-                          )
-                        }
+                      <KebabMenu
+                        isOpen={activeSongMenu === index}
+                        onOpen={() => setActiveSongMenu(index)}
+                        onClose={() => setActiveSongMenu(null)}
                       >
-                        <KebabMenuIcon />
-                      </StyledMenuButton>
+                        <StyledMenuItem
+                          type="button"
+                          aria-label="Edit song"
+                          onClick={() => {
+                            setSongEditMode(index);
+                            setSongDeleteMode(null);
+                            setActiveSongMenu(null);
+                          }}
+                        >
+                          Edit song
+                        </StyledMenuItem>
 
-                      {activeSongMenu === index && (
-                        <StyledMenu>
-                          <StyledMenuItem
-                            type="button"
-                            aria-label="Edit song"
-                            onClick={() => {
-                              setSongEditMode(index);
-                              setSongDeleteMode(null);
-                              setActiveSongMenu(null);
-                            }}
-                          >
-                            Edit song
-                          </StyledMenuItem>
-
-                          <StyledMenuItem
-                            type="button"
-                            aria-label="Delete song"
-                            onClick={() => {
-                              handleSongDelete(index);
-                              setSongDeleteMode(null);
-                              setSongEditMode(null);
-                              setActiveSongMenu(null);
-                            }}
-                          >
-                            Delete song
-                          </StyledMenuItem>
-                        </StyledMenu>
-                      )}
+                        <StyledMenuItem
+                          type="button"
+                          aria-label="Delete song"
+                          onClick={() => {
+                            handleSongDelete(index);
+                            setSongDeleteMode(null);
+                            setSongEditMode(null);
+                            setActiveSongMenu(null);
+                          }}
+                        >
+                          Delete song
+                        </StyledMenuItem>
+                      </KebabMenu>
                     </StyledMessageAndButtonWrapper>
                   </StyledSongRow>
                 )}

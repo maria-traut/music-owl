@@ -32,7 +32,7 @@ export const StyledSongRow = styled.div`
 `;
 
 export const StyledSongNumber = styled.span`
-  font-size: 12px;
+  font-size: 1rem;
   min-width: 18px;
 `;
 

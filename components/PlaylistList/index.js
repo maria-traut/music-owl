@@ -5,9 +5,15 @@ import {
   StyledPlaylist,
   StyledPlaylistTitle,
   StyledSongList,
+  StyledPlaylistSongTitle,
+  StyledPlaylistSongArtist,
+  StyledPlaylistSongNumber,
   StyledYoutubeLink,
-  StyledNote,
+  StyledPlaylistSongInfo,
+  StyledPlaylistNote,
   StyledLinkNoteWrapper,
+  StyledPlaylistSongWrapper,
+  StyledPlaylistHeader,
 } from "./PlaylistList.styled";
 import {
   StyledButtonDanger,
@@ -16,13 +22,11 @@ import {
   StyledButtonWrapper,
   StyledMessageAndButtonWrapper,
   StyledMenuItem,
-  StyledMenuButton,
-  StyledMenu,
   StyledMenuWrapper,
 } from "../Global/Global.styles";
 
 import PlaylistForm from "../PlaylistForm";
-import KebabMenuIcon from "../KebabMenuIcon";
+import KebabMenu from "../KebabMenu";
 
 export default function PlaylistList({
   personId,
@@ -60,41 +64,17 @@ export default function PlaylistList({
           />
         ) : (
           <StyledPlaylist key={playlist._id} $color={color}>
-            {deletePlaylistId === playlist._id ? (
-              <StyledMessageAndButtonWrapper>
-                <StyledMessage>Delete this playlist?</StyledMessage>
-                <StyledButtonWrapper>
-                  <StyledButtonSecondary
-                    type="button"
-                    aria-label="Cancel deletion"
-                    onClick={() => setDeletePlaylistId(null)}
+            <StyledPlaylistHeader>
+              <StyledPlaylistTitle>
+                {playlist.playlist_title}
+              </StyledPlaylistTitle>
+              {deletePlaylistId === playlist._id ? null : (
+                <StyledMenuWrapper>
+                  <KebabMenu
+                    isOpen={showMenuId === playlist._id}
+                    onOpen={() => setShowMenuId(playlist._id)}
+                    onClose={() => setShowMenuId(null)}
                   >
-                    No
-                  </StyledButtonSecondary>
-                  <StyledButtonDanger
-                    type="button"
-                    aria-label="Confirm deletion"
-                    onClick={() => handlePlaylistDelete(playlist._id)}
-                  >
-                    Yes
-                  </StyledButtonDanger>
-                </StyledButtonWrapper>
-              </StyledMessageAndButtonWrapper>
-            ) : (
-              <StyledMenuWrapper>
-                <StyledMenuButton
-                  type="button"
-                  aria-label="Further options"
-                  onClick={() =>
-                    setShowMenuId(
-                      showMenuId === playlist._id ? null : playlist._id
-                    )
-                  }
-                >
-                  <KebabMenuIcon />
-                </StyledMenuButton>
-                {showMenuId === playlist._id && (
-                  <StyledMenu>
                     <StyledMenuItem
                       type="button"
                       aria-label="Edit playlist"
@@ -115,28 +95,63 @@ export default function PlaylistList({
                     >
                       Delete playlist
                     </StyledMenuItem>
-                  </StyledMenu>
-                )}
-              </StyledMenuWrapper>
+                  </KebabMenu>
+                </StyledMenuWrapper>
+              )}
+            </StyledPlaylistHeader>
+
+            {deletePlaylistId === playlist._id && (
+              <StyledMessageAndButtonWrapper>
+                <StyledMessage>Delete this playlist?</StyledMessage>
+                <StyledButtonWrapper>
+                  <StyledButtonSecondary
+                    type="button"
+                    aria-label="Cancel deletion"
+                    onClick={() => setDeletePlaylistId(null)}
+                  >
+                    No
+                  </StyledButtonSecondary>
+                  <StyledButtonDanger
+                    type="button"
+                    aria-label="Confirm deletion"
+                    onClick={() => handlePlaylistDelete(playlist._id)}
+                  >
+                    Yes
+                  </StyledButtonDanger>
+                </StyledButtonWrapper>
+              </StyledMessageAndButtonWrapper>
             )}
 
-            <StyledPlaylistTitle>{playlist.playlist_title}</StyledPlaylistTitle>
             <StyledSongList>
-              {playlist.songs.map((song) => (
+              {playlist.songs.map((song, index) => (
                 <li key={song.title}>
-                  {song.title} — {song.artist}{" "}
-                  <StyledLinkNoteWrapper>
-                    {song.youtube_id && (
-                      <StyledYoutubeLink
-                        href={`https://www.youtube.com/watch?v=${song.youtube_id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        ▶
-                      </StyledYoutubeLink>
-                    )}
-                    {song.note && <StyledNote>{song.note}</StyledNote>}
-                  </StyledLinkNoteWrapper>
+                  <StyledPlaylistSongWrapper>
+                    <StyledPlaylistSongNumber>
+                      {index + 1}
+                    </StyledPlaylistSongNumber>
+                    <StyledPlaylistSongInfo>
+                      <StyledPlaylistSongTitle>
+                        {song.title}
+                      </StyledPlaylistSongTitle>
+                      <StyledPlaylistSongArtist>
+                        {song.artist}
+                      </StyledPlaylistSongArtist>
+                      <StyledLinkNoteWrapper>
+                        {song.youtube_id && (
+                          <StyledYoutubeLink
+                            href={`https://www.youtube.com/watch?v=${song.youtube_id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            ▶
+                          </StyledYoutubeLink>
+                        )}
+                        {song.note && (
+                          <StyledPlaylistNote>{song.note}</StyledPlaylistNote>
+                        )}
+                      </StyledLinkNoteWrapper>
+                    </StyledPlaylistSongInfo>
+                  </StyledPlaylistSongWrapper>
                 </li>
               ))}
             </StyledSongList>
