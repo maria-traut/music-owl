@@ -89,17 +89,14 @@ export default function PersonForm({
                 <StyledButtonSecondary
                   type="button"
                   aria-label="Cancel add person and close form"
-                  onClick={() => setPersonFormMode(false)}
+                  onClick={() => {
+                    onPersonFormClear();
+                    setPersonFormMode(false);
+                  }}
                 >
                   Cancel
                 </StyledButtonSecondary>
-                <StyledButtonSecondary
-                  type="button"
-                  aria-label="Clear form"
-                  onClick={onPersonFormClear}
-                >
-                  Clear
-                </StyledButtonSecondary>
+
                 <StyledButtonPrimary type="submit" aria-label="Add person">
                   Save
                 </StyledButtonPrimary>

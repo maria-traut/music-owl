@@ -1,7 +1,7 @@
 import ScientificFindingList from "@/components/ScientificFindingList";
 import {
   StyledMain,
-  StyledScienceSection,
+  StyledIntroSection,
   StyledH2,
   StyledDivider,
 } from "../components/Global/Global.styles";
@@ -9,10 +9,13 @@ import {
 export default function Science() {
   return (
     <StyledMain>
-      <StyledScienceSection>
+      <StyledIntroSection>
         <StyledH2>Scientific Findings</StyledH2>
-        <p>Find out more about how music effects our brain.</p>
-      </StyledScienceSection>
+        <p>
+          The science behind Music Owl — why familiar songs can unlock memories
+          when little else can.
+        </p>
+      </StyledIntroSection>
       <StyledDivider />
       <ScientificFindingList />
     </StyledMain>

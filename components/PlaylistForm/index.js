@@ -1,21 +1,31 @@
 import { useState } from "react";
 import {
   StyledFieldset,
-  StyledLabel,
   StyledFormSection,
   StyledInput,
   StyledFormButtonWrapper,
+  StyledFormButtonWrapperLeft,
   StyledButtonPrimary,
   StyledButtonSecondary,
+  StyledButtonTertiary,
   StyledMessageAndButtonWrapper,
-  StyledSongDivider,
-  StyledMessage,
+  StyledLabel,
+  StyledMenuItem,
+  StyledH4,
 } from "../Global/Global.styles";
 import {
   StyledSongErrorMessage,
   StyledUpdateForm,
   StyledSongBlock,
+  StyledSongForm,
+  StyledSongRow,
+  StyledSongNumber,
+  StyledSongInfo,
+  StyledSongTitle,
+  StyledSongArtist,
+  StyledHint,
 } from "./PlaylistForm.styled";
+import KebabMenu from "../KebabMenu";
 
 export default function PlaylistForm({
   onSubmit,
@@ -26,7 +36,7 @@ export default function PlaylistForm({
   const [currentPlaylistTitle, setCurrentPlaylistTitle] = useState(
     defaultValues?.playlist_title ?? ""
   );
-  const [songDeleteMode, setSongDeleteMode] = useState(null);
+
   const [songs, setSongs] = useState(defaultValues?.songs ?? []);
   const [songError, setSongError] = useState(null);
   const [currentSong, setCurrentSong] = useState({
@@ -35,6 +45,11 @@ export default function PlaylistForm({
     youtubeId: "",
     note: "",
   });
+
+  const [activeSongMenu, setActiveSongMenu] = useState(null);
+  const [songEditMode, setSongEditMode] = useState(null);
+  const [songDeleteMode, setSongDeleteMode] = useState(null);
+  const [songAddMode, setSongAddMode] = useState(!defaultValues);
 
   function isDuplicate(song) {
     return songs.some(
@@ -47,19 +62,21 @@ export default function PlaylistForm({
   function handleSongAdd() {
     if (!currentSong.title || !currentSong.artist) {
       setSongError("Please enter at least a title and an artist.");
-      return;
+      setTimeout(() => setSongError(null), 3000);
+      return false;
     }
     if (isDuplicate(currentSong)) {
       setSongError("This song is already in the playlist.");
-      return;
+      return false;
     }
     if (songs.length >= 20) {
       setSongError("A playlist can contain a maximum of 20 songs.");
-      return;
+      return false;
     }
     setSongs([...songs, currentSong]);
     setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
     setSongError(null);
+    return true;
   }
 
   function handlePlaylistFormClear() {
@@ -76,8 +93,17 @@ export default function PlaylistForm({
 
   async function handlePlaylistDataCollect(event) {
     event.preventDefault();
+
+    const invalidSong = songs.some((song) => !song.title || !song.artist);
+
+    if (invalidSong) {
+      setSongError("Every song needs at least a title and an artist.");
+
+      return;
+    }
+
     const formData = new FormData(event.target);
-    const playlistTitle = formData.get("playlistTitle") ?? currentPlaylistTitle;
+    const playlistTitle = formData.get("playlistTitle") || currentPlaylistTitle;
     const allSongs =
       currentSong.title && currentSong.artist && !isDuplicate(currentSong)
         ? [...songs, currentSong]
@@ -95,7 +121,7 @@ export default function PlaylistForm({
     <form onSubmit={handlePlaylistDataCollect}>
       <StyledFieldset>
         {!editPlaylistId ? (
-          <legend>Add a Playlist</legend>
+          <legend>Create a Playlist</legend>
         ) : (
           <legend>Edit Playlist</legend>
         )}
@@ -115,179 +141,144 @@ export default function PlaylistForm({
             onChange={(event) => setCurrentPlaylistTitle(event.target.value)}
           ></StyledInput>
         </StyledFormSection>
-        <p>Add up to 20 Songs</p>
+        <StyledH4>Songs</StyledH4>
         {songError && (
           <StyledSongErrorMessage role="alert">
             {songError}
           </StyledSongErrorMessage>
         )}
-        <StyledFormSection>
-          <StyledLabel htmlFor="title">Title</StyledLabel>
-          <StyledInput
-            type="text"
-            id="title"
-            name="title"
-            maxLength={30}
-            title="Title must be between 1 and 30 characters."
-            value={currentSong.title}
-            onChange={(event) =>
-              setCurrentSong({ ...currentSong, title: event.target.value })
-            }
-          />
-        </StyledFormSection>
-        <StyledFormSection>
-          <StyledLabel htmlFor="artist">Artist</StyledLabel>
-          <StyledInput
-            type="text"
-            id="artist"
-            name="artist"
-            maxLength={30}
-            title="Artist must be between 1 and 30 characters."
-            value={currentSong.artist}
-            onChange={(event) =>
-              setCurrentSong({ ...currentSong, artist: event.target.value })
-            }
-          />
-        </StyledFormSection>
-        <StyledFormSection>
-          <StyledLabel htmlFor="youtubeId">YouTube ID</StyledLabel>
-          <StyledInput
-            type="text"
-            id="youtubeId"
-            name="youtubeId"
-            maxLength={30}
-            title="Youtube ID must be between 1 and 30 characters."
-            value={currentSong.youtubeId}
-            onChange={(event) =>
-              setCurrentSong({
-                ...currentSong,
-                youtubeId: event.target.value,
-              })
-            }
-          />
-        </StyledFormSection>
-        <StyledFormSection>
-          <StyledLabel htmlFor="note">Note</StyledLabel>
-          <StyledInput
-            type="text"
-            id="note"
-            name="note"
-            maxLength={50}
-            title="Note must be between 1 and 50 characters."
-            value={currentSong.note}
-            onChange={(event) =>
-              setCurrentSong({ ...currentSong, note: event.target.value })
-            }
-          />
-        </StyledFormSection>
-        <StyledFormButtonWrapper>
-          <StyledButtonPrimary
-            type="button"
-            aria-label="Add song"
-            onClick={() => handleSongAdd()}
-          >
-            Add Song
-          </StyledButtonPrimary>
-        </StyledFormButtonWrapper>
-        <StyledSongDivider />
+
         {defaultValues ? (
           songs.map((song, index) => (
-  <StyledUpdateForm key={`${song.title}-${song.artist}`}>
-              {songDeleteMode === `${song.title}-${song.artist}` ? (
-                <StyledMessageAndButtonWrapper>
-                  <StyledMessage>Delete this song?</StyledMessage>
-
-                  <StyledButtonSecondary
-                    type="button"
-                    aria-label="Cancel song deletion"
-                    onClick={() => setSongDeleteMode(null)}
-                  >
-                    No
-                  </StyledButtonSecondary>
-                  <StyledButtonPrimary
-                    type="button"
-                    aria-label="Confirm song deletion"
-                    onClick={() => {
-                      handleSongDelete(index);
-                      setSongDeleteMode(null);
-                    }}
-                  >
-                    Yes
-                  </StyledButtonPrimary>
-                </StyledMessageAndButtonWrapper>
-              ) : (
-                <StyledMessageAndButtonWrapper>
-                  <h4>Song {index + 1}</h4>
-                  <StyledButtonSecondary
-                    type="button"
-                    aria-label="Delete song"
-                    onClick={() =>
-                      setSongDeleteMode(`${song.title}-${song.artist}`)
-                    }
-                  >
-                    Delete Song
-                  </StyledButtonSecondary>
-                </StyledMessageAndButtonWrapper>
-              )}
+            <StyledUpdateForm key={index}>
               <StyledSongBlock>
-                <StyledFormSection>
-                  <StyledLabel>Title</StyledLabel>
-                  <StyledInput
-                    value={song.title}
-                    onChange={(event) => {
-                      const updated = songs.map((existingSong, i) =>
-                        i === index
-                          ? { ...existingSong, title: event.target.value }
-                          : existingSong
-                      );
-                      setSongs(updated);
-                    }}
-                  />
-                </StyledFormSection>
-                <StyledFormSection>
-                  <StyledLabel>Artist</StyledLabel>
-                  <StyledInput
-                    value={song.artist}
-                    onChange={(event) => {
-                      const updated = songs.map((existingSong, i) =>
-                        i === index
-                          ? { ...existingSong, artist: event.target.value }
-                          : existingSong
-                      );
-                      setSongs(updated);
-                    }}
-                  />
-                </StyledFormSection>
-                <StyledFormSection>
-                  <StyledLabel>Youtube ID</StyledLabel>
-                  <StyledInput
-                    value={song.youtubeId || song.youtube_id || ""}
-                    onChange={(event) => {
-                      const updated = songs.map((existingSong, i) =>
-                        i === index
-                          ? { ...existingSong, youtube_id: event.target.value }
-                          : existingSong
-                      );
-                      setSongs(updated);
-                    }}
-                  />
-                </StyledFormSection>
-                <StyledFormSection>
-                  <StyledLabel>Note</StyledLabel>
-                  <StyledInput
-                    value={song.note || ""}
-                    onChange={(event) => {
-                      const updated = songs.map((existingSong, i) =>
-                        i === index
-                          ? { ...existingSong, note: event.target.value }
-                          : existingSong
-                      );
-                      setSongs(updated);
-                    }}
-                  />
-                </StyledFormSection>
+                {songEditMode === index ? (
+                  <StyledSongForm>
+                    <StyledFormSection>
+                      <StyledLabel>
+                        Title<span aria-hidden>*</span>
+                      </StyledLabel>
+                      <StyledInput
+                        value={song.title}
+                        aria-required="true"
+                        onChange={(event) => {
+                          const updated = songs.map((existingSong, i) =>
+                            i === index
+                              ? { ...existingSong, title: event.target.value }
+                              : existingSong
+                          );
+                          setSongs(updated);
+                        }}
+                      />
+                    </StyledFormSection>
+
+                    <StyledFormSection>
+                      <StyledLabel>
+                        Artist<span aria-hidden>*</span>
+                      </StyledLabel>
+                      <StyledInput
+                        value={song.artist}
+                        aria-required="true"
+                        onChange={(event) => {
+                          const updated = songs.map((existingSong, i) =>
+                            i === index
+                              ? {
+                                  ...existingSong,
+                                  artist: event.target.value,
+                                }
+                              : existingSong
+                          );
+                          setSongs(updated);
+                        }}
+                      />
+                    </StyledFormSection>
+
+                    <StyledFormSection>
+                      <StyledLabel>
+                        Youtube ID{" "}
+                        <StyledHint>(from the URL after ?v=)</StyledHint>
+                      </StyledLabel>
+                      <StyledInput
+                        value={song.youtubeId || song.youtube_id || ""}
+                        placeholder="e.g. CGj85pVzRJs"
+                        onChange={(event) => {
+                          const updated = songs.map((existingSong, i) =>
+                            i === index
+                              ? {
+                                  ...existingSong,
+                                  youtube_id: event.target.value,
+                                }
+                              : existingSong
+                          );
+                          setSongs(updated);
+                        }}
+                      />
+                    </StyledFormSection>
+
+                    <StyledFormSection>
+                      <StyledLabel>Note</StyledLabel>
+                      <StyledInput
+                        value={song.note || ""}
+                        onChange={(event) => {
+                          const updated = songs.map((existingSong, i) =>
+                            i === index
+                              ? { ...existingSong, note: event.target.value }
+                              : existingSong
+                          );
+                          setSongs(updated);
+                        }}
+                      />
+                    </StyledFormSection>
+                    <StyledFormButtonWrapperLeft>
+                      <StyledButtonSecondary
+                        onClick={() => setSongEditMode(null)}
+                      >
+                        Done
+                      </StyledButtonSecondary>
+                    </StyledFormButtonWrapperLeft>
+                  </StyledSongForm>
+                ) : (
+                  <StyledSongRow>
+                    <StyledSongNumber>{index + 1}</StyledSongNumber>
+                    <StyledSongInfo>
+                      <StyledSongTitle>{song.title}</StyledSongTitle>
+                      <StyledSongArtist>{song.artist}</StyledSongArtist>
+                    </StyledSongInfo>
+                    <StyledMessageAndButtonWrapper>
+                      <KebabMenu
+                        isOpen={activeSongMenu === index}
+                        onOpen={() => setActiveSongMenu(index)}
+                        onClose={() => setActiveSongMenu(null)}
+                      >
+                        <StyledMenuItem
+                          type="button"
+                          aria-label="Edit song"
+                          onClick={() => {
+                            setSongEditMode(index);
+                            setSongDeleteMode(null);
+                            setActiveSongMenu(null);
+                          }}
+                        >
+                          Edit song
+                        </StyledMenuItem>
+
+                        <StyledMenuItem
+                          type="button"
+                          aria-label="Delete song"
+                          onClick={() => {
+                            handleSongDelete(index);
+                            setSongDeleteMode(null);
+                            setSongEditMode(null);
+                            setActiveSongMenu(null);
+                          }}
+                        >
+                          Delete song
+                        </StyledMenuItem>
+                      </KebabMenu>
+                    </StyledMessageAndButtonWrapper>
+                  </StyledSongRow>
+                )}
               </StyledSongBlock>
-              <StyledSongDivider />
             </StyledUpdateForm>
           ))
         ) : (
@@ -299,6 +290,107 @@ export default function PlaylistForm({
             ))}
           </ol>
         )}
+
+        {!songAddMode ? (
+          <StyledFormButtonWrapperLeft>
+            <StyledButtonTertiary
+              type="button"
+              aria-label="Add song"
+              onClick={() => {
+                setSongAddMode(true);
+                setSongError(null);
+              }}
+            >
+              + New Song
+            </StyledButtonTertiary>
+          </StyledFormButtonWrapperLeft>
+        ) : (
+          <StyledSongForm>
+            <StyledFormSection>
+              <StyledLabel htmlFor="title">
+                Title<span aria-hidden>*</span>
+              </StyledLabel>
+              <StyledInput
+                type="text"
+                id="title"
+                name="title"
+                aria-required="true"
+                maxLength={30}
+                title="Title must be between 1 and 30 characters."
+                value={currentSong.title}
+                onChange={(event) =>
+                  setCurrentSong({ ...currentSong, title: event.target.value })
+                }
+              />
+            </StyledFormSection>
+
+            <StyledFormSection>
+              <StyledLabel htmlFor="artist">
+                Artist<span aria-hidden>*</span>
+              </StyledLabel>
+              <StyledInput
+                type="text"
+                id="artist"
+                name="artist"
+                aria-required="true"
+                maxLength={30}
+                title="Artist must be between 1 and 30 characters."
+                value={currentSong.artist}
+                onChange={(event) =>
+                  setCurrentSong({ ...currentSong, artist: event.target.value })
+                }
+              />
+            </StyledFormSection>
+
+            <StyledFormSection>
+              <StyledLabel>
+                Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>
+              </StyledLabel>
+              <StyledInput
+                type="text"
+                id="youtubeId"
+                name="youtubeId"
+                placeholder="e.g. CGj85pVzRJs"
+                maxLength={30}
+                title="Youtube ID must be between 1 and 30 characters."
+                value={currentSong.youtubeId}
+                onChange={(event) =>
+                  setCurrentSong({
+                    ...currentSong,
+                    youtubeId: event.target.value,
+                  })
+                }
+              />
+            </StyledFormSection>
+
+            <StyledFormSection>
+              <StyledLabel htmlFor="note">Note</StyledLabel>
+              <StyledInput
+                type="text"
+                id="note"
+                name="note"
+                maxLength={50}
+                title="Note must be between 1 and 50 characters."
+                value={currentSong.note}
+                onChange={(event) =>
+                  setCurrentSong({ ...currentSong, note: event.target.value })
+                }
+              />
+            </StyledFormSection>
+            <StyledFormButtonWrapperLeft>
+              <StyledButtonSecondary
+                type="button"
+                aria-label="Save song"
+                onClick={() => {
+                  const success = handleSongAdd();
+                  if (success) setSongAddMode(false);
+                }}
+              >
+                Add to playlist
+              </StyledButtonSecondary>
+            </StyledFormButtonWrapperLeft>
+          </StyledSongForm>
+        )}
         <StyledFormButtonWrapper>
           <StyledButtonSecondary
             type="button"
@@ -306,13 +398,6 @@ export default function PlaylistForm({
             onClick={onCancel}
           >
             Cancel
-          </StyledButtonSecondary>
-          <StyledButtonSecondary
-            type="button"
-            aria-label="Clear form"
-            onClick={handlePlaylistFormClear}
-          >
-            Start Over
           </StyledButtonSecondary>
           <StyledButtonPrimary type="submit" aria-label="Add playlist">
             Save

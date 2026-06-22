@@ -1,12 +1,15 @@
 import {
-  StyledIntroSection,
   StyledLinkWrapper,
   StyledLinkPeople,
   StyledLinkScience,
-  StyledH2,
+  StyledLinkPlaylists,
   StyledH3,
 } from "./AppInfo.styled";
-import { StyledDivider } from "../Global/Global.styles";
+import {
+  StyledDivider,
+  StyledIntroSection,
+  StyledH2,
+} from "../Global/Global.styles";
 
 export default function AppInfo() {
   return (
@@ -14,17 +17,25 @@ export default function AppInfo() {
       <StyledIntroSection>
         <StyledH2>What Is Music Owl?</StyledH2>
         <p>
-          Music Owl helps you collect the music that matters — for the people
-          who matter most.
+          Music has the power to reach people even when words no longer can.
+          Music Owl helps you build playlists for people living with memory loss
+          — so the songs that shaped their life can bring them back, even just
+          for a moment.
         </p>
         <p>Here is what you can do:</p>
         <StyledLinkWrapper>
           <StyledLinkPeople href="/people">
             <p>
               Add the people you want to create music lists for. All you need is
-              a name and their year of birth.
+              a name, a year of birth, and a colour that feels like them.
             </p>
           </StyledLinkPeople>
+          <StyledLinkPlaylists href="/people">
+            <p>
+              Create personalized playlists for each person — filled with the
+              songs that once made them dance, laugh, or dream.
+            </p>
+          </StyledLinkPlaylists>
           <StyledLinkScience href="/science">
             <p>
               Explore a curated collection of scientific findings on music,

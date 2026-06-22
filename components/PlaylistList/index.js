@@ -1,24 +1,32 @@
 import useSWR from "swr";
+import { useState } from "react";
 import {
   StyledPlaylistList,
   StyledPlaylist,
   StyledPlaylistTitle,
   StyledSongList,
+  StyledPlaylistSongTitle,
+  StyledPlaylistSongArtist,
+  StyledPlaylistSongNumber,
   StyledYoutubeLink,
-  StyledNote,
+  StyledPlaylistSongInfo,
+  StyledPlaylistNote,
   StyledLinkNoteWrapper,
+  StyledPlaylistSongWrapper,
+  StyledPlaylistHeader,
 } from "./PlaylistList.styled";
 import {
-  StyledUpdateButton,
-  StyledDeleteButton,
-  StyledButtonPrimary,
+  StyledButtonDanger,
   StyledButtonSecondary,
   StyledMessage,
   StyledButtonWrapper,
   StyledMessageAndButtonWrapper,
+  StyledMenuItem,
+  StyledMenuWrapper,
 } from "../Global/Global.styles";
-import { useState } from "react";
+
 import PlaylistForm from "../PlaylistForm";
+import KebabMenu from "../KebabMenu";
 
 export default function PlaylistList({
   personId,
@@ -33,6 +41,7 @@ export default function PlaylistList({
   } = useSWR(`/api/playlists?personId=${personId}`);
   const [deletePlaylistId, setDeletePlaylistId] = useState(null);
   const [editPlaylistId, setEditPlaylistId] = useState(null);
+  const [showMenuId, setShowMenuId] = useState(null);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <p>An error occurred.</p>;
@@ -41,80 +50,113 @@ export default function PlaylistList({
 
   return (
     <StyledPlaylistList>
-      {playlists.map((playlist) => (
-        <StyledPlaylist key={playlist._id} $color={color}>
-          {editPlaylistId === playlist._id ? (
-            <PlaylistForm
-              defaultValues={playlist}
-              onSubmit={async (data) => {
-                const success = await handlePlaylistUpdate(playlist._id, data);
-                if (success) setEditPlaylistId(null);
-              }}
-              onCancel={() => setEditPlaylistId(null)}
-              editPlaylistId={editPlaylistId}
-            />
-          ) : (
-            <>
-              {deletePlaylistId === playlist._id ? (
-                <StyledMessageAndButtonWrapper>
-                  <StyledMessage>Delete this playlist?</StyledMessage>
-                  <StyledButtonWrapper>
-                    <StyledButtonSecondary
-                      type="button"
-                      aria-label="Cancel deletion"
-                      onClick={() => setDeletePlaylistId(null)}
-                    >
-                      No
-                    </StyledButtonSecondary>
-                    <StyledButtonPrimary
-                      type="button"
-                      aria-label="Confirm deletion"
-                      onClick={() => handlePlaylistDelete(playlist._id)}
-                    >
-                      Yes
-                    </StyledButtonPrimary>
-                  </StyledButtonWrapper>
-                </StyledMessageAndButtonWrapper>
-              ) : (
-                  <StyledButtonWrapper>
-                    <StyledDeleteButton
-                      type="button"
-                      aria-label="Delete playlist"
-                      onClick={() => setDeletePlaylistId(playlist._id)}
-                    >
-                      x
-                    </StyledDeleteButton>
-                    <StyledUpdateButton
+      {playlists.map((playlist) =>
+        editPlaylistId === playlist._id ? (
+          <PlaylistForm
+            key={playlist._id}
+            defaultValues={playlist}
+            onSubmit={async (data) => {
+              const success = await handlePlaylistUpdate(playlist._id, data);
+              if (success) setEditPlaylistId(null);
+            }}
+            onCancel={() => setEditPlaylistId(null)}
+            editPlaylistId={editPlaylistId}
+          />
+        ) : (
+          <StyledPlaylist key={playlist._id} $color={color}>
+            {deletePlaylistId === playlist._id && (
+              <StyledMessageAndButtonWrapper>
+                <StyledMessage>Delete this playlist?</StyledMessage>
+                <StyledButtonWrapper>
+                  <StyledButtonSecondary
+                    type="button"
+                    aria-label="Cancel deletion"
+                    onClick={() => setDeletePlaylistId(null)}
+                  >
+                    No
+                  </StyledButtonSecondary>
+                  <StyledButtonDanger
+                    type="button"
+                    aria-label="Confirm deletion"
+                    onClick={() => handlePlaylistDelete(playlist._id)}
+                  >
+                    Yes
+                  </StyledButtonDanger>
+                </StyledButtonWrapper>
+              </StyledMessageAndButtonWrapper>
+            )}
+            <StyledPlaylistHeader>
+              <StyledPlaylistTitle>
+                {playlist.playlist_title}
+              </StyledPlaylistTitle>
+              {deletePlaylistId === playlist._id ? null : (
+                <StyledMenuWrapper>
+                  <KebabMenu
+                    isOpen={showMenuId === playlist._id}
+                    onOpen={() => setShowMenuId(playlist._id)}
+                    onClose={() => setShowMenuId(null)}
+                  >
+                    <StyledMenuItem
                       type="button"
                       aria-label="Edit playlist"
-                      onClick={() => setEditPlaylistId(playlist._id)}
+                      onClick={() => {
+                        setEditPlaylistId(playlist._id);
+                        setShowMenuId(null);
+                      }}
                     >
-                      &#9998;
-                    </StyledUpdateButton>
-                  </StyledButtonWrapper>
+                      Edit playlist
+                    </StyledMenuItem>
+                    <StyledMenuItem
+                      type="button"
+                      aria-label="Delete playlist"
+                      onClick={() => {
+                        setDeletePlaylistId(playlist._id);
+                        setShowMenuId(null);
+                      }}
+                    >
+                      Delete playlist
+                    </StyledMenuItem>
+                  </KebabMenu>
+                </StyledMenuWrapper>
               )}
-            </>
-          )}
-          <StyledPlaylistTitle>{playlist.playlist_title}</StyledPlaylistTitle>
-          <StyledSongList>
-            {playlist.songs.map((song) => (
-              <li key={song.title}>
-                {song.title} — {song.artist}{" "}
-                <StyledLinkNoteWrapper>
-                  <StyledYoutubeLink
-                    href={`https://www.youtube.com/watch?v=${song.youtube_id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    ▶
-                  </StyledYoutubeLink>
-                  {song.note && <StyledNote>{song.note}</StyledNote>}
-                </StyledLinkNoteWrapper>
-              </li>
-            ))}
-          </StyledSongList>
-        </StyledPlaylist>
-      ))}
+            </StyledPlaylistHeader>
+
+            <StyledSongList>
+              {playlist.songs.map((song, index) => (
+                <li key={song.title}>
+                  <StyledPlaylistSongWrapper>
+                    <StyledPlaylistSongNumber>
+                      {index + 1}
+                    </StyledPlaylistSongNumber>
+                    <StyledPlaylistSongInfo>
+                      <StyledPlaylistSongTitle>
+                        {song.title}
+                      </StyledPlaylistSongTitle>
+                      <StyledPlaylistSongArtist>
+                        {song.artist}
+                      </StyledPlaylistSongArtist>
+                      <StyledLinkNoteWrapper>
+                        {song.youtube_id && (
+                          <StyledYoutubeLink
+                            href={`https://www.youtube.com/watch?v=${song.youtube_id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            ▶
+                          </StyledYoutubeLink>
+                        )}
+                        {song.note && (
+                          <StyledPlaylistNote>{song.note}</StyledPlaylistNote>
+                        )}
+                      </StyledLinkNoteWrapper>
+                    </StyledPlaylistSongInfo>
+                  </StyledPlaylistSongWrapper>
+                </li>
+              ))}
+            </StyledSongList>
+          </StyledPlaylist>
+        )
+      )}
     </StyledPlaylistList>
   );
 }

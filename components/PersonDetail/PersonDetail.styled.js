@@ -1,45 +1,47 @@
 import styled from "styled-components";
-import { StyledButton } from "../Global/Global.styles";
+import { StyledMenuWrapper } from "../Global/Global.styles";
 
-export const StyledDetailCard = styled.article`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  border-radius: 15px;
-  border: 1px solid #e0e0e0;
-  background-color: #fafaf8;
-  overflow: hidden;
-`;
-
-export const StyledDetailColoredArea = styled.div`
+export const StyledPersonHeaderMenuWrapper = styled(StyledMenuWrapper)`
   position: relative;
-  height: 5rem;
-  background-color: ${({ $color }) => $color};
+  top: auto;
+  right: auto;
+  margin-left: auto;
 `;
 
-export const StyledDetailYear = styled.div`
-  position: absolute;
-  font-size: 0.65rem;
-  color: white;
-  background-color: #00000022;
-  border-radius: 15px;
-  padding: 2px 6px;
-  right: 0.5rem;
-  bottom: 0.5rem;
-`;
-
-export const StyledDetailName = styled.div`
+export const StyledPersonHeader = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  overflow-wrap: break-word;
-  word-break: break-word;
-  justify-content: center;
-  margin: 0.5rem;
+  align-items: center;
+  gap: 14px;
+  margin: 1rem 0 1.5rem 0;
 `;
 
-export const StyledPlaylistSectionTitle = styled.h3`
-  text-align: center;
-  margin: 2.5rem 0 1rem 0;
+export const StyledColorAvatar = styled.span`
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-element);
+  background: ${({ $color }) => $color};
+  flex-shrink: 0;
+`;
+
+export const StyledPersonName = styled.h3`
+  font-weight: 500;
+  margin: 0;
+`;
+
+export const StyledPersonYear = styled.p`
+  font-size: 12px;
+  margin: 0;
+  white-space: nowrap;
+`;
+
+export const StyledPlaylistSectionHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+`;
+
+export const StyledPlaylistSectionTitle = styled.h2`
+  text-align: left;
+  margin: 0;
 `;

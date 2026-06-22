@@ -9,10 +9,11 @@ export const StyledInputAndButtonFlex = styled.div`
 
 export const StyledInputName = styled(StyledInput)`
   width: 12rem;
+  margin-bottom: 0.5rem;
 `;
 
 export const StyledInputYear = styled(StyledInput)`
-  width: 5rem;
+  width: 7rem;
 `;
 
 export const StyledInputColor = styled(StyledInput)`
