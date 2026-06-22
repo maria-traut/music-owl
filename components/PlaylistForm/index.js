@@ -382,8 +382,8 @@ export default function PlaylistForm({
                 type="button"
                 aria-label="Save song"
                 onClick={() => {
-                  handleSongAdd();
-                  setSongAddMode(false);
+                  const success = handleSongAdd();
+                  if (success) setSongAddMode(false);
                 }}
               >
                 Add to playlist

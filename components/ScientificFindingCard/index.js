@@ -24,7 +24,7 @@ export default function ScientificFindingCard({ scientificFinding }) {
     publisher,
     tags,
   } = scientificFinding;
-  console.log(category);
+
   return (
     <StyledCard $color={CATEGORY_COLORS[category] ?? "#fde5bb"}>
       <StyledCategory>{category}</StyledCategory>

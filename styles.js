@@ -14,6 +14,7 @@ export default createGlobalStyle`
 	--app-background: #FAFAF8;
   --color-text-primary: #1B3A5C;
   --color-text-secondary: #1b3a5c99;
+  --color-text-tertiary: #1B3A5C66; 
   --color-primary: #1B3A5C;
   --color-primary-hover: #16304d;
   --color-secondary: #4A6FA5;

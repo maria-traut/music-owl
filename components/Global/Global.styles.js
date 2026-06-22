@@ -328,7 +328,7 @@ export const StyledMenuItem = styled.button`
   padding: 10px 12px;
   border-radius: 8px;
   text-align: left;
-  font-size: 1rem;
+  font-size: 0.95;
   cursor: pointer;
   width: 100%;
   transition: background 120ms ease;

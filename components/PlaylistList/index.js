@@ -64,6 +64,27 @@ export default function PlaylistList({
           />
         ) : (
           <StyledPlaylist key={playlist._id} $color={color}>
+            {deletePlaylistId === playlist._id && (
+              <StyledMessageAndButtonWrapper>
+                <StyledMessage>Delete this playlist?</StyledMessage>
+                <StyledButtonWrapper>
+                  <StyledButtonSecondary
+                    type="button"
+                    aria-label="Cancel deletion"
+                    onClick={() => setDeletePlaylistId(null)}
+                  >
+                    No
+                  </StyledButtonSecondary>
+                  <StyledButtonDanger
+                    type="button"
+                    aria-label="Confirm deletion"
+                    onClick={() => handlePlaylistDelete(playlist._id)}
+                  >
+                    Yes
+                  </StyledButtonDanger>
+                </StyledButtonWrapper>
+              </StyledMessageAndButtonWrapper>
+            )}
             <StyledPlaylistHeader>
               <StyledPlaylistTitle>
                 {playlist.playlist_title}
@@ -99,28 +120,6 @@ export default function PlaylistList({
                 </StyledMenuWrapper>
               )}
             </StyledPlaylistHeader>
-
-            {deletePlaylistId === playlist._id && (
-              <StyledMessageAndButtonWrapper>
-                <StyledMessage>Delete this playlist?</StyledMessage>
-                <StyledButtonWrapper>
-                  <StyledButtonSecondary
-                    type="button"
-                    aria-label="Cancel deletion"
-                    onClick={() => setDeletePlaylistId(null)}
-                  >
-                    No
-                  </StyledButtonSecondary>
-                  <StyledButtonDanger
-                    type="button"
-                    aria-label="Confirm deletion"
-                    onClick={() => handlePlaylistDelete(playlist._id)}
-                  >
-                    Yes
-                  </StyledButtonDanger>
-                </StyledButtonWrapper>
-              </StyledMessageAndButtonWrapper>
-            )}
 
             <StyledSongList>
               {playlist.songs.map((song, index) => (
