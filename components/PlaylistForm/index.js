@@ -65,7 +65,9 @@ export default function PlaylistForm({
   const [activeSearchIndex, setActiveSearchIndex] = useState(null);
   const [searchError, setSearchError] = useState(null);
 
-  async function handleSongSearch(songUid) {
+  async function handleSongSearch(songUid, index) {
+    console.log("songUid:", songUid);
+    console.log("query:", songSearches[songUid]?.query);
     const query = songSearches[songUid]?.query?.trim();
 
     if (!query) {
@@ -79,7 +81,8 @@ export default function PlaylistForm({
     );
 
     const data = await response.json();
-
+    console.log("results:", data.items);
+    console.log("songSearches nach set:", songSearches);
     if (!data.items || data.items.length === 0) {
       setSongSearches((prev) => ({
         ...prev,
@@ -90,6 +93,8 @@ export default function PlaylistForm({
       }));
 
       setSearchError("No results found. Try a different search term.");
+      setActiveSearchIndex(index);
+      console.log("setze activeSearchIndex auf:", index);
       return;
     }
 
@@ -97,11 +102,12 @@ export default function PlaylistForm({
 
     setSongSearches((prev) => ({
       ...prev,
-      [index]: {
-        ...prev[index],
+      [songUid]: {
+        ...prev[songUid],
         results: data.items,
       },
     }));
+    setActiveSearchIndex(index);
   }
 
   async function handleNewSongSearch() {
@@ -323,7 +329,7 @@ export default function PlaylistForm({
                         </StyledButtonSecondary>
                         <StyledButtonSecondary
                           type="button"
-                          onClick={() => handleSongSearch(song.uid)}
+                          onClick={() => handleSongSearch(song.uid, index)}
                         >
                           Go
                         </StyledButtonSecondary>
@@ -545,7 +551,7 @@ export default function PlaylistForm({
                 </StyledButtonSecondary>
                 <StyledButtonSecondary
                   type="button"
-                  onClick={handleNewSongSearch}
+                  onClick={() => handleSongSearch(song.uid, index)}
                 >
                   Go
                 </StyledButtonSecondary>
