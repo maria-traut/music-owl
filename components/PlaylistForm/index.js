@@ -66,8 +66,6 @@ export default function PlaylistForm({
   const [searchError, setSearchError] = useState(null);
 
   async function handleSongSearch(songUid, index) {
-    console.log("songUid:", songUid);
-    console.log("query:", songSearches[songUid]?.query);
     const query = songSearches[songUid]?.query?.trim();
 
     if (!query) {
@@ -81,8 +79,7 @@ export default function PlaylistForm({
     );
 
     const data = await response.json();
-    console.log("results:", data.items);
-    console.log("songSearches nach set:", songSearches);
+
     if (!data.items || data.items.length === 0) {
       setSongSearches((prev) => ({
         ...prev,
@@ -94,7 +91,7 @@ export default function PlaylistForm({
 
       setSearchError("No results found. Try a different search term.");
       setActiveSearchIndex(index);
-      console.log("setze activeSearchIndex auf:", index);
+
       return;
     }
 
@@ -551,7 +548,7 @@ export default function PlaylistForm({
                 </StyledButtonSecondary>
                 <StyledButtonSecondary
                   type="button"
-                  onClick={() => handleSongSearch(song.uid, index)}
+                  onClick={handleNewSongSearch}
                 >
                   Go
                 </StyledButtonSecondary>
