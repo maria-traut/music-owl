@@ -83,9 +83,9 @@ export default function PlaylistForm({
     if (!data.items || data.items.length === 0) {
       setSongSearches((prev) => ({
         ...prev,
-        [index]: {
-          ...prev[index],
-          results: [],
+        [songUid]: {
+          ...prev[songUid],
+          results: data.items,
         },
       }));
 
@@ -126,10 +126,10 @@ export default function PlaylistForm({
     setNewSongSearchResults(data.items);
   }
 
-  function handleSongSearchClear(index) {
+  function handleSongSearchClear(songUid) {
     setSongSearches((prev) => ({
       ...prev,
-      [index]: {
+      [songUid]: {
         query: "",
         results: [],
       },
@@ -305,10 +305,10 @@ export default function PlaylistForm({
                         onChange={(event) =>
                           setSongSearches((prev) => ({
                             ...prev,
-                            [index]: {
-                              ...prev[index],
+                            [song.uid]: {
+                              ...prev[song.uid],
                               query: event.target.value,
-                              results: prev[index]?.results || [],
+                              results: prev[song.uid]?.results || [],
                             },
                           }))
                         }
@@ -317,13 +317,13 @@ export default function PlaylistForm({
                         <StyledButtonSecondary
                           type="button"
                           disabled={!songSearches[song.uid]?.query}
-                          onClick={() => handleSongSearchClear(index)}
+                          onClick={() => handleSongSearchClear(song.uid)}
                         >
                           Clear
                         </StyledButtonSecondary>
                         <StyledButtonSecondary
                           type="button"
-                          onClick={() => handleSongSearch(index)}
+                          onClick={() => handleSongSearch(song.uid)}
                         >
                           Go
                         </StyledButtonSecondary>
@@ -349,7 +349,7 @@ export default function PlaylistForm({
 
                                   setSongSearches((prev) => ({
                                     ...prev,
-                                    [index]: {
+                                    [song.uid]: {
                                       query: "",
                                       results: [],
                                     },
