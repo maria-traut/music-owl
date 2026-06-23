@@ -12,13 +12,25 @@ export default createGlobalStyle`
 
   :root {
 	--app-background: #FAFAF8;
-  --text-color: #1B3A5C;
+  --color-text-primary: #1B3A5C;
+  --color-text-secondary: #1b3a5c99;
+  --color-text-tertiary: #1B3A5C66; 
+  --color-primary: #1B3A5C;
+  --color-primary-hover: #16304d;
+  --color-secondary: #4A6FA5;
+  --color-danger-text: #fa8072;
+  --color-danger: #b85450;
+  --color-background: #f5f5f5;
+  --color-border: #cccccc;
+  --color-divider: #e0e0e0;
+  --radius-card: 15px;
+  --radius-element: 8px;
   }
 
   body {
     margin: 0;
     font-family: ${inter.style.fontFamily}, sans-serif;
-    color: var(--text-color);
+    color: var(--color-text-primary);
     background-color: var(--app-background);
   }
 
@@ -26,6 +38,6 @@ export default createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
   font-family: ${inter.style.fontFamily}, sans-serif;
   font-weight: bold;
-  color: var(--text-color);
+  color: var(--color-text-primary);
 }
 `;

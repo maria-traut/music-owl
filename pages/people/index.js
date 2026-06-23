@@ -4,12 +4,12 @@ import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
 import {
   StyledMain,
-  StyledH2,
-  StyledPeopleSection,
+  StyledIntroSection,
   StyledMessage,
   StyledDivider,
   StyledButtonWrapper,
-  StyledButtonSecondary,
+  StyledButtonPrimary,
+  StyledH2,
 } from "@/components/Global/Global.styles";
 
 export default function People() {
@@ -55,21 +55,21 @@ export default function People() {
   }
 
   function handlePersonFormClear(event) {
-    event.target.form.reset();
     setPersonCreateSuccess(false);
     setPersonCreateError(false);
   }
 
   return (
     <StyledMain>
-      <StyledPeopleSection>
+      <StyledIntroSection>
         <StyledH2>My People</StyledH2>
         <p>
           Every music playlist starts with a person. Add them here: a name, a
           year of birth and their favourite colour.
         </p>
-      </StyledPeopleSection>
+      </StyledIntroSection>
       <StyledDivider />
+
       {personFormMode ? (
         <PersonForm
           onSubmit={handlePersonCreate}
@@ -78,13 +78,13 @@ export default function People() {
         />
       ) : (
         <StyledButtonWrapper>
-          <StyledButtonSecondary
+          <StyledButtonPrimary
             type="button"
             aria-label="Open Person Form"
             onClick={() => setPersonFormMode(true)}
           >
-            + Add a Person
-          </StyledButtonSecondary>
+            + New Person
+          </StyledButtonPrimary>
         </StyledButtonWrapper>
       )}
       {personCreateSuccess && (
@@ -93,6 +93,7 @@ export default function People() {
       {personCreateError && (
         <StyledMessage>Something went wrong. Please try again.</StyledMessage>
       )}
+
       <PersonList />
     </StyledMain>
   );

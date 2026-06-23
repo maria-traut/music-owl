@@ -1,17 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-export const StyledIntroSection = styled.section`
-  background: transparent;
-  padding-bottom: 0.6rem;
-`;
-
-export const StyledH2 = styled.h2`
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: 1.3;
-`;
-
 export const StyledH3 = styled.h3`
   font-size: 1rem;
   line-height: 1.3;
@@ -27,7 +16,7 @@ export const StyledLinkWrapper = styled.span`
 export const StyledLink = styled(Link)`
   color: #ffffff;
   padding: 5px 25px;
-  border-radius: 15px;
+  border-radius: var(--radius-card);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -36,9 +25,13 @@ export const StyledLink = styled(Link)`
 `;
 
 export const StyledLinkPeople = styled(StyledLink)`
-  background-color: #1b3a5c;
+  background-color: var(--color-primary);
 `;
 
 export const StyledLinkScience = styled(StyledLink)`
   background-color: #e8a838;
+`;
+
+export const StyledLinkPlaylists = styled(StyledLink)`
+  background-color: #4a9b8e;
 `;

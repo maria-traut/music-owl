@@ -3,11 +3,13 @@ import { useSWRConfig } from "swr";
 import { useState, useEffect } from "react";
 
 import {
-  StyledDetailCard,
-  StyledDetailColoredArea,
-  StyledDetailYear,
-  StyledDetailName,
   StyledPlaylistSectionTitle,
+  StyledPlaylistSectionHeader,
+  StyledPersonHeader,
+  StyledColorAvatar,
+  StyledPersonName,
+  StyledPersonYear,
+  StyledPersonHeaderMenuWrapper,
 } from "./PersonDetail.styled";
 import PersonForm from "../PersonForm";
 import {
@@ -15,12 +17,16 @@ import {
   StyledButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
+  StyledButtonDanger,
   StyledMessage,
-  StyledUpdateButton,
-  StyledDeleteButton,
+  StyledMenuButton,
+  StyledMenu,
+  StyledMenuItem,
+  StyledDivider,
 } from "../Global/Global.styles";
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
+import KebabMenu from "../KebabMenu";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -37,6 +43,8 @@ export default function PersonDetail({ person }) {
   const [playlistError, setPlaylistError] = useState(null);
   const [playlistUpdateError, setPlaylistUpdateError] = useState(null);
   const [playlistDeleteSuccess, setPlaylistDeleteSuccess] = useState(false);
+
+  const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
     if (!personDeleteSuccess) return;
@@ -139,39 +147,47 @@ export default function PersonDetail({ person }) {
 
   return (
     <>
-      <StyledDetailCard>
-        <StyledDetailColoredArea $color={color}>
-          <StyledDetailYear>{birth_year}</StyledDetailYear>
-        </StyledDetailColoredArea>
-        <StyledDetailName>{name}</StyledDetailName>
-      </StyledDetailCard>
-
-      {!activeMode && (
-        <StyledButtonWrapper>
-          <StyledDeleteButton
-            type="button"
-            aria-label="Delete person"
-            onClick={() => setActiveMode("delete")}
+      <StyledPersonHeader>
+        <StyledColorAvatar $color={color} />
+        <StyledPersonName>{name}</StyledPersonName>
+        <StyledPersonYear>* {birth_year}</StyledPersonYear>
+        <StyledPersonHeaderMenuWrapper>
+          <KebabMenu
+            isOpen={showMenu}
+            onOpen={() => setShowMenu(true)}
+            onClose={() => setShowMenu(false)}
           >
-            x
-          </StyledDeleteButton>
-          <StyledUpdateButton
-            type="button"
-            aria-label="Edit person"
-            onClick={() => setActiveMode("edit")}
-          >
-            &#9998;
-          </StyledUpdateButton>
-        </StyledButtonWrapper>
-      )}
+            <StyledMenuItem
+              type="button"
+              aria-label="Edit person"
+              onClick={() => {
+                setActiveMode("edit");
+                setShowMenu(false);
+              }}
+            >
+              Edit person
+            </StyledMenuItem>
+            <StyledMenuItem
+              type="button"
+              aria-label="Delete person"
+              onClick={() => {
+                setActiveMode("delete");
+                setShowMenu(false);
+              }}
+            >
+              Remove person
+            </StyledMenuItem>
+          </KebabMenu>
+        </StyledPersonHeaderMenuWrapper>
+      </StyledPersonHeader>
 
       {activeMode === "delete" && (
         <>
           {personDeleteSuccess ? (
-            <StyledMessage>{name} was successfully deleted.</StyledMessage>
+            <StyledMessage>{name} was successfully removed.</StyledMessage>
           ) : (
             <StyledMessageAndButtonWrapper>
-              <StyledMessage>{`Delete ${name} and go back to 'People'?`}</StyledMessage>
+              <StyledMessage>Remove and go back?</StyledMessage>
               <StyledButtonWrapper>
                 <StyledButtonSecondary
                   type="button"
@@ -183,13 +199,13 @@ export default function PersonDetail({ person }) {
                 >
                   No
                 </StyledButtonSecondary>
-                <StyledButtonPrimary
+                <StyledButtonDanger
                   type="button"
                   aria-label="Confirm deletion"
                   onClick={handlePersonDelete}
                 >
                   Yes
-                </StyledButtonPrimary>
+                </StyledButtonDanger>
               </StyledButtonWrapper>
               {personDeleteError && (
                 <span>An error occurred. Please try again.</span>
@@ -209,33 +225,38 @@ export default function PersonDetail({ person }) {
       {personUpdateError && <p role="alert">{personUpdateError}</p>}
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
-        <StyledPlaylistSectionTitle>{`Manage ${person.name}'s playlists`}</StyledPlaylistSectionTitle>
-        {activeMode === "playlist form" ? (
-          <PlaylistForm
-            onSubmit={(data) => handlePlaylistCreate(data)}
-            onCancel={() => setActiveMode(null)}
-          />
-        ) : (
-          <StyledButtonWrapper>
-            <StyledButtonSecondary
+        <StyledDivider />
+        <StyledPlaylistSectionHeader>
+          <StyledPlaylistSectionTitle>Playlists</StyledPlaylistSectionTitle>
+          {activeMode !== "playlist form" && (
+            <StyledButtonPrimary
               type="button"
               aria-label="Open Playlist Form"
               onClick={() => setActiveMode("playlist form")}
             >
-              + Add a Playlist
-            </StyledButtonSecondary>
-          </StyledButtonWrapper>
+              + New Playlist
+            </StyledButtonPrimary>
+          )}
+        </StyledPlaylistSectionHeader>
+
+        {activeMode === "playlist form" && (
+          <PlaylistForm
+            onSubmit={(data) => handlePlaylistCreate(data)}
+            onCancel={() => setActiveMode(null)}
+          />
         )}
+
         {playlistCreateSuccess && (
-          <StyledMessage>Playlist was successfully created.</StyledMessage>
+          <StyledMessage>Playlist successfully created.</StyledMessage>
         )}
         {playlistUpdateSuccess && (
-          <StyledMessage>Playlist was successfully updated.</StyledMessage>
+          <StyledMessage>Playlist successfully updated.</StyledMessage>
         )}
         {playlistDeleteSuccess && (
-          <StyledMessage>Playlist was successfully deleted.</StyledMessage>
+          <StyledMessage>Playlist successfully deleted.</StyledMessage>
         )}
         {playlistUpdateError && <p role="alert">{playlistUpdateError}</p>}
+
         <PlaylistList
           personId={_id}
           color={color}
