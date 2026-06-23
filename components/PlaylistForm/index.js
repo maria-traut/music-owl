@@ -39,7 +39,12 @@ export default function PlaylistForm({
     defaultValues?.playlist_title ?? ""
   );
 
-  const [songs, setSongs] = useState(defaultValues?.songs ?? []);
+  const [songs, setSongs] = useState(
+    (defaultValues?.songs ?? []).map((song) => ({
+      uid: song.uid || crypto.randomUUID(),
+      ...song,
+    }))
+  );
   const [songError, setSongError] = useState(null);
   const [currentSong, setCurrentSong] = useState({
     title: "",
@@ -53,34 +58,82 @@ export default function PlaylistForm({
   const [songDeleteMode, setSongDeleteMode] = useState(null);
   const [songAddMode, setSongAddMode] = useState(!defaultValues);
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  const [songSearches, setSongSearches] = useState({});
+  const [newSongSearchQuery, setNewSongSearchQuery] = useState("");
+  const [newSongSearchResults, setNewSongSearchResults] = useState([]);
+
   const [activeSearchIndex, setActiveSearchIndex] = useState(null);
   const [searchError, setSearchError] = useState(null);
 
-  async function handleSongSearch(index = null) {
-    if (!searchQuery) {
+  async function handleSongSearch(songUid) {
+    const query = songSearches[songUid]?.query?.trim();
+
+    if (!query) {
       setSearchError("Please enter a search term.");
-      setTimeout(() => setSearchError(false), 3000);
+      setTimeout(() => setSearchError(null), 3000);
       return;
     }
+
     const response = await fetch(
-      `/api/youtube-search?query=${encodeURIComponent(searchQuery)}`
+      `/api/youtube-search?query=${encodeURIComponent(query)}`
     );
+
     const data = await response.json();
+
     if (!data.items || data.items.length === 0) {
-      setSearchResults([]);
+      setSongSearches((prev) => ({
+        ...prev,
+        [index]: {
+          ...prev[index],
+          results: [],
+        },
+      }));
+
       setSearchError("No results found. Try a different search term.");
       return;
     }
+
     setSearchError(null);
-    setSearchResults(data.items);
-    setActiveSearchIndex(index);
+
+    setSongSearches((prev) => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        results: data.items,
+      },
+    }));
   }
 
-  function handleSongSearchClear() {
-    setSearchQuery("");
-    setSearchResults([]);
+  async function handleNewSongSearch() {
+    if (!newSongSearchQuery.trim()) {
+      setSearchError("Please enter a search term.");
+      return;
+    }
+
+    const response = await fetch(
+      `/api/youtube-search?query=${encodeURIComponent(newSongSearchQuery)}`
+    );
+
+    const data = await response.json();
+
+    if (!data.items || data.items.length === 0) {
+      setNewSongSearchResults([]);
+      setSearchError("No results found.");
+      return;
+    }
+
+    setSearchError(null);
+    setNewSongSearchResults(data.items);
+  }
+
+  function handleSongSearchClear(index) {
+    setSongSearches((prev) => ({
+      ...prev,
+      [index]: {
+        query: "",
+        results: [],
+      },
+    }));
   }
 
   function decodeHtml(html) {
@@ -111,7 +164,13 @@ export default function PlaylistForm({
       setSongError("A playlist can contain a maximum of 20 songs.");
       return false;
     }
-    setSongs([...songs, currentSong]);
+    setSongs([
+      ...songs,
+      {
+        uid: crypto.randomUUID(),
+        ...currentSong,
+      },
+    ]);
     setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
     setSongError(null);
     return true;
@@ -192,7 +251,7 @@ export default function PlaylistForm({
         )}
         {defaultValues ? (
           songs.map((song, index) => (
-            <StyledUpdateForm key={index}>
+            <StyledUpdateForm key={song.uid}>
               <StyledSongBlock>
                 {songEditMode === index ? (
                   <StyledSongForm>
@@ -242,30 +301,36 @@ export default function PlaylistForm({
                         id="search"
                         name="search"
                         placeholder="Find on YouTube"
-                        value={searchQuery}
-                        onChange={(event) => setSearchQuery(event.target.value)}
+                        value={songSearches[song.uid]?.query || ""}
+                        onChange={(event) =>
+                          setSongSearches((prev) => ({
+                            ...prev,
+                            [index]: {
+                              ...prev[index],
+                              query: event.target.value,
+                              results: prev[index]?.results || [],
+                            },
+                          }))
+                        }
                       />
                       <StyledButtonWrapper>
                         <StyledButtonSecondary
                           type="button"
-                          disabled={!searchQuery}
-                          onClick={handleSongSearchClear}
+                          disabled={!songSearches[song.uid]?.query}
+                          onClick={() => handleSongSearchClear(index)}
                         >
                           Clear
                         </StyledButtonSecondary>
                         <StyledButtonSecondary
                           type="button"
-                          onClick={() => {
-                            setActiveSearchIndex(index);
-                            handleSongSearch(index);
-                          }}
+                          onClick={() => handleSongSearch(index)}
                         >
                           Go
                         </StyledButtonSecondary>
                       </StyledButtonWrapper>
                       {activeSearchIndex === index && (
                         <StyledSearchResultList>
-                          {searchResults.map((result) => (
+                          {songSearches[song.uid]?.results?.map((result) => (
                             <li key={result.id.videoId}>
                               <button
                                 type="button"
@@ -281,8 +346,15 @@ export default function PlaylistForm({
                                   );
 
                                   setSongs(updated);
-                                  setSearchResults([]);
-                                  setSearchQuery("");
+
+                                  setSongSearches((prev) => ({
+                                    ...prev,
+                                    [index]: {
+                                      query: "",
+                                      results: [],
+                                    },
+                                  }));
+
                                   setActiveSearchIndex(null);
                                 }}
                               >
@@ -457,23 +529,29 @@ export default function PlaylistForm({
                 id="search"
                 name="search"
                 placeholder="Find on YouTube"
-                value={searchQuery}
-                onChange={(event) => setSearchQuery(event.target.value)}
+                value={newSongSearchQuery}
+                onChange={(event) => setNewSongSearchQuery(event.target.value)}
               />
               <StyledButtonWrapper>
                 <StyledButtonSecondary
                   type="button"
-                  disabled={!searchQuery}
-                  onClick={handleSongSearchClear}
+                  disabled={!newSongSearchQuery}
+                  onClick={() => {
+                    setNewSongSearchQuery("");
+                    setNewSongSearchResults([]);
+                  }}
                 >
                   Clear
                 </StyledButtonSecondary>
-                <StyledButtonSecondary type="button" onClick={handleSongSearch}>
+                <StyledButtonSecondary
+                  type="button"
+                  onClick={handleNewSongSearch}
+                >
                   Go
                 </StyledButtonSecondary>
               </StyledButtonWrapper>
               <StyledSearchResultList>
-                {searchResults.map((result) => (
+                {newSongSearchResults.map((result) => (
                   <li key={result.id.videoId}>
                     <button
                       type="button"
@@ -482,8 +560,9 @@ export default function PlaylistForm({
                           ...currentSong,
                           youtubeId: result.id.videoId,
                         });
-                        setSearchResults([]);
-                        setSearchQuery("");
+
+                        setNewSongSearchResults([]);
+                        setNewSongSearchQuery("");
                       }}
                     >
                       {decodeHtml(result.snippet.title)}
