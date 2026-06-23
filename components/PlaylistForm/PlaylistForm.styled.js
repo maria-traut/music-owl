@@ -1,13 +1,10 @@
 import styled from "styled-components";
 
-<<<<<<< HEAD
-=======
 export const StyledSongErrorMessage = styled.p`
   color: var(--color-danger-text);
   font-weight: 700;
 `;
 
->>>>>>> main
 export const StyledUpdateForm = styled.div`
   margin: 0;
   padding: 0;
@@ -57,13 +54,4 @@ export const StyledHint = styled.span`
   font-size: 11px;
   color: var(--color-text-secondary);
   font-weight: 400;
-`;
-
-export const StyledSearchResultList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 0.5rem;
 `;
