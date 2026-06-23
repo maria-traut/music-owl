@@ -9,14 +9,16 @@ import {
   StyledButtonSecondary,
   StyledButtonTertiary,
   StyledMessageAndButtonWrapper,
+  StyledButtonWrapper,
+  StyledErrorMessage,
   StyledLabel,
   StyledMenuItem,
   StyledH4,
 } from "../Global/Global.styles";
 import {
-  StyledSongErrorMessage,
   StyledUpdateForm,
   StyledSongBlock,
+  StyledSearchResultList,
   StyledSongForm,
   StyledSongRow,
   StyledSongNumber,
@@ -37,7 +39,12 @@ export default function PlaylistForm({
     defaultValues?.playlist_title ?? ""
   );
 
-  const [songs, setSongs] = useState(defaultValues?.songs ?? []);
+  const [songs, setSongs] = useState(
+    (defaultValues?.songs ?? []).map((song) => ({
+      uid: song.uid || crypto.randomUUID(),
+      ...song,
+    }))
+  );
   const [songError, setSongError] = useState(null);
   const [currentSong, setCurrentSong] = useState({
     title: "",
@@ -51,6 +58,108 @@ export default function PlaylistForm({
   const [songDeleteMode, setSongDeleteMode] = useState(null);
   const [songAddMode, setSongAddMode] = useState(!defaultValues);
 
+  const [songSearches, setSongSearches] = useState({});
+  const [newSongSearchQuery, setNewSongSearchQuery] = useState("");
+  const [newSongSearchResults, setNewSongSearchResults] = useState([]);
+
+  const [activeSearchIndex, setActiveSearchIndex] = useState(null);
+  const [searchError, setSearchError] = useState(null);
+
+  async function handleSongSearch(songUid, index) {
+    const query = songSearches[songUid]?.query?.trim();
+
+    if (!query) {
+      setSearchError("Please enter a search term.");
+      setTimeout(() => setSearchError(null), 3000);
+      return;
+    }
+    try {
+      const response = await fetch(
+        `/api/youtube-search?query=${encodeURIComponent(query)}`
+      );
+      if (!response.ok) {
+        setSearchError("Something went wrong. Please try again.");
+        return;
+      }
+
+      const data = await response.json();
+
+      if (!data.items || data.items.length === 0) {
+        setSongSearches((prev) => ({
+          ...prev,
+          [songUid]: {
+            ...prev[songUid],
+            results: data.items,
+          },
+        }));
+
+        setSearchError("No results found. Try a different search term.");
+        setActiveSearchIndex(index);
+
+        return;
+      }
+
+      setSearchError(null);
+
+      setSongSearches((prev) => ({
+        ...prev,
+        [songUid]: {
+          ...prev[songUid],
+          results: data.items,
+        },
+      }));
+      setActiveSearchIndex(index);
+    } catch (error) {
+      setSearchError("Something went wrong. Please try again.");
+    }
+  }
+
+  async function handleNewSongSearch() {
+    if (!newSongSearchQuery.trim()) {
+      setSearchError("Please enter a search term.");
+      return;
+    }
+    try {
+      const response = await fetch(
+        `/api/youtube-search?query=${encodeURIComponent(newSongSearchQuery)}`
+      );
+
+      if (!response.ok) {
+        setSearchError("Something went wrong. Please try again.");
+        return;
+      }
+
+      const data = await response.json();
+
+      if (!data.items || data.items.length === 0) {
+        setNewSongSearchResults([]);
+        setSearchError("No results found.");
+        return;
+      }
+
+      setSearchError(null);
+      setNewSongSearchResults(data.items);
+    } catch (error) {
+      setSearchError("Something went wrong. Please try again.");
+    }
+  }
+
+  function handleSongSearchClear(songUid) {
+    setSongSearches((prev) => ({
+      ...prev,
+      [songUid]: {
+        query: "",
+        results: [],
+      },
+    }));
+  }
+
+  function decodeHtml(html) {
+    const textarea = document.createElement("textarea");
+    textarea.innerHTML = html;
+    return textarea.value;
+  }
+
   function isDuplicate(song) {
     return songs.some(
       (existingSong) =>
@@ -62,7 +171,7 @@ export default function PlaylistForm({
   function handleSongAdd() {
     if (!currentSong.title || !currentSong.artist) {
       setSongError("Please enter at least a title and an artist.");
-      setTimeout(() => setSongError(null), 3000);
+      setTimeout(() => setSongError(false), 3000);
       return false;
     }
     if (isDuplicate(currentSong)) {
@@ -73,10 +182,21 @@ export default function PlaylistForm({
       setSongError("A playlist can contain a maximum of 20 songs.");
       return false;
     }
-    setSongs([...songs, currentSong]);
+    setSongs([
+      ...songs,
+      {
+        uid: crypto.randomUUID(),
+        ...currentSong,
+      },
+    ]);
     setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
     setSongError(null);
     return true;
+  }
+
+  function handleSongDelete(index) {
+    const updated = songs.filter((song, i) => i !== index);
+    setSongs(updated);
   }
 
   function handlePlaylistFormClear() {
@@ -84,11 +204,6 @@ export default function PlaylistForm({
     setSongs([]);
     setCurrentSong({ title: "", artist: "", youtubeId: "", note: "" });
     setSongError(false);
-  }
-
-  function handleSongDelete(index) {
-    const updated = songs.filter((song, i) => i !== index);
-    setSongs(updated);
   }
 
   async function handlePlaylistDataCollect(event) {
@@ -104,15 +219,22 @@ export default function PlaylistForm({
 
     const formData = new FormData(event.target);
     const playlistTitle = formData.get("playlistTitle") || currentPlaylistTitle;
-    const allSongs =
+    const allSongs = (
       currentSong.title && currentSong.artist && !isDuplicate(currentSong)
         ? [...songs, currentSong]
-        : songs;
+        : songs
+    ).map((song) => ({
+      title: song.title,
+      artist: song.artist,
+      youtube_id: song.youtubeId || song.youtube_id || "",
+      note: song.note,
+    }));
     if (allSongs.length === 0) {
       setSongError("Please enter at least one song.");
       return;
     }
     setSongError(null);
+
     const success = await onSubmit({ playlistTitle, songs: allSongs });
     if (success) handlePlaylistFormClear();
   }
@@ -143,14 +265,11 @@ export default function PlaylistForm({
         </StyledFormSection>
         <StyledH4>Songs</StyledH4>
         {songError && (
-          <StyledSongErrorMessage role="alert">
-            {songError}
-          </StyledSongErrorMessage>
+          <StyledErrorMessage role="alert">{songError}</StyledErrorMessage>
         )}
-
         {defaultValues ? (
           songs.map((song, index) => (
-            <StyledUpdateForm key={index}>
+            <StyledUpdateForm key={song.uid}>
               <StyledSongBlock>
                 {songEditMode === index ? (
                   <StyledSongForm>
@@ -194,13 +313,88 @@ export default function PlaylistForm({
                     </StyledFormSection>
 
                     <StyledFormSection>
+                      <StyledLabel>Search</StyledLabel>
+                      <StyledInput
+                        type="text"
+                        id="search"
+                        name="search"
+                        placeholder="Find on YouTube"
+                        value={songSearches[song.uid]?.query || ""}
+                        onChange={(event) =>
+                          setSongSearches((prev) => ({
+                            ...prev,
+                            [song.uid]: {
+                              ...prev[song.uid],
+                              query: event.target.value,
+                              results: prev[song.uid]?.results || [],
+                            },
+                          }))
+                        }
+                      />
+                      <StyledButtonWrapper>
+                        <StyledButtonSecondary
+                          type="button"
+                          disabled={!songSearches[song.uid]?.query}
+                          onClick={() => handleSongSearchClear(song.uid)}
+                        >
+                          Clear
+                        </StyledButtonSecondary>
+                        <StyledButtonSecondary
+                          type="button"
+                          onClick={() => handleSongSearch(song.uid, index)}
+                        >
+                          Go
+                        </StyledButtonSecondary>
+                      </StyledButtonWrapper>
+                      {activeSearchIndex === index && (
+                        <StyledSearchResultList>
+                          {songSearches[song.uid]?.results?.map((result) => (
+                            <li key={result.id.videoId}>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const updated = songs.map(
+                                    (existingSong, i) =>
+                                      i === activeSearchIndex
+                                        ? {
+                                            ...existingSong,
+                                            youtube_id: result.id.videoId,
+                                          }
+                                        : existingSong
+                                  );
+
+                                  setSongs(updated);
+
+                                  setSongSearches((prev) => ({
+                                    ...prev,
+                                    [song.uid]: {
+                                      query: "",
+                                      results: [],
+                                    },
+                                  }));
+
+                                  setActiveSearchIndex(null);
+                                }}
+                              >
+                                {decodeHtml(result.snippet.title)}
+                              </button>
+                            </li>
+                          ))}
+                        </StyledSearchResultList>
+                      )}
+                    </StyledFormSection>
+
+                    <StyledFormSection>
                       <StyledLabel>
                         Youtube ID{" "}
                         <StyledHint>(from the URL after ?v=)</StyledHint>
                       </StyledLabel>
                       <StyledInput
-                        value={song.youtubeId || song.youtube_id || ""}
+                        maxLength={11}
+                        pattern="^[a-zA-Z0-9_-]{11}$"
+                        title="Youtube ID must be exactly 11 characters."
                         placeholder="e.g. CGj85pVzRJs"
+                        value={song.youtubeId || song.youtube_id || ""}
                         onChange={(event) => {
                           const updated = songs.map((existingSong, i) =>
                             i === index
@@ -341,7 +535,60 @@ export default function PlaylistForm({
                 }
               />
             </StyledFormSection>
+            {searchError && (
+              <StyledErrorMessage role="alert">
+                {searchError}
+              </StyledErrorMessage>
+            )}
+            <StyledFormSection>
+              <StyledLabel htmlFor="search">Search</StyledLabel>
+              <StyledInput
+                type="text"
+                id="search"
+                name="search"
+                placeholder="Find on YouTube"
+                value={newSongSearchQuery}
+                onChange={(event) => setNewSongSearchQuery(event.target.value)}
+              />
+              <StyledButtonWrapper>
+                <StyledButtonSecondary
+                  type="button"
+                  disabled={!newSongSearchQuery}
+                  onClick={() => {
+                    setNewSongSearchQuery("");
+                    setNewSongSearchResults([]);
+                  }}
+                >
+                  Clear
+                </StyledButtonSecondary>
+                <StyledButtonSecondary
+                  type="button"
+                  onClick={handleNewSongSearch}
+                >
+                  Go
+                </StyledButtonSecondary>
+              </StyledButtonWrapper>
+              <StyledSearchResultList>
+                {newSongSearchResults.map((result) => (
+                  <li key={result.id.videoId}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCurrentSong({
+                          ...currentSong,
+                          youtubeId: result.id.videoId,
+                        });
 
+                        setNewSongSearchResults([]);
+                        setNewSongSearchQuery("");
+                      }}
+                    >
+                      {decodeHtml(result.snippet.title)}
+                    </button>
+                  </li>
+                ))}
+              </StyledSearchResultList>
+            </StyledFormSection>
             <StyledFormSection>
               <StyledLabel>
                 Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>

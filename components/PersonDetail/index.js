@@ -19,8 +19,6 @@ import {
   StyledButtonSecondary,
   StyledButtonDanger,
   StyledMessage,
-  StyledMenuButton,
-  StyledMenu,
   StyledMenuItem,
   StyledDivider,
 } from "../Global/Global.styles";

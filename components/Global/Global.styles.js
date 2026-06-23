@@ -141,7 +141,7 @@ export const StyledButtonWrapper = styled.div`
   gap: 0.4rem;
 `;
 
-const StyledActionButton = styled.button`
+export const StyledActionButton = styled.button`
   background-color: transparent;
   height: 1.2rem;
   width: 2rem;
