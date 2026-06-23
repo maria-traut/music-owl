@@ -73,14 +73,34 @@ export default function PlaylistForm({
       setTimeout(() => setSearchError(null), 3000);
       return;
     }
+    try {
+      const response = await fetch(
+        `/api/youtube-search?query=${encodeURIComponent(query)}`
+      );
+      if (!response.ok) {
+        setSearchError("Something went wrong. Please try again.");
+        return;
+      }
 
-    const response = await fetch(
-      `/api/youtube-search?query=${encodeURIComponent(query)}`
-    );
+      const data = await response.json();
 
-    const data = await response.json();
+      if (!data.items || data.items.length === 0) {
+        setSongSearches((prev) => ({
+          ...prev,
+          [songUid]: {
+            ...prev[songUid],
+            results: data.items,
+          },
+        }));
 
-    if (!data.items || data.items.length === 0) {
+        setSearchError("No results found. Try a different search term.");
+        setActiveSearchIndex(index);
+
+        return;
+      }
+
+      setSearchError(null);
+
       setSongSearches((prev) => ({
         ...prev,
         [songUid]: {
@@ -88,23 +108,10 @@ export default function PlaylistForm({
           results: data.items,
         },
       }));
-
-      setSearchError("No results found. Try a different search term.");
       setActiveSearchIndex(index);
-
-      return;
+    } catch (error) {
+      setSearchError("Something went wrong. Please try again.");
     }
-
-    setSearchError(null);
-
-    setSongSearches((prev) => ({
-      ...prev,
-      [songUid]: {
-        ...prev[songUid],
-        results: data.items,
-      },
-    }));
-    setActiveSearchIndex(index);
   }
 
   async function handleNewSongSearch() {
@@ -112,21 +119,29 @@ export default function PlaylistForm({
       setSearchError("Please enter a search term.");
       return;
     }
+    try {
+      const response = await fetch(
+        `/api/youtube-search?query=${encodeURIComponent(newSongSearchQuery)}`
+      );
 
-    const response = await fetch(
-      `/api/youtube-search?query=${encodeURIComponent(newSongSearchQuery)}`
-    );
+      if (!response.ok) {
+        setSearchError("Something went wrong. Please try again.");
+        return;
+      }
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!data.items || data.items.length === 0) {
-      setNewSongSearchResults([]);
-      setSearchError("No results found.");
-      return;
+      if (!data.items || data.items.length === 0) {
+        setNewSongSearchResults([]);
+        setSearchError("No results found.");
+        return;
+      }
+
+      setSearchError(null);
+      setNewSongSearchResults(data.items);
+    } catch (error) {
+      setSearchError("Something went wrong. Please try again.");
     }
-
-    setSearchError(null);
-    setNewSongSearchResults(data.items);
   }
 
   function handleSongSearchClear(songUid) {
