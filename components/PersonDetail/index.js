@@ -1,31 +1,21 @@
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
 import { useState, useEffect } from "react";
-
+import PlaylistList from "../PlaylistList";
+import PlaylistForm from "../PlaylistForm";
+import PersonHeader from "../PersonHeader";
+import PersonForm from "../PersonForm";
+import PersonDeleteDialog from "../PersonDeleteDialog";
+import MusicEraRecommendation from "../MusicEraRecommendation";
 import {
   StyledPlaylistSectionTitle,
   StyledPlaylistSectionHeader,
-  StyledPersonHeader,
-  StyledColorAvatar,
-  StyledPersonName,
-  StyledPersonYear,
-  StyledPersonHeaderMenuWrapper,
 } from "./PersonDetail.styled";
-import PersonForm from "../PersonForm";
 import {
-  StyledMessageAndButtonWrapper,
-  StyledButtonWrapper,
   StyledButtonPrimary,
-  StyledButtonSecondary,
-  StyledButtonDanger,
   StyledMessage,
-  StyledMenuItem,
   StyledDivider,
 } from "../Global/Global.styles";
-import PlaylistList from "../PlaylistList";
-import PlaylistForm from "../PlaylistForm";
-import KebabMenu from "../KebabMenu";
-import MusicEraRecommendation from "../MusicEraRecommendation";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -146,74 +136,24 @@ export default function PersonDetail({ person }) {
 
   return (
     <>
-      <StyledPersonHeader>
-        <StyledColorAvatar $color={color} />
-        <StyledPersonName>{name}</StyledPersonName>
-        <StyledPersonYear>* {birth_year}</StyledPersonYear>
-        <StyledPersonHeaderMenuWrapper>
-          <KebabMenu
-            isOpen={showMenu}
-            onOpen={() => setShowMenu(true)}
-            onClose={() => setShowMenu(false)}
-          >
-            <StyledMenuItem
-              type="button"
-              aria-label="Edit person"
-              onClick={() => {
-                setActiveMode("edit");
-                setShowMenu(false);
-              }}
-            >
-              Edit person
-            </StyledMenuItem>
-            <StyledMenuItem
-              type="button"
-              aria-label="Delete person"
-              onClick={() => {
-                setActiveMode("delete");
-                setShowMenu(false);
-              }}
-            >
-              Remove person
-            </StyledMenuItem>
-          </KebabMenu>
-        </StyledPersonHeaderMenuWrapper>
-      </StyledPersonHeader>
+      <PersonHeader
+        name={name}
+        color={color}
+        birth_year={birth_year}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        onPersonDelete={handlePersonDelete}
+      />
+      <PersonDeleteDialog
+        name={name}
+        activeMode={activeMode}
+        setActiveMode={setActiveMode}
+        onPersonDelete={handlePersonDelete}
+        personDeleteSuccess={personDeleteSuccess}
+        personDeleteError={personDeleteError}
+        setPersonDeleteError={setPersonDeleteError}
+      />
       <MusicEraRecommendation person={person} />
-      {activeMode === "delete" && (
-        <>
-          {personDeleteSuccess ? (
-            <StyledMessage>{name} was successfully removed.</StyledMessage>
-          ) : (
-            <StyledMessageAndButtonWrapper>
-              <StyledMessage>Remove and go back?</StyledMessage>
-              <StyledButtonWrapper>
-                <StyledButtonSecondary
-                  type="button"
-                  aria-label="Cancel deletion"
-                  onClick={() => {
-                    setActiveMode(null);
-                    setPersonDeleteError(false);
-                  }}
-                >
-                  No
-                </StyledButtonSecondary>
-                <StyledButtonDanger
-                  type="button"
-                  aria-label="Confirm deletion"
-                  onClick={handlePersonDelete}
-                >
-                  Yes
-                </StyledButtonDanger>
-              </StyledButtonWrapper>
-              {personDeleteError && (
-                <span>An error occurred. Please try again.</span>
-              )}
-            </StyledMessageAndButtonWrapper>
-          )}
-        </>
-      )}
-
       {activeMode === "edit" && (
         <PersonForm
           onSubmit={handlePersonUpdate}
