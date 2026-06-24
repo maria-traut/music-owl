@@ -179,7 +179,7 @@ export default function PersonDetail({ person }) {
           </KebabMenu>
         </StyledPersonHeaderMenuWrapper>
       </StyledPersonHeader>
-      <MusicEraRecommendation />
+      <MusicEraRecommendation person={person} />
       {activeMode === "delete" && (
         <>
           {personDeleteSuccess ? (
@@ -213,6 +213,7 @@ export default function PersonDetail({ person }) {
           )}
         </>
       )}
+
       {activeMode === "edit" && (
         <PersonForm
           onSubmit={handlePersonUpdate}
@@ -222,6 +223,7 @@ export default function PersonDetail({ person }) {
         />
       )}
       {personUpdateError && <p role="alert">{personUpdateError}</p>}
+
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledDivider />
