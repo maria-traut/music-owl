@@ -1,21 +1,12 @@
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
 import { useState, useEffect } from "react";
-import PlaylistList from "../PlaylistList";
-import PlaylistForm from "../PlaylistForm";
+import { StyledDivider } from "../Global/Global.styles";
+import PlaylistSection from "../PlaylistSection";
 import PersonHeader from "../PersonHeader";
-import PersonForm from "../PersonForm";
+import PersonEditForm from "../PersonEditForm";
 import PersonDeleteDialog from "../PersonDeleteDialog";
 import MusicEraRecommendation from "../MusicEraRecommendation";
-import {
-  StyledPlaylistSectionTitle,
-  StyledPlaylistSectionHeader,
-} from "./PersonDetail.styled";
-import {
-  StyledButtonPrimary,
-  StyledMessage,
-  StyledDivider,
-} from "../Global/Global.styles";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -154,57 +145,30 @@ export default function PersonDetail({ person }) {
         setPersonDeleteError={setPersonDeleteError}
       />
       <MusicEraRecommendation person={person} />
-      {activeMode === "edit" && (
-        <PersonForm
-          onSubmit={handlePersonUpdate}
-          defaultValues={{ name, birth_year, color }}
-          updateMode={true}
-          setUpdateMode={() => setActiveMode(null)}
-        />
-      )}
-      {personUpdateError && <p role="alert">{personUpdateError}</p>}
-
-      {playlistError && <p role="alert">{playlistError}</p>}
-      <section>
-        <StyledDivider />
-        <StyledPlaylistSectionHeader>
-          <StyledPlaylistSectionTitle>Playlists</StyledPlaylistSectionTitle>
-          {activeMode !== "playlist form" && (
-            <StyledButtonPrimary
-              type="button"
-              aria-label="Open Playlist Form"
-              onClick={() => setActiveMode("playlist form")}
-            >
-              + New Playlist
-            </StyledButtonPrimary>
-          )}
-        </StyledPlaylistSectionHeader>
-
-        {activeMode === "playlist form" && (
-          <PlaylistForm
-            onSubmit={(data) => handlePlaylistCreate(data)}
-            onCancel={() => setActiveMode(null)}
-          />
-        )}
-
-        {playlistCreateSuccess && (
-          <StyledMessage>Playlist successfully created.</StyledMessage>
-        )}
-        {playlistUpdateSuccess && (
-          <StyledMessage>Playlist successfully updated.</StyledMessage>
-        )}
-        {playlistDeleteSuccess && (
-          <StyledMessage>Playlist successfully deleted.</StyledMessage>
-        )}
-        {playlistUpdateError && <p role="alert">{playlistUpdateError}</p>}
-
-        <PlaylistList
-          personId={_id}
-          color={color}
-          handlePlaylistDelete={handlePlaylistDelete}
-          handlePlaylistUpdate={handlePlaylistUpdate}
-        />
-      </section>
+      <PersonEditForm
+        name={name}
+        birth_year={birth_year}
+        color={color}
+        activeMode={activeMode}
+        setActiveMode={setActiveMode}
+        handlePersonUpdate={handlePersonUpdate}
+        personUpdateError={personUpdateError}
+      />
+      <StyledDivider />
+      <PlaylistSection
+        _id={_id}
+        color={color}
+        activeMode={activeMode}
+        setActiveMode={setActiveMode}
+        playlistCreateSuccess={playlistCreateSuccess}
+        playlistUpdateSuccess={playlistUpdateSuccess}
+        playlistDeleteSuccess={playlistDeleteSuccess}
+        playlistUpdateError={playlistUpdateError}
+        playlistError={playlistError}
+        handlePlaylistCreate={handlePlaylistCreate}
+        handlePlaylistUpdate={handlePlaylistUpdate}
+        handlePlaylistDelete={handlePlaylistDelete}
+      />
     </>
   );
 }
