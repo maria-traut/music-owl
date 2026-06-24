@@ -1,13 +1,8 @@
 import { StyledSummary, StyledMusicEra } from "./MusicEraRecommendation.styled";
+import { calculateEra } from "@/utils/calculateEra";
 
 export default function MusicEraRecommendation({ person }) {
-  const { eraStart, eraEnd } = handleCalculateEra();
-
-  function handleCalculateEra() {
-    const eraStart = person.birth_year + 12;
-    const eraEnd = person.birth_year + 25;
-    return { eraStart, eraEnd };
-  }
+  const { eraStart, eraEnd } = calculateEra(person.birth_year);
 
   const currentAge = new Date().getFullYear() - person.birth_year;
 
@@ -23,7 +18,7 @@ export default function MusicEraRecommendation({ person }) {
         old.
       </p>
     );
-  } else if (currentAge > 11 && currentAge <= 25) {
+  } else if (currentAge <= 25) {
     eraText = (
       <p>
         Born in {person.birth_year}, look for{" "}
