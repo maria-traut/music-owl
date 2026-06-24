@@ -34,7 +34,7 @@ export const StyledH4 = styled.h4`
 
 export const StyledMessage = styled.p`
   display: inline-block;
-  margin-top: 0.5rem;
+  margin-top: 2rem;
 `;
 
 export const StyledBackLink = styled(Link)`

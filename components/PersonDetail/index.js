@@ -25,6 +25,7 @@ import {
 import PlaylistList from "../PlaylistList";
 import PlaylistForm from "../PlaylistForm";
 import KebabMenu from "../KebabMenu";
+import MusicEraRecommendation from "../MusicEraRecommendation";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -178,7 +179,7 @@ export default function PersonDetail({ person }) {
           </KebabMenu>
         </StyledPersonHeaderMenuWrapper>
       </StyledPersonHeader>
-
+      <MusicEraRecommendation person={person} />
       {activeMode === "delete" && (
         <>
           {personDeleteSuccess ? (
@@ -212,6 +213,7 @@ export default function PersonDetail({ person }) {
           )}
         </>
       )}
+
       {activeMode === "edit" && (
         <PersonForm
           onSubmit={handlePersonUpdate}
@@ -221,6 +223,7 @@ export default function PersonDetail({ person }) {
         />
       )}
       {personUpdateError && <p role="alert">{personUpdateError}</p>}
+
       {playlistError && <p role="alert">{playlistError}</p>}
       <section>
         <StyledDivider />
