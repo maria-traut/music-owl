@@ -135,6 +135,7 @@ export default function PersonDetail({ person }) {
         setActiveMode={setActiveMode}
         onPersonDelete={handlePersonDelete}
       />
+      <MusicEraRecommendation person={person} />
       <PersonDeleteDialog
         name={name}
         activeMode={activeMode}
@@ -144,7 +145,6 @@ export default function PersonDetail({ person }) {
         personDeleteError={personDeleteError}
         setPersonDeleteError={setPersonDeleteError}
       />
-      <MusicEraRecommendation person={person} />
       <PersonEditForm
         name={name}
         birth_year={birth_year}
