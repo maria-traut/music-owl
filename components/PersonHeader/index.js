@@ -15,7 +15,6 @@ export default function PersonHeader({
   color,
   showMenu,
   setShowMenu,
-
   setActiveMode,
 }) {
   return (
