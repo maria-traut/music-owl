@@ -124,7 +124,6 @@ export default function PersonDetail({ person }) {
       return false;
     }
   }
-
   return (
     <>
       <PersonHeader
@@ -133,6 +132,7 @@ export default function PersonDetail({ person }) {
         birth_year={birth_year}
         showMenu={showMenu}
         setShowMenu={setShowMenu}
+        setActiveMode={setActiveMode}
         onPersonDelete={handlePersonDelete}
       />
       <PersonDeleteDialog
