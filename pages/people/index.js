@@ -69,7 +69,6 @@ export default function People() {
         </p>
       </StyledIntroSection>
       <StyledDivider />
-
       {personFormMode ? (
         <PersonForm
           onSubmit={handlePersonCreate}
