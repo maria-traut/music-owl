@@ -6,7 +6,6 @@ import {
   StyledButtonSecondary,
   StyledSearchResultList,
 } from "../Global/Global.styles";
-import {} from "./NewSongSearch.styled";
 
 export default function NewSongSearch({
   currentSong,
