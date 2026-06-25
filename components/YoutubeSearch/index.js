@@ -1,10 +1,10 @@
-import { StyledSearchResultList } from "./YoutubeSearch.styled";
 import {
   StyledFormSection,
   StyledLabel,
   StyledInput,
   StyledButtonWrapper,
   StyledButtonSecondary,
+  StyledSearchResultList,
 } from "../Global/Global.styles";
 
 export default function YoutubeSearch({
@@ -22,7 +22,7 @@ export default function YoutubeSearch({
 }) {
   return (
     <StyledFormSection>
-      <StyledLabel>Search</StyledLabel>
+      <StyledLabel htmlFor="search">Search</StyledLabel>
       <StyledInput
         type="text"
         id="search"

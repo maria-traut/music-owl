@@ -39,7 +39,6 @@ export default function PlaylistForm({
 
   const [activeSongMenu, setActiveSongMenu] = useState(null);
   const [songEditMode, setSongEditMode] = useState(null);
-  const [songDeleteMode, setSongDeleteMode] = useState(null);
   const [songAddMode, setSongAddMode] = useState(!defaultValues);
 
   const [songSearches, setSongSearches] = useState({});
@@ -248,7 +247,6 @@ export default function PlaylistForm({
           setSongEditMode={setSongEditMode}
           activeSongMenu={activeSongMenu}
           setActiveSongMenu={setActiveSongMenu}
-          setSongDeleteMode={setSongDeleteMode}
           activeSearchIndex={activeSearchIndex}
           setActiveSearchIndex={setActiveSearchIndex}
           songSearches={songSearches}

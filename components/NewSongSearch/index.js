@@ -4,8 +4,9 @@ import {
   StyledInput,
   StyledButtonWrapper,
   StyledButtonSecondary,
+  StyledSearchResultList,
 } from "../Global/Global.styles";
-import { StyledNewSearchResultList } from "./NewSongSearch.styled";
+import {} from "./NewSongSearch.styled";
 
 export default function NewSongSearch({
   currentSong,
@@ -43,7 +44,7 @@ export default function NewSongSearch({
           Go
         </StyledButtonSecondary>
       </StyledButtonWrapper>
-      <StyledNewSearchResultList>
+      <StyledSearchResultList>
         {newSongSearchResults.map((result) => (
           <li key={result.id.videoId}>
             <button
@@ -62,7 +63,7 @@ export default function NewSongSearch({
             </button>
           </li>
         ))}
-      </StyledNewSearchResultList>
+      </StyledSearchResultList>
     </StyledFormSection>
   );
 }
