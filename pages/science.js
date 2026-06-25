@@ -22,9 +22,9 @@ export default function Science() {
       <StyledDivider />
       <ScienceFilter
         scienceCategoryFilter={scienceCategoryFilter}
-        onChange={(category) => setScienceCategoryFilter(category)}
+        onFilterChange={(category) => setScienceCategoryFilter(category)}
       />
-      <ScientificFindingList />
+      <ScientificFindingList scienceCategoryFilter={scienceCategoryFilter} />
     </StyledMain>
   );
 }

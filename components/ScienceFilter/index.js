@@ -3,6 +3,13 @@ export default function ScienceFilter({ onFilterChange }) {
     <section>
       <button
         type="button"
+        aria-label="filter category all"
+        onClick={() => onFilterChange("All")}
+      >
+        All
+      </button>
+      <button
+        type="button"
         aria-label="filter category neurology"
         onClick={() => onFilterChange("Neurology")}
       >
@@ -21,13 +28,6 @@ export default function ScienceFilter({ onFilterChange }) {
         onClick={() => onFilterChange("Clinical Research")}
       >
         Clinical Research
-      </button>
-      <button
-        type="button"
-        aria-label="filter category all"
-        onClick={() => onFilterChange("All")}
-      >
-        All
       </button>
     </section>
   );
