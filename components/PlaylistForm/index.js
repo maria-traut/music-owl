@@ -28,6 +28,8 @@ import {
   StyledHint,
 } from "./PlaylistForm.styled";
 import KebabMenu from "../KebabMenu";
+import PlaylistDetails from "../PlaylistDetails";
+import YoutubeSearch from "../YoutubeSearch";
 
 export default function PlaylistForm({
   onSubmit,
@@ -247,7 +249,10 @@ export default function PlaylistForm({
         ) : (
           <legend>Edit Playlist</legend>
         )}
-        <PlaylistDetails />
+        <PlaylistDetails
+          currentPlaylistTitle={currentPlaylistTitle}
+          setCurrentPlaylistTitle={setCurrentPlaylistTitle}
+        />
         <StyledH4>Songs</StyledH4>
         {songError && (
           <StyledErrorMessage role="alert">{songError}</StyledErrorMessage>
@@ -297,77 +302,19 @@ export default function PlaylistForm({
                       />
                     </StyledFormSection>
 
-                    <StyledFormSection>
-                      <StyledLabel>Search</StyledLabel>
-                      <StyledInput
-                        type="text"
-                        id="search"
-                        name="search"
-                        placeholder="Find on YouTube"
-                        value={songSearches[song.uid]?.query || ""}
-                        onChange={(event) =>
-                          setSongSearches((prev) => ({
-                            ...prev,
-                            [song.uid]: {
-                              ...prev[song.uid],
-                              query: event.target.value,
-                              results: prev[song.uid]?.results || [],
-                            },
-                          }))
-                        }
-                      />
-                      <StyledButtonWrapper>
-                        <StyledButtonSecondary
-                          type="button"
-                          disabled={!songSearches[song.uid]?.query}
-                          onClick={() => handleSongSearchClear(song.uid)}
-                        >
-                          Clear
-                        </StyledButtonSecondary>
-                        <StyledButtonSecondary
-                          type="button"
-                          onClick={() => handleSongSearch(song.uid, index)}
-                        >
-                          Go
-                        </StyledButtonSecondary>
-                      </StyledButtonWrapper>
-                      {activeSearchIndex === index && (
-                        <StyledSearchResultList>
-                          {songSearches[song.uid]?.results?.map((result) => (
-                            <li key={result.id.videoId}>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  const updated = songs.map(
-                                    (existingSong, i) =>
-                                      i === activeSearchIndex
-                                        ? {
-                                            ...existingSong,
-                                            youtube_id: result.id.videoId,
-                                          }
-                                        : existingSong
-                                  );
-
-                                  setSongs(updated);
-
-                                  setSongSearches((prev) => ({
-                                    ...prev,
-                                    [song.uid]: {
-                                      query: "",
-                                      results: [],
-                                    },
-                                  }));
-
-                                  setActiveSearchIndex(null);
-                                }}
-                              >
-                                {decodeHtml(result.snippet.title)}
-                              </button>
-                            </li>
-                          ))}
-                        </StyledSearchResultList>
-                      )}
-                    </StyledFormSection>
+                    <YoutubeSearch
+                      song={song}
+                      songs={songs}
+                      setSongs={setSongs}
+                      index={index}
+                      activeSearchIndex={activeSearchIndex}
+                      setActiveSearchIndex={setActiveSearchIndex}
+                      songSearches={songSearches}
+                      setSongSearches={setSongSearches}
+                      decodeHtml={decodeHtml}
+                      onSongSearch={handleSongSearch}
+                      onSongSearchClear={handleSongSearchClear}
+                    />
 
                     <StyledFormSection>
                       <StyledLabel>
@@ -525,55 +472,7 @@ export default function PlaylistForm({
                 {searchError}
               </StyledErrorMessage>
             )}
-            <StyledFormSection>
-              <StyledLabel htmlFor="search">Search</StyledLabel>
-              <StyledInput
-                type="text"
-                id="search"
-                name="search"
-                placeholder="Find on YouTube"
-                value={newSongSearchQuery}
-                onChange={(event) => setNewSongSearchQuery(event.target.value)}
-              />
-              <StyledButtonWrapper>
-                <StyledButtonSecondary
-                  type="button"
-                  disabled={!newSongSearchQuery}
-                  onClick={() => {
-                    setNewSongSearchQuery("");
-                    setNewSongSearchResults([]);
-                  }}
-                >
-                  Clear
-                </StyledButtonSecondary>
-                <StyledButtonSecondary
-                  type="button"
-                  onClick={handleNewSongSearch}
-                >
-                  Go
-                </StyledButtonSecondary>
-              </StyledButtonWrapper>
-              <StyledSearchResultList>
-                {newSongSearchResults.map((result) => (
-                  <li key={result.id.videoId}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCurrentSong({
-                          ...currentSong,
-                          youtubeId: result.id.videoId,
-                        });
-
-                        setNewSongSearchResults([]);
-                        setNewSongSearchQuery("");
-                      }}
-                    >
-                      {decodeHtml(result.snippet.title)}
-                    </button>
-                  </li>
-                ))}
-              </StyledSearchResultList>
-            </StyledFormSection>
+            <NewSongSearch />
             <StyledFormSection>
               <StyledLabel>
                 Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>

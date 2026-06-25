@@ -55,12 +55,3 @@ export const StyledHint = styled.span`
   color: var(--color-text-secondary);
   font-weight: 400;
 `;
-
-export const StyledSearchResultList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: 0.5rem;
-`;
