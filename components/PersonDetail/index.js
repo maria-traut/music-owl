@@ -1,30 +1,11 @@
 import { useRouter } from "next/router";
 import { useSWRConfig } from "swr";
 import { useState, useEffect } from "react";
-
-import {
-  StyledPlaylistSectionTitle,
-  StyledPlaylistSectionHeader,
-  StyledPersonHeader,
-  StyledColorAvatar,
-  StyledPersonName,
-  StyledPersonYear,
-  StyledPersonHeaderMenuWrapper,
-} from "./PersonDetail.styled";
-import PersonForm from "../PersonForm";
-import {
-  StyledMessageAndButtonWrapper,
-  StyledButtonWrapper,
-  StyledButtonPrimary,
-  StyledButtonSecondary,
-  StyledButtonDanger,
-  StyledMessage,
-  StyledMenuItem,
-  StyledDivider,
-} from "../Global/Global.styles";
-import PlaylistList from "../PlaylistList";
-import PlaylistForm from "../PlaylistForm";
-import KebabMenu from "../KebabMenu";
+import { StyledDivider } from "../Global/Global.styles";
+import PlaylistSection from "../PlaylistSection";
+import PersonHeader from "../PersonHeader";
+import PersonEditForm from "../PersonEditForm";
+import PersonDeleteDialog from "../PersonDeleteDialog";
 import MusicEraRecommendation from "../MusicEraRecommendation";
 
 export default function PersonDetail({ person }) {
@@ -143,128 +124,50 @@ export default function PersonDetail({ person }) {
       return false;
     }
   }
-
   return (
     <>
-      <StyledPersonHeader>
-        <StyledColorAvatar $color={color} />
-        <StyledPersonName>{name}</StyledPersonName>
-        <StyledPersonYear>* {birth_year}</StyledPersonYear>
-        <StyledPersonHeaderMenuWrapper>
-          <KebabMenu
-            isOpen={showMenu}
-            onOpen={() => setShowMenu(true)}
-            onClose={() => setShowMenu(false)}
-          >
-            <StyledMenuItem
-              type="button"
-              aria-label="Edit person"
-              onClick={() => {
-                setActiveMode("edit");
-                setShowMenu(false);
-              }}
-            >
-              Edit person
-            </StyledMenuItem>
-            <StyledMenuItem
-              type="button"
-              aria-label="Delete person"
-              onClick={() => {
-                setActiveMode("delete");
-                setShowMenu(false);
-              }}
-            >
-              Remove person
-            </StyledMenuItem>
-          </KebabMenu>
-        </StyledPersonHeaderMenuWrapper>
-      </StyledPersonHeader>
+      <PersonHeader
+        name={name}
+        color={color}
+        birth_year={birth_year}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        setActiveMode={setActiveMode}
+      />
       <MusicEraRecommendation person={person} />
-      {activeMode === "delete" && (
-        <>
-          {personDeleteSuccess ? (
-            <StyledMessage>{name} was successfully removed.</StyledMessage>
-          ) : (
-            <StyledMessageAndButtonWrapper>
-              <StyledMessage>Remove and go back?</StyledMessage>
-              <StyledButtonWrapper>
-                <StyledButtonSecondary
-                  type="button"
-                  aria-label="Cancel deletion"
-                  onClick={() => {
-                    setActiveMode(null);
-                    setPersonDeleteError(false);
-                  }}
-                >
-                  No
-                </StyledButtonSecondary>
-                <StyledButtonDanger
-                  type="button"
-                  aria-label="Confirm deletion"
-                  onClick={handlePersonDelete}
-                >
-                  Yes
-                </StyledButtonDanger>
-              </StyledButtonWrapper>
-              {personDeleteError && (
-                <span>An error occurred. Please try again.</span>
-              )}
-            </StyledMessageAndButtonWrapper>
-          )}
-        </>
-      )}
-
-      {activeMode === "edit" && (
-        <PersonForm
-          onSubmit={handlePersonUpdate}
-          defaultValues={{ name, birth_year, color }}
-          updateMode={true}
-          setUpdateMode={() => setActiveMode(null)}
-        />
-      )}
-      {personUpdateError && <p role="alert">{personUpdateError}</p>}
-
-      {playlistError && <p role="alert">{playlistError}</p>}
-      <section>
-        <StyledDivider />
-        <StyledPlaylistSectionHeader>
-          <StyledPlaylistSectionTitle>Playlists</StyledPlaylistSectionTitle>
-          {activeMode !== "playlist form" && (
-            <StyledButtonPrimary
-              type="button"
-              aria-label="Open Playlist Form"
-              onClick={() => setActiveMode("playlist form")}
-            >
-              + New Playlist
-            </StyledButtonPrimary>
-          )}
-        </StyledPlaylistSectionHeader>
-
-        {activeMode === "playlist form" && (
-          <PlaylistForm
-            onSubmit={(data) => handlePlaylistCreate(data)}
-            onCancel={() => setActiveMode(null)}
-          />
-        )}
-
-        {playlistCreateSuccess && (
-          <StyledMessage>Playlist successfully created.</StyledMessage>
-        )}
-        {playlistUpdateSuccess && (
-          <StyledMessage>Playlist successfully updated.</StyledMessage>
-        )}
-        {playlistDeleteSuccess && (
-          <StyledMessage>Playlist successfully deleted.</StyledMessage>
-        )}
-        {playlistUpdateError && <p role="alert">{playlistUpdateError}</p>}
-
-        <PlaylistList
-          personId={_id}
-          color={color}
-          handlePlaylistDelete={handlePlaylistDelete}
-          handlePlaylistUpdate={handlePlaylistUpdate}
-        />
-      </section>
+      <PersonDeleteDialog
+        name={name}
+        activeMode={activeMode}
+        setActiveMode={setActiveMode}
+        onPersonDelete={handlePersonDelete}
+        personDeleteSuccess={personDeleteSuccess}
+        personDeleteError={personDeleteError}
+        setPersonDeleteError={setPersonDeleteError}
+      />
+      <PersonEditForm
+        name={name}
+        birth_year={birth_year}
+        color={color}
+        activeMode={activeMode}
+        setActiveMode={setActiveMode}
+        onPersonUpdate={handlePersonUpdate}
+        personUpdateError={personUpdateError}
+      />
+      <StyledDivider />
+      <PlaylistSection
+        _id={_id}
+        color={color}
+        activeMode={activeMode}
+        setActiveMode={setActiveMode}
+        playlistCreateSuccess={playlistCreateSuccess}
+        playlistUpdateSuccess={playlistUpdateSuccess}
+        playlistDeleteSuccess={playlistDeleteSuccess}
+        playlistUpdateError={playlistUpdateError}
+        playlistError={playlistError}
+        onPlaylistCreate={handlePlaylistCreate}
+        onPlaylistUpdate={handlePlaylistUpdate}
+        onPlaylistDelete={handlePlaylistDelete}
+      />
     </>
   );
 }
