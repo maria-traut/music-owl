@@ -30,6 +30,7 @@ import {
 import KebabMenu from "../KebabMenu";
 import PlaylistDetails from "../PlaylistDetails";
 import YoutubeSearch from "../YoutubeSearch";
+import NewSongSearch from "../NewSongSearch";
 
 export default function PlaylistForm({
   onSubmit,
@@ -472,7 +473,18 @@ export default function PlaylistForm({
                 {searchError}
               </StyledErrorMessage>
             )}
-            <NewSongSearch />
+
+            <NewSongSearch
+              currentSong={currentSong}
+              setCurrentSong={setCurrentSong}
+              newSongSearchQuery={newSongSearchQuery}
+              setNewSongSearchQuery={setNewSongSearchResults}
+              newSongSearchResults={newSongSearchResults}
+              setNewSongSearchResults={setNewSongSearchQuery}
+              onNewSongSearch={handleNewSongSearch}
+              decodeHtml={decodeHtml}
+            />
+
             <StyledFormSection>
               <StyledLabel>
                 Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>

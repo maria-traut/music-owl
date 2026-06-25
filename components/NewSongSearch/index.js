@@ -5,9 +5,18 @@ import {
   StyledButtonWrapper,
   StyledButtonSecondary,
 } from "../Global/Global.styles";
-styledserach;
+import { StyledNewSearchResultList } from "./NewSongSearch.styled";
 
-export default function NewSongSearch() {
+export default function NewSongSearch({
+  currentSong,
+  setCurrentSong,
+  newSongSearchQuery,
+  setNewSongSearchQuery,
+  newSongSearchResults,
+  setNewSongSearchResults,
+  onNewSongSearch,
+  decodeHtml,
+}) {
   return (
     <StyledFormSection>
       <StyledLabel htmlFor="search">Search</StyledLabel>
@@ -30,11 +39,11 @@ export default function NewSongSearch() {
         >
           Clear
         </StyledButtonSecondary>
-        <StyledButtonSecondary type="button" onClick={handleNewSongSearch}>
+        <StyledButtonSecondary type="button" onClick={onNewSongSearch}>
           Go
         </StyledButtonSecondary>
       </StyledButtonWrapper>
-      <StyledSearchResultList>
+      <StyledNewSearchResultList>
         {newSongSearchResults.map((result) => (
           <li key={result.id.videoId}>
             <button
@@ -53,7 +62,7 @@ export default function NewSongSearch() {
             </button>
           </li>
         ))}
-      </StyledSearchResultList>
+      </StyledNewSearchResultList>
     </StyledFormSection>
   );
 }
