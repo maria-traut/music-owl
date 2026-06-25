@@ -18,40 +18,38 @@ export default function PersonHeader({
   setActiveMode,
 }) {
   return (
-    <>
-      <StyledPersonHeader>
-        <StyledColorAvatar $color={color} />
-        <StyledPersonName>{name}</StyledPersonName>
-        <StyledPersonYear>* {birth_year}</StyledPersonYear>
-        <StyledPersonHeaderMenuWrapper>
-          <KebabMenu
-            isOpen={showMenu}
-            onOpen={() => setShowMenu(true)}
-            onClose={() => setShowMenu(false)}
+    <StyledPersonHeader>
+      <StyledColorAvatar $color={color} />
+      <StyledPersonName>{name}</StyledPersonName>
+      <StyledPersonYear>* {birth_year}</StyledPersonYear>
+      <StyledPersonHeaderMenuWrapper>
+        <KebabMenu
+          isOpen={showMenu}
+          onOpen={() => setShowMenu(true)}
+          onClose={() => setShowMenu(false)}
+        >
+          <StyledMenuItem
+            type="button"
+            aria-label="Edit person"
+            onClick={() => {
+              setActiveMode("edit");
+              setShowMenu(false);
+            }}
           >
-            <StyledMenuItem
-              type="button"
-              aria-label="Edit person"
-              onClick={() => {
-                setActiveMode("edit");
-                setShowMenu(false);
-              }}
-            >
-              Edit person
-            </StyledMenuItem>
-            <StyledMenuItem
-              type="button"
-              aria-label="Delete person"
-              onClick={() => {
-                setActiveMode("delete");
-                setShowMenu(false);
-              }}
-            >
-              Remove person
-            </StyledMenuItem>
-          </KebabMenu>
-        </StyledPersonHeaderMenuWrapper>
-      </StyledPersonHeader>
-    </>
+            Edit person
+          </StyledMenuItem>
+          <StyledMenuItem
+            type="button"
+            aria-label="Delete person"
+            onClick={() => {
+              setActiveMode("delete");
+              setShowMenu(false);
+            }}
+          >
+            Remove person
+          </StyledMenuItem>
+        </KebabMenu>
+      </StyledPersonHeaderMenuWrapper>
+    </StyledPersonHeader>
   );
 }

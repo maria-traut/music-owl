@@ -133,7 +133,6 @@ export default function PersonDetail({ person }) {
         showMenu={showMenu}
         setShowMenu={setShowMenu}
         setActiveMode={setActiveMode}
-        onPersonDelete={handlePersonDelete}
       />
       <MusicEraRecommendation person={person} />
       <PersonDeleteDialog
@@ -151,7 +150,7 @@ export default function PersonDetail({ person }) {
         color={color}
         activeMode={activeMode}
         setActiveMode={setActiveMode}
-        handlePersonUpdate={handlePersonUpdate}
+        onPersonUpdate={handlePersonUpdate}
         personUpdateError={personUpdateError}
       />
       <StyledDivider />
@@ -165,9 +164,9 @@ export default function PersonDetail({ person }) {
         playlistDeleteSuccess={playlistDeleteSuccess}
         playlistUpdateError={playlistUpdateError}
         playlistError={playlistError}
-        handlePlaylistCreate={handlePlaylistCreate}
-        handlePlaylistUpdate={handlePlaylistUpdate}
-        handlePlaylistDelete={handlePlaylistDelete}
+        onPlaylistCreate={handlePlaylistCreate}
+        onPlaylistUpdate={handlePlaylistUpdate}
+        onPlaylistDelete={handlePlaylistDelete}
       />
     </>
   );

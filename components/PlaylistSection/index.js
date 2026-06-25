@@ -16,9 +16,9 @@ export default function PlaylistSection({
   playlistUpdateSuccess,
   playlistDeleteSuccess,
   playlistUpdateError,
-  handlePlaylistCreate,
-  handlePlaylistUpdate,
-  handlePlaylistDelete,
+  onPlaylistCreate,
+  onPlaylistUpdate,
+  onPlaylistDelete,
 }) {
   return (
     <section>
@@ -37,7 +37,7 @@ export default function PlaylistSection({
 
       {activeMode === "playlist form" && (
         <PlaylistForm
-          onSubmit={(data) => handlePlaylistCreate(data)}
+          onSubmit={(data) => onPlaylistCreate(data)}
           onCancel={() => setActiveMode(null)}
         />
       )}
@@ -57,8 +57,8 @@ export default function PlaylistSection({
       <PlaylistList
         personId={_id}
         color={color}
-        handlePlaylistDelete={handlePlaylistDelete}
-        handlePlaylistUpdate={handlePlaylistUpdate}
+        onPlaylistDelete={onPlaylistDelete}
+        onPlaylistUpdate={onPlaylistUpdate}
       />
     </section>
   );

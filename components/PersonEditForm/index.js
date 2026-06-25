@@ -7,13 +7,13 @@ export default function PersonEditForm({
   activeMode,
   setActiveMode,
   personUpdateError,
-  handlePersonUpdate,
+  onPersonUpdate,
 }) {
   return (
     <>
       {activeMode === "edit" && (
         <PersonForm
-          onSubmit={handlePersonUpdate}
+          onSubmit={onPersonUpdate}
           defaultValues={{ name, birth_year, color }}
           updateMode={true}
           setUpdateMode={() => setActiveMode(null)}
