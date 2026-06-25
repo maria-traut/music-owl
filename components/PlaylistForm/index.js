@@ -30,7 +30,7 @@ import {
 import KebabMenu from "../KebabMenu";
 import PlaylistDetails from "../PlaylistDetails";
 import YoutubeSearch from "../YoutubeSearch";
-import NewSongSearch from "../NewSongSearch";
+import SongCreateForm from "../SongCreateForm";
 
 export default function PlaylistForm({
   onSubmit,
@@ -418,122 +418,22 @@ export default function PlaylistForm({
           </ol>
         )}
 
-        {!songAddMode ? (
-          <StyledFormButtonWrapperLeft>
-            <StyledButtonTertiary
-              type="button"
-              aria-label="Add song"
-              onClick={() => {
-                setSongAddMode(true);
-                setSongError(null);
-              }}
-            >
-              + New Song
-            </StyledButtonTertiary>
-          </StyledFormButtonWrapperLeft>
-        ) : (
-          <StyledSongForm>
-            <StyledFormSection>
-              <StyledLabel htmlFor="title">
-                Title<span aria-hidden>*</span>
-              </StyledLabel>
-              <StyledInput
-                type="text"
-                id="title"
-                name="title"
-                aria-required="true"
-                maxLength={30}
-                title="Title must be between 1 and 30 characters."
-                value={currentSong.title}
-                onChange={(event) =>
-                  setCurrentSong({ ...currentSong, title: event.target.value })
-                }
-              />
-            </StyledFormSection>
+        <SongCreateForm
+          songAddMode={songAddMode}
+          setSongAddMode={setSongAddMode}
+          setSongError={setSongError}
+          currentSong={currentSong}
+          setCurrentSong={setCurrentSong}
+          newSongSearchQuery={newSongSearchQuery}
+          setNewSongSearchQuery={setNewSongSearchQuery}
+          newSongSearchResults={newSongSearchResults}
+          setNewSongSearchResults={setNewSongSearchResults}
+          onSongAdd={handleSongAdd}
+          onNewSongSearch={handleNewSongSearch}
+          decodeHtml={decodeHtml}
+          searchError={searchError}
+        />
 
-            <StyledFormSection>
-              <StyledLabel htmlFor="artist">
-                Artist<span aria-hidden>*</span>
-              </StyledLabel>
-              <StyledInput
-                type="text"
-                id="artist"
-                name="artist"
-                aria-required="true"
-                maxLength={30}
-                title="Artist must be between 1 and 30 characters."
-                value={currentSong.artist}
-                onChange={(event) =>
-                  setCurrentSong({ ...currentSong, artist: event.target.value })
-                }
-              />
-            </StyledFormSection>
-            {searchError && (
-              <StyledErrorMessage role="alert">
-                {searchError}
-              </StyledErrorMessage>
-            )}
-
-            <NewSongSearch
-              currentSong={currentSong}
-              setCurrentSong={setCurrentSong}
-              newSongSearchQuery={newSongSearchQuery}
-              setNewSongSearchQuery={setNewSongSearchResults}
-              newSongSearchResults={newSongSearchResults}
-              setNewSongSearchResults={setNewSongSearchQuery}
-              onNewSongSearch={handleNewSongSearch}
-              decodeHtml={decodeHtml}
-            />
-
-            <StyledFormSection>
-              <StyledLabel>
-                Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>
-              </StyledLabel>
-              <StyledInput
-                type="text"
-                id="youtubeId"
-                name="youtubeId"
-                placeholder="e.g. CGj85pVzRJs"
-                maxLength={30}
-                title="Youtube ID must be between 1 and 30 characters."
-                value={currentSong.youtubeId}
-                onChange={(event) =>
-                  setCurrentSong({
-                    ...currentSong,
-                    youtubeId: event.target.value,
-                  })
-                }
-              />
-            </StyledFormSection>
-
-            <StyledFormSection>
-              <StyledLabel htmlFor="note">Note</StyledLabel>
-              <StyledInput
-                type="text"
-                id="note"
-                name="note"
-                maxLength={50}
-                title="Note must be between 1 and 50 characters."
-                value={currentSong.note}
-                onChange={(event) =>
-                  setCurrentSong({ ...currentSong, note: event.target.value })
-                }
-              />
-            </StyledFormSection>
-            <StyledFormButtonWrapperLeft>
-              <StyledButtonSecondary
-                type="button"
-                aria-label="Save song"
-                onClick={() => {
-                  const success = handleSongAdd();
-                  if (success) setSongAddMode(false);
-                }}
-              >
-                Add to playlist
-              </StyledButtonSecondary>
-            </StyledFormButtonWrapperLeft>
-          </StyledSongForm>
-        )}
         <StyledFormButtonWrapper>
           <StyledButtonSecondary
             type="button"
