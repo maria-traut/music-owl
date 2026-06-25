@@ -6,11 +6,9 @@ import {
   StyledLabel,
   StyledInput,
   StyledErrorMessage,
-} from "../Global/Global.styles";
-import {
   StyledSongForm,
   StyledHint,
-} from "../PlaylistForm/PlaylistForm.styled";
+} from "../Global/Global.styles";
 
 import NewSongSearch from "../NewSongSearch";
 
@@ -27,6 +25,7 @@ export default function SongCreateForm({
   onSongAdd,
   onNewSongSearch,
   decodeHtml,
+  searchError,
 }) {
   return (
     <>

@@ -31,8 +31,8 @@ import KebabMenu from "../KebabMenu";
 export default function PlaylistList({
   personId,
   color,
-  handlePlaylistDelete,
-  handlePlaylistUpdate,
+  onPlaylistDelete,
+  onPlaylistUpdate,
 }) {
   const {
     data: playlists,
@@ -56,7 +56,7 @@ export default function PlaylistList({
             key={playlist._id}
             defaultValues={playlist}
             onSubmit={async (data) => {
-              const success = await handlePlaylistUpdate(playlist._id, data);
+              const success = await onPlaylistUpdate(playlist._id, data);
               if (success) setEditPlaylistId(null);
             }}
             onCancel={() => setEditPlaylistId(null)}
@@ -78,7 +78,7 @@ export default function PlaylistList({
                   <StyledButtonDanger
                     type="button"
                     aria-label="Confirm deletion"
-                    onClick={() => handlePlaylistDelete(playlist._id)}
+                    onClick={() => onPlaylistDelete(playlist._id)}
                   >
                     Yes
                   </StyledButtonDanger>

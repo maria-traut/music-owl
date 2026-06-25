@@ -1,16 +1,4 @@
 import {
-  StyledSongBlock,
-  StyledSongForm,
-  StyledUpdateForm,
-  StyledHint,
-  StyledSongRow,
-  StyledSongNumber,
-  StyledSongInfo,
-  StyledSongTitle,
-  StyledSongArtist,
-} from "../PlaylistForm/PlaylistForm.styled";
-
-import {
   StyledFormSection,
   StyledLabel,
   StyledInput,
@@ -18,6 +6,15 @@ import {
   StyledFormButtonWrapperLeft,
   StyledButtonSecondary,
   StyledMenuItem,
+  StyledHint,
+  StyledSongForm,
+  StyledSongBlock,
+  StyledUpdateForm,
+  StyledSongRow,
+  StyledSongNumber,
+  StyledSongInfo,
+  StyledSongTitle,
+  StyledSongArtist,
 } from "../Global/Global.styles";
 
 import YoutubeSearch from "../YoutubeSearch";
