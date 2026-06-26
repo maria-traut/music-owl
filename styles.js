@@ -11,7 +11,7 @@ export default createGlobalStyle`
   }
 
   :root {
-	--app-background: #FAFAF8;
+	--app-background: #FBF8F3;
   --color-text-primary: #1B3A5C;
   --color-text-secondary: #1b3a5c99;
   --color-text-tertiary: #1B3A5C66; 
