@@ -23,6 +23,10 @@ export default function ScientificFindingList({ scienceCategoryFilter }) {
           return scientificFinding.category === scienceCategoryFilter;
         });
 
+  if (filteredFindings.length === 0) {
+    return <p>No findings found for this category.</p>;
+  }
+
   return (
     <StyledList>
       {filteredFindings.map((filteredFinding) => (

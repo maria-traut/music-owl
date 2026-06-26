@@ -3,44 +3,26 @@ import {
   StyledFilterButton,
 } from "./ScienceFilter.styled";
 
+const categories = ["All", "Neurology", "Psychology", "Clinical Research"];
+
 export default function ScienceFilter({
   onFilterChange,
   scienceCategoryFilter,
 }) {
   return (
     <StyledFilterButtonWrapper>
-      <StyledFilterButton
-        type="button"
-        aria-label="filter category all"
-        onClick={() => onFilterChange("All")}
-        $isActive={scienceCategoryFilter === "All"}
-      >
-        All
-      </StyledFilterButton>
-      <StyledFilterButton
-        type="button"
-        aria-label="filter category neurology"
-        onClick={() => onFilterChange("Neurology")}
-        $isActive={scienceCategoryFilter === "Neurology"}
-      >
-        Neurology
-      </StyledFilterButton>
-      <StyledFilterButton
-        type="button"
-        aria-label="filter category psychology"
-        onClick={() => onFilterChange("Psychology")}
-        $isActive={scienceCategoryFilter === "Psychology"}
-      >
-        Psychology
-      </StyledFilterButton>
-      <StyledFilterButton
-        type="button"
-        aria-label="filter category clinical research"
-        onClick={() => onFilterChange("Clinical Research")}
-        $isActive={scienceCategoryFilter === "Clinical Research"}
-      >
-        Clinical Research
-      </StyledFilterButton>
+      {categories.map((category) => (
+        <StyledFilterButton
+          key={category}
+          type="button"
+          aria-label={`filter category ${category.toLowerCase()}`}
+          aria-pressed={scienceCategoryFilter === category}
+          onClick={() => onFilterChange(category)}
+          $isActive={scienceCategoryFilter === category}
+        >
+          {category}
+        </StyledFilterButton>
+      ))}
     </StyledFilterButtonWrapper>
   );
 }

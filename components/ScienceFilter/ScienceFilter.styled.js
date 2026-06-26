@@ -8,7 +8,6 @@ export const StyledFilterButtonWrapper = styled.div`
 `;
 
 export const StyledFilterButton = styled(StyledButton)`
-  background: red;
   font-size: 0.8rem;
   border: 1px solid #1b3a5c;
   padding: 10px 10px;
