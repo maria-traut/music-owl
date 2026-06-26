@@ -2,7 +2,7 @@ import useSWR from "swr";
 import ScientificFindingCard from "../ScientificFindingCard";
 import { StyledList } from "./ScientificFindingList.styled";
 
-export default function ScientificFindingList() {
+export default function ScientificFindingList({ scienceCategoryFilter }) {
   const {
     data: scientificFindings,
     isLoading,
@@ -16,12 +16,23 @@ export default function ScientificFindingList() {
   if (!scientificFindings)
     return <p>Scientific findings could not be loaded.</p>;
 
+  const filteredFindings =
+    scienceCategoryFilter === "All"
+      ? scientificFindings
+      : scientificFindings.filter((scientificFinding) => {
+          return scientificFinding.category === scienceCategoryFilter;
+        });
+
+  if (filteredFindings.length === 0) {
+    return <p>No findings found for this category.</p>;
+  }
+
   return (
     <StyledList>
-      {scientificFindings.map((scientificFinding) => (
+      {filteredFindings.map((filteredFinding) => (
         <ScientificFindingCard
-          key={scientificFinding._id}
-          scientificFinding={scientificFinding}
+          key={filteredFinding._id}
+          scientificFinding={filteredFinding}
         />
       ))}
     </StyledList>
