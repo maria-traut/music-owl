@@ -28,7 +28,6 @@ export default function SongEditForm({
   setSongEditMode,
   activeSongMenu,
   setActiveSongMenu,
-  setSongDeleteMode,
   activeSearchIndex,
   setActiveSearchIndex,
   songSearches,
@@ -164,7 +163,6 @@ export default function SongEditForm({
                         aria-label="Edit song"
                         onClick={() => {
                           setSongEditMode(index);
-                          setSongDeleteMode(null);
                           setActiveSongMenu(null);
                         }}
                       >
@@ -176,7 +174,6 @@ export default function SongEditForm({
                         aria-label="Delete song"
                         onClick={() => {
                           onSongDelete(index);
-                          setSongDeleteMode(null);
                           setSongEditMode(null);
                           setActiveSongMenu(null);
                         }}

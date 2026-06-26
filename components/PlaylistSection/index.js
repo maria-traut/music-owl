@@ -4,18 +4,13 @@ import {
   StyledPlaylistSectionTitle,
   StyledPlaylistSectionHeader,
 } from "./PlaylistSection.styled";
-import { StyledButtonPrimary, StyledMessage } from "../Global/Global.styles";
+import { StyledButtonPrimary } from "../Global/Global.styles";
 
 export default function PlaylistSection({
   _id,
   color,
   activeMode,
   setActiveMode,
-  playlistError,
-  playlistCreateSuccess,
-  playlistUpdateSuccess,
-  playlistDeleteSuccess,
-  playlistUpdateError,
   onPlaylistCreate,
   onPlaylistUpdate,
   onPlaylistDelete,
@@ -41,18 +36,6 @@ export default function PlaylistSection({
           onCancel={() => setActiveMode(null)}
         />
       )}
-
-      {playlistCreateSuccess && (
-        <StyledMessage>Playlist successfully created.</StyledMessage>
-      )}
-      {playlistUpdateSuccess && (
-        <StyledMessage>Playlist successfully updated.</StyledMessage>
-      )}
-      {playlistDeleteSuccess && (
-        <StyledMessage>Playlist successfully deleted.</StyledMessage>
-      )}
-      {playlistUpdateError && <p role="alert">{playlistUpdateError}</p>}
-      {playlistError && <p role="alert">{playlistError}</p>}
 
       <PlaylistList
         personId={_id}

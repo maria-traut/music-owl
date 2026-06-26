@@ -14,15 +14,7 @@ export default function PersonDetail({ person }) {
   const { mutate } = useSWRConfig();
   const { name, birth_year, _id, color } = person;
   const [activeMode, setActiveMode] = useState(null);
-
   const [personDeleteSuccess, setPersonDeleteSuccess] = useState(false);
-
-  const [playlistCreateSuccess, setPlaylistCreateSuccess] = useState(false);
-  const [playlistUpdateSuccess, setPlaylistUpdateSuccess] = useState(false);
-  const [playlistError, setPlaylistError] = useState(null);
-  const [playlistUpdateError, setPlaylistUpdateError] = useState(null);
-  const [playlistDeleteSuccess, setPlaylistDeleteSuccess] = useState(false);
-
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
@@ -30,7 +22,7 @@ export default function PersonDetail({ person }) {
     const successMessageTimer = setTimeout(() => {
       setPersonDeleteSuccess(false);
       router.push("/people");
-    }, 2000);
+    }, 3000);
     return () => {
       clearTimeout(successMessageTimer);
     };
@@ -39,6 +31,7 @@ export default function PersonDetail({ person }) {
   async function handlePersonDelete() {
     const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
     if (response.ok) {
+      setPersonDeleteSuccess(true);
       mutate("/api/people");
       toast.success("Person successfully removed.");
     } else {
@@ -59,7 +52,6 @@ export default function PersonDetail({ person }) {
       mutate("/api/people");
       mutate(`/api/people/${_id}`);
       setActiveMode(null);
-
       toast.success("Person successfully updated.");
     } else {
       toast.error("Something went wrong. Please try again.");
@@ -80,16 +72,15 @@ export default function PersonDetail({ person }) {
 
       if (response.ok) {
         mutate(`/api/playlists?personId=${_id}`);
-        setPlaylistCreateSuccess(true);
-        setTimeout(() => setPlaylistCreateSuccess(false), 2000);
+        toast.success("Playlist successfully created.");
         setActiveMode(null);
         return true;
       } else {
-        setPlaylistError("Something went wrong. Please try again.");
+        toast.error("Something went wrong. Please try again.");
         return false;
       }
     } catch {
-      setPlaylistError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
       return false;
     }
   }
@@ -100,10 +91,9 @@ export default function PersonDetail({ person }) {
     });
     if (response.ok) {
       mutate(`/api/playlists?personId=${_id}`);
-      setPlaylistDeleteSuccess(true);
-      setTimeout(() => setPlaylistDeleteSuccess(false), 3000);
+      toast.success("Playlist successfully deleted.");
     } else {
-      setPlaylistError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     }
   }
 
@@ -115,12 +105,10 @@ export default function PersonDetail({ person }) {
     });
     if (response.ok) {
       mutate(`/api/playlists?personId=${_id}`);
-      setPlaylistUpdateSuccess(true);
-      setTimeout(() => setPlaylistUpdateSuccess(false), 3000);
-      setPlaylistUpdateError(null);
+      toast.success("Playlist successfully updated.");
       return true;
     } else {
-      setPlaylistUpdateError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
       return false;
     }
   }
@@ -156,11 +144,6 @@ export default function PersonDetail({ person }) {
         color={color}
         activeMode={activeMode}
         setActiveMode={setActiveMode}
-        playlistCreateSuccess={playlistCreateSuccess}
-        playlistUpdateSuccess={playlistUpdateSuccess}
-        playlistDeleteSuccess={playlistDeleteSuccess}
-        playlistUpdateError={playlistUpdateError}
-        playlistError={playlistError}
         onPlaylistCreate={handlePlaylistCreate}
         onPlaylistUpdate={handlePlaylistUpdate}
         onPlaylistDelete={handlePlaylistDelete}

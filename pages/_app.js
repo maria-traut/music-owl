@@ -16,19 +16,19 @@ export default function App({ Component, pageProps }) {
     <>
       <GlobalStyle />
       <Toaster
-        position="bottom-center"
+        position="top-center"
         reverseOrder={false}
         gutter={12}
         containerStyle={{
-          bottom: 40,
+          top: 80,
         }}
         toastOptions={{
           success: {
             icon: null,
             duration: 4000,
             style: {
-              background: "white",
-              color: "var(--color-text-primary)",
+              background: "#10b981",
+              color: "white",
               borderRadius: "var(--radius-element)",
               boxShadow: "0 4px 12px rgba(27, 58, 92, 0.1)",
               fontWeight: "500",
@@ -41,8 +41,8 @@ export default function App({ Component, pageProps }) {
             icon: null,
             duration: 4000,
             style: {
-              background: "white",
-              color: "var(--color-text-primary)",
+              background: "salmon",
+              color: "white",
               borderRadius: "var(--radius-element)",
               boxShadow: "0 4px 12px rgba(27, 58, 92, 0.1)",
               fontWeight: "500",
