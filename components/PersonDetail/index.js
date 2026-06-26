@@ -7,6 +7,7 @@ import PersonHeader from "../PersonHeader";
 import PersonEditForm from "../PersonEditForm";
 import PersonDeleteDialog from "../PersonDeleteDialog";
 import MusicEraRecommendation from "../MusicEraRecommendation";
+import toast from "react-hot-toast";
 
 export default function PersonDetail({ person }) {
   const router = useRouter();
@@ -40,10 +41,13 @@ export default function PersonDetail({ person }) {
   async function handlePersonDelete() {
     const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
     if (response.ok) {
+      setPersonDeleteError(null);
       setPersonDeleteSuccess(true);
       mutate("/api/people");
+      toast.success("Person successfully removed.");
     } else {
       setPersonDeleteError(true);
+      toast.error("Something went wrong. Please try again.");
     }
   }
 
@@ -61,8 +65,10 @@ export default function PersonDetail({ person }) {
       mutate(`/api/people/${_id}`);
       setActiveMode(null);
       setPersonUpdateError(null);
+      toast.success("Person successfully updated.");
     } else {
       setPersonUpdateError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     }
   }
 

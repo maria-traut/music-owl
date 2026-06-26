@@ -19,9 +19,7 @@ export default function PersonDeleteDialog({
     <>
       {activeMode === "delete" && (
         <>
-          {personDeleteSuccess ? (
-            <StyledMessage>{name} was successfully removed.</StyledMessage>
-          ) : (
+          {!personDeleteSuccess && (
             <StyledMessageAndButtonWrapper>
               <StyledMessage>Remove and go back?</StyledMessage>
               <StyledButtonWrapper>
