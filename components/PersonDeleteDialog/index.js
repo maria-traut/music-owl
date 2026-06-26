@@ -7,13 +7,10 @@ import {
 } from "../Global/Global.styles";
 
 export default function PersonDeleteDialog({
-  name,
   activeMode,
   setActiveMode,
   onPersonDelete,
   personDeleteSuccess,
-  personDeleteError,
-  setPersonDeleteError,
 }) {
   return (
     <>
@@ -28,7 +25,6 @@ export default function PersonDeleteDialog({
                   aria-label="Cancel deletion"
                   onClick={() => {
                     setActiveMode(null);
-                    setPersonDeleteError(false);
                   }}
                 >
                   No
@@ -41,9 +37,6 @@ export default function PersonDeleteDialog({
                   Yes
                 </StyledButtonDanger>
               </StyledButtonWrapper>
-              {personDeleteError && (
-                <span>An error occurred. Please try again.</span>
-              )}
             </StyledMessageAndButtonWrapper>
           )}
         </>

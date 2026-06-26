@@ -16,8 +16,6 @@ export default function PersonDetail({ person }) {
   const [activeMode, setActiveMode] = useState(null);
 
   const [personDeleteSuccess, setPersonDeleteSuccess] = useState(false);
-  const [personUpdateError, setPersonUpdateError] = useState(null);
-  const [personDeleteError, setPersonDeleteError] = useState(false);
 
   const [playlistCreateSuccess, setPlaylistCreateSuccess] = useState(false);
   const [playlistUpdateSuccess, setPlaylistUpdateSuccess] = useState(false);
@@ -41,12 +39,9 @@ export default function PersonDetail({ person }) {
   async function handlePersonDelete() {
     const response = await fetch(`/api/people/${_id}`, { method: "DELETE" });
     if (response.ok) {
-      setPersonDeleteError(null);
-      setPersonDeleteSuccess(true);
       mutate("/api/people");
       toast.success("Person successfully removed.");
     } else {
-      setPersonDeleteError(true);
       toast.error("Something went wrong. Please try again.");
     }
   }
@@ -64,10 +59,9 @@ export default function PersonDetail({ person }) {
       mutate("/api/people");
       mutate(`/api/people/${_id}`);
       setActiveMode(null);
-      setPersonUpdateError(null);
+
       toast.success("Person successfully updated.");
     } else {
-      setPersonUpdateError("Something went wrong. Please try again.");
       toast.error("Something went wrong. Please try again.");
     }
   }
@@ -147,8 +141,6 @@ export default function PersonDetail({ person }) {
         setActiveMode={setActiveMode}
         onPersonDelete={handlePersonDelete}
         personDeleteSuccess={personDeleteSuccess}
-        personDeleteError={personDeleteError}
-        setPersonDeleteError={setPersonDeleteError}
       />
       <PersonEditForm
         name={name}
@@ -157,7 +149,6 @@ export default function PersonDetail({ person }) {
         activeMode={activeMode}
         setActiveMode={setActiveMode}
         onPersonUpdate={handlePersonUpdate}
-        personUpdateError={personUpdateError}
       />
       <StyledDivider />
       <PlaylistSection

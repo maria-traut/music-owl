@@ -6,7 +6,6 @@ export default function PersonEditForm({
   color,
   activeMode,
   setActiveMode,
-  personUpdateError,
   onPersonUpdate,
 }) {
   return (
@@ -19,7 +18,6 @@ export default function PersonEditForm({
           setUpdateMode={() => setActiveMode(null)}
         />
       )}
-      {personUpdateError && <p role="alert">{personUpdateError}</p>}
     </>
   );
 }
