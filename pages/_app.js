@@ -25,9 +25,9 @@ export default function App({ Component, pageProps }) {
         toastOptions={{
           success: {
             icon: null,
-            duration: 4000,
+            duration: 3000,
             style: {
-              background: "#10b981",
+              background: "#4a9b8e",
               color: "white",
               borderRadius: "var(--radius-element)",
               boxShadow: "0 4px 12px rgba(27, 58, 92, 0.1)",
@@ -39,7 +39,7 @@ export default function App({ Component, pageProps }) {
           },
           error: {
             icon: null,
-            duration: 4000,
+            duration: 3000,
             style: {
               background: "salmon",
               color: "white",
