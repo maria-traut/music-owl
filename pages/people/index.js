@@ -11,22 +11,11 @@ import {
   StyledButtonPrimary,
   StyledH2,
 } from "@/components/Global/Global.styles";
+import toast from "react-hot-toast";
 
 export default function People() {
   const { mutate } = useSWR("/api/people");
   const [personFormMode, setPersonFormMode] = useState(false);
-  const [personCreateSuccess, setPersonCreateSuccess] = useState(false);
-  const [personCreateError, setPersonCreateError] = useState(false);
-
-  useEffect(() => {
-    if (!personCreateSuccess) return;
-    const successMessageTimer = setTimeout(() => {
-      setPersonCreateSuccess(false);
-    }, 3000);
-    return () => {
-      clearTimeout(successMessageTimer);
-    };
-  }, [personCreateSuccess]);
 
   async function handlePersonCreate(event) {
     event.preventDefault();
@@ -42,21 +31,13 @@ export default function People() {
         mutate();
         event.target.reset();
         setPersonFormMode(false);
-        setPersonCreateSuccess(true);
-        setPersonCreateError(false);
+        toast.success("Person successfully added.");
       } else {
-        setPersonCreateError(true);
-        setPersonCreateSuccess(false);
+        toast.error("Something went wrong. Please try again.");
       }
     } catch {
-      setPersonCreateError(true);
-      setPersonCreateSuccess(false);
+      toast.error("Something went wrong. Please try again.");
     }
-  }
-
-  function handlePersonFormClear(event) {
-    setPersonCreateSuccess(false);
-    setPersonCreateError(false);
   }
 
   return (
@@ -72,7 +53,6 @@ export default function People() {
       {personFormMode ? (
         <PersonForm
           onSubmit={handlePersonCreate}
-          onPersonFormClear={handlePersonFormClear}
           setPersonFormMode={setPersonFormMode}
         />
       ) : (
@@ -85,12 +65,6 @@ export default function People() {
             + New Person
           </StyledButtonPrimary>
         </StyledButtonWrapper>
-      )}
-      {personCreateSuccess && (
-        <StyledMessage>Person successfully added!</StyledMessage>
-      )}
-      {personCreateError && (
-        <StyledMessage>Something went wrong. Please try again.</StyledMessage>
       )}
 
       <PersonList />

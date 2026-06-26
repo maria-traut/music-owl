@@ -25,6 +25,8 @@ export default createGlobalStyle`
   --color-divider: #e0e0e0;
   --radius-card: 15px;
   --radius-element: 8px;
+  --color-error: #fa8072;
+  --color-success: #4a9b8e;
   }
 
   body {

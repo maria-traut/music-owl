@@ -15,7 +15,6 @@ import {
 
 export default function PersonForm({
   onSubmit,
-  onPersonFormClear,
   defaultValues,
   updateMode,
   setUpdateMode,
@@ -89,10 +88,7 @@ export default function PersonForm({
                 <StyledButtonSecondary
                   type="button"
                   aria-label="Cancel add person and close form"
-                  onClick={() => {
-                    onPersonFormClear();
-                    setPersonFormMode(false);
-                  }}
+                  onClick={() => setPersonFormMode(false)}
                 >
                   Cancel
                 </StyledButtonSecondary>
