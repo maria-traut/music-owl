@@ -1,11 +1,11 @@
 import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
-import { StyledApp } from "@/components/Global/Global.styles";
+import { StyledApp, StyledDivider } from "@/components/Global/Global.styles";
 import NavBar from "@/components/NavBar";
 import BackToTopButton from "@/components/BackToTopButton";
 import { Toaster } from "react-hot-toast";
 import Header from "@/components/Header";
-import Image from "next/image";
+import Footer from "@/components/Footer";
 
 const fetcher = (...args) =>
   fetch(...args).then((res) => {
@@ -53,6 +53,7 @@ export default function App({ Component, pageProps }) {
           <NavBar />
           <BackToTopButton />
           <Component {...pageProps} />
+          <Footer />
         </StyledApp>
       </SWRConfig>
     </>
