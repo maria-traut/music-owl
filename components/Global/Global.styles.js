@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const StyledApp = styled.div`
   max-width: 480px;
-  margin: 0 auto 2.3rem;
+  margin: 1rem auto 2.3rem;
 `;
 
 export const StyledMain = styled.main`
@@ -14,11 +14,6 @@ export const StyledDivider = styled.hr`
   border: none;
   border-top: 1px solid #e0e0e0;
   margin: 1.7rem 0;
-`;
-
-export const StyledH1 = styled.h1`
-  text-align: center;
-  margin-bottom: 1rem;
 `;
 
 export const StyledH2 = styled.h2`
