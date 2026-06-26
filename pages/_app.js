@@ -11,6 +11,16 @@ const fetcher = (...args) =>
     return res.json();
   });
 
+const sharedToastStyle = {
+  color: "white",
+  borderRadius: "var(--radius-element)",
+  boxShadow: "0 4px 12px rgba(27, 58, 92, 0.1)",
+  fontWeight: "500",
+  fontSize: "14px",
+  padding: "16px 20px",
+  textAlign: "center",
+};
+
 export default function App({ Component, pageProps }) {
   return (
     <>
@@ -26,30 +36,12 @@ export default function App({ Component, pageProps }) {
           success: {
             icon: null,
             duration: 3000,
-            style: {
-              background: "#4a9b8e",
-              color: "white",
-              borderRadius: "var(--radius-element)",
-              boxShadow: "0 4px 12px rgba(27, 58, 92, 0.1)",
-              fontWeight: "500",
-              fontSize: "14px",
-              padding: "16px 20px",
-              textAlign: "center",
-            },
+            style: { ...sharedToastStyle, background: "var(--color-success)" },
           },
           error: {
             icon: null,
             duration: 3000,
-            style: {
-              background: "salmon",
-              color: "white",
-              borderRadius: "var(--radius-element)",
-              boxShadow: "0 4px 12px rgba(27, 58, 92, 0.1)",
-              fontWeight: "500",
-              fontSize: "14px",
-              padding: "16px 20px",
-              textAlign: "center",
-            },
+            style: { ...sharedToastStyle, background: "var(--color-error)" },
           },
         }}
       />
