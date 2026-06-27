@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledFooter = styled.div`
+export const StyledFooter = styled.footer`
   padding: 1.5rem 0 0 1.7rem;
   margin-top: auto;
   text-align: left;

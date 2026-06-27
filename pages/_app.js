@@ -1,6 +1,6 @@
 import GlobalStyle from "../styles";
 import { SWRConfig } from "swr";
-import { StyledApp, StyledDivider } from "@/components/Global/Global.styles";
+import { StyledApp } from "@/components/Global/Global.styles";
 import NavBar from "@/components/NavBar";
 import BackToTopButton from "@/components/BackToTopButton";
 import { Toaster } from "react-hot-toast";
