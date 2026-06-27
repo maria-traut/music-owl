@@ -43,10 +43,17 @@ export default function PlaylistList({
   const [editPlaylistId, setEditPlaylistId] = useState(null);
   const [showMenuId, setShowMenuId] = useState(null);
 
-  if (isLoading) return <p>Loading ...</p>;
-  if (error) return <p>An error occurred.</p>;
-  if (!playlists) return <p>Playlists could not be loaded.</p>;
-  if (playlists.length === 0) return <p>No playlists yet.</p>;
+  if (isLoading) return <StyledMessage>Loading ...</StyledMessage>;
+  if (error) return <StyledMessage>An error occurred.</StyledMessage>;
+  if (!playlists)
+    return <StyledMessage>Playlists could not be loaded.</StyledMessage>;
+  if (playlists.length === 0)
+    return (
+      <StyledMessage>
+        No playlists yet. Start creating one to bring music and memories
+        together.
+      </StyledMessage>
+    );
 
   return (
     <StyledPlaylistList>

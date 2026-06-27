@@ -31,8 +31,19 @@ export const StyledH4 = styled.h4`
 `;
 
 export const StyledMessage = styled.p`
-  display: inline-block;
-  margin-top: 2rem;
+  display: block;
+  text-align: center;
+  margin: 2rem auto 0;
+  padding: 2rem 1rem;
+  max-width: 400px;
+`;
+
+export const StyledConfirmMessage = styled.p`
+  display: block;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
 `;
 
 export const StyledErrorMessage = styled.p`
@@ -123,6 +134,7 @@ export const StyledFormButtonWrapper = styled.div`
 `;
 
 export const StyledFormButtonWrapperLeft = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -133,10 +145,10 @@ export const StyledFormButtonWrapperLeft = styled.div`
 // buttons
 
 export const StyledMessageAndButtonWrapper = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 1rem;
 `;
 
 export const StyledButtonWrapper = styled.div`
@@ -406,4 +418,15 @@ export const StyledSearchResultList = styled.ul`
   margin: 0;
   padding: 0;
   gap: 0.5rem;
+`;
+
+export const StyledConfirmDialog = styled.div`
+  background-color: #fefdfb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
 `;

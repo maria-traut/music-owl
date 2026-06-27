@@ -1,9 +1,9 @@
 import {
-  StyledMessage,
-  StyledMessageAndButtonWrapper,
+  StyledConfirmMessage,
   StyledButtonWrapper,
   StyledButtonSecondary,
   StyledButtonDanger,
+  StyledConfirmDialog,
 } from "../Global/Global.styles";
 
 export default function PersonDeleteDialog({
@@ -17,9 +17,18 @@ export default function PersonDeleteDialog({
       {activeMode === "delete" && (
         <>
           {!personDeleteSuccess && (
-            <StyledMessageAndButtonWrapper>
-              <StyledMessage>Remove and go back?</StyledMessage>
+            <StyledConfirmDialog>
+              <StyledConfirmMessage>
+                Remove this person and go back?
+              </StyledConfirmMessage>
               <StyledButtonWrapper>
+                <StyledButtonDanger
+                  type="button"
+                  aria-label="Confirm deletion"
+                  onClick={onPersonDelete}
+                >
+                  Yes
+                </StyledButtonDanger>
                 <StyledButtonSecondary
                   type="button"
                   aria-label="Cancel deletion"
@@ -29,15 +38,8 @@ export default function PersonDeleteDialog({
                 >
                   No
                 </StyledButtonSecondary>
-                <StyledButtonDanger
-                  type="button"
-                  aria-label="Confirm deletion"
-                  onClick={onPersonDelete}
-                >
-                  Yes
-                </StyledButtonDanger>
               </StyledButtonWrapper>
-            </StyledMessageAndButtonWrapper>
+            </StyledConfirmDialog>
           )}
         </>
       )}
