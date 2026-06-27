@@ -94,8 +94,8 @@ export const StyledFormSection = styled.div`
 
 export const StyledInput = styled.input`
   font-size: 16px;
-  padding: 12px 14px;
-  min-height: 48px;
+  padding: 10px 14px;
+  min-height: 40px;
   border-radius: 8px;
   border: 1px solid #e0e0e0;
   -webkit-appearance: none;
