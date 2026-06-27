@@ -2,10 +2,11 @@ import styled from "styled-components";
 import Link from "next/link";
 
 export const StyledNav = styled.div`
+  color: var(--color-text-tertiary);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3.5rem;
+  gap: 3.7rem;
   width: 100%;
   height: 3rem;
   padding: 0;
