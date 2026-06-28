@@ -79,6 +79,14 @@ export const StyledFieldset = styled.fieldset`
   padding: 1rem 0.7rem 0.7rem 0.7rem;
 `;
 
+export const StyledPlaylistFieldset = styled.fieldset`
+  border-radius: 15px;
+  border: 3px solid ${({ $color }) => $color}4D;
+  background-color: transparent;
+  margin-top: 1rem;
+  padding: 1rem 0.7rem 0.7rem 0.7rem;
+`;
+
 export const StyledLabel = styled.label`
   display: block;
   font-size: 11px;
@@ -417,7 +425,7 @@ export const StyledSearchResultList = styled.ul`
   flex-direction: column;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0.5rem 0;
   gap: 0.5rem;
 `;
 

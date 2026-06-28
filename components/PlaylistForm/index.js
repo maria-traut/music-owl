@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  StyledFieldset,
+  StyledPlaylistFieldset,
   StyledFormButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
@@ -14,6 +14,7 @@ import SongCreateForm from "../SongCreateForm";
 import SongEditForm from "../SongEditForm";
 
 export default function PlaylistForm({
+  color,
   onSubmit,
   onCancel,
   defaultValues,
@@ -224,7 +225,7 @@ export default function PlaylistForm({
 
   return (
     <form onSubmit={handlePlaylistDataCollect}>
-      <StyledFieldset>
+      <StyledPlaylistFieldset $color={color}>
         {!editPlaylistId ? (
           <legend>Create a Playlist</legend>
         ) : (
@@ -285,7 +286,7 @@ export default function PlaylistForm({
             Save
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
-      </StyledFieldset>
+      </StyledPlaylistFieldset>
     </form>
   );
 }

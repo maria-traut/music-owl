@@ -3,9 +3,7 @@ import {
   StyledLabel,
   StyledInput,
   StyledFormButtonWrapperLeft,
-  StyledSearchResultList,
   StyledTextButton,
-  StyledYoutubeDetailsBox,
 } from "../Global/Global.styles";
 
 export default function YoutubeSearch({
@@ -57,7 +55,7 @@ export default function YoutubeSearch({
         </StyledTextButton>
       </StyledFormButtonWrapperLeft>
       {activeSearchIndex === index && (
-        <StyledSearchResultList>
+        <li>
           {songSearches[song.uid]?.results?.map((result) => (
             <li key={result.id.videoId}>
               <button
@@ -89,7 +87,7 @@ export default function YoutubeSearch({
               </button>
             </li>
           ))}
-        </StyledSearchResultList>
+        </li>
       )}
     </StyledFormSection>
   );

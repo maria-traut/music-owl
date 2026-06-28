@@ -10,10 +10,10 @@ export const StyledPlaylistList = styled.ul`
 `;
 
 export const StyledPlaylist = styled.li`
+  background-color: ${({ $color }) => $color}4D;
   list-style: none;
   width: 100%;
   padding: 0.5rem 1rem 1rem 1.5rem;
-  border: 3px solid ${({ $color }) => $color}88;
   border-radius: var(--radius-card);
   position: relative;
 `;
@@ -51,7 +51,7 @@ export const StyledLinkNoteWrapper = styled.div`
 export const StyledYoutubeLink = styled.a`
   text-decoration: none;
   color: inherit;
-  background-color: lightgrey;
+  background-color: #fbf8f3;
   border-radius: 50%;
   padding-left: 3px;
   width: 1.5rem;

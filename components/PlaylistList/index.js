@@ -60,6 +60,7 @@ export default function PlaylistList({
       {playlists.map((playlist) =>
         editPlaylistId === playlist._id ? (
           <PlaylistForm
+            color={color}
             key={playlist._id}
             defaultValues={playlist}
             onSubmit={async (data) => {
