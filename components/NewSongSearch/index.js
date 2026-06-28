@@ -2,8 +2,8 @@ import {
   StyledFormSection,
   StyledLabel,
   StyledInput,
-  StyledButtonWrapper,
-  StyledButtonSecondary,
+  StyledTextButton,
+  StyledFormButtonWrapperLeft,
   StyledSearchResultList,
 } from "../Global/Global.styles";
 
@@ -28,8 +28,11 @@ export default function NewSongSearch({
         value={newSongSearchQuery}
         onChange={(event) => setNewSongSearchQuery(event.target.value)}
       />
-      <StyledButtonWrapper>
-        <StyledButtonSecondary
+      <StyledFormButtonWrapperLeft>
+        <StyledTextButton type="button" onClick={onNewSongSearch}>
+          Go
+        </StyledTextButton>
+        <StyledTextButton
           type="button"
           disabled={!newSongSearchQuery}
           onClick={() => {
@@ -38,11 +41,8 @@ export default function NewSongSearch({
           }}
         >
           Clear
-        </StyledButtonSecondary>
-        <StyledButtonSecondary type="button" onClick={onNewSongSearch}>
-          Go
-        </StyledButtonSecondary>
-      </StyledButtonWrapper>
+        </StyledTextButton>
+      </StyledFormButtonWrapperLeft>
       <StyledSearchResultList>
         {newSongSearchResults.map((result) => (
           <li key={result.id.videoId}>

@@ -16,7 +16,7 @@ export default function KebabMenu({ isOpen, onOpen, onClose, children }) {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   return (
     <div ref={ref}>

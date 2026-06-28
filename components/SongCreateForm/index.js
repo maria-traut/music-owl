@@ -8,6 +8,8 @@ import {
   StyledErrorMessage,
   StyledSongForm,
   StyledHint,
+  StyledYoutubeDetailsBox,
+  StyledYoutubeDetailsSection,
 } from "../Global/Global.styles";
 
 import NewSongSearch from "../NewSongSearch";
@@ -79,41 +81,6 @@ export default function SongCreateForm({
               }
             />
           </StyledFormSection>
-          {searchError && (
-            <StyledErrorMessage role="alert">{searchError}</StyledErrorMessage>
-          )}
-
-          <NewSongSearch
-            currentSong={currentSong}
-            setCurrentSong={setCurrentSong}
-            newSongSearchQuery={newSongSearchQuery}
-            setNewSongSearchQuery={setNewSongSearchQuery}
-            newSongSearchResults={newSongSearchResults}
-            setNewSongSearchResults={setNewSongSearchResults}
-            onNewSongSearch={onNewSongSearch}
-            decodeHtml={decodeHtml}
-          />
-
-          <StyledFormSection>
-            <StyledLabel>
-              Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>
-            </StyledLabel>
-            <StyledInput
-              type="text"
-              id="youtubeId"
-              name="youtubeId"
-              placeholder="e.g. CGj85pVzRJs"
-              maxLength={30}
-              title="Youtube ID must be between 1 and 30 characters."
-              value={currentSong.youtubeId}
-              onChange={(event) =>
-                setCurrentSong({
-                  ...currentSong,
-                  youtubeId: event.target.value,
-                })
-              }
-            />
-          </StyledFormSection>
 
           <StyledFormSection>
             <StyledLabel htmlFor="note">Note</StyledLabel>
@@ -129,6 +96,46 @@ export default function SongCreateForm({
               }
             />
           </StyledFormSection>
+
+          {searchError && (
+            <StyledErrorMessage role="alert">{searchError}</StyledErrorMessage>
+          )}
+          <StyledYoutubeDetailsSection>
+            <summary>YouTube details</summary>
+            <StyledYoutubeDetailsBox>
+              <NewSongSearch
+                currentSong={currentSong}
+                setCurrentSong={setCurrentSong}
+                newSongSearchQuery={newSongSearchQuery}
+                setNewSongSearchQuery={setNewSongSearchQuery}
+                newSongSearchResults={newSongSearchResults}
+                setNewSongSearchResults={setNewSongSearchResults}
+                onNewSongSearch={onNewSongSearch}
+                decodeHtml={decodeHtml}
+              />
+
+              <StyledFormSection>
+                <StyledLabel>
+                  Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>
+                </StyledLabel>
+                <StyledInput
+                  type="text"
+                  id="youtubeId"
+                  name="youtubeId"
+                  placeholder="e.g. CGj85pVzRJs"
+                  maxLength={30}
+                  title="Youtube ID must be between 1 and 30 characters."
+                  value={currentSong.youtubeId}
+                  onChange={(event) =>
+                    setCurrentSong({
+                      ...currentSong,
+                      youtubeId: event.target.value,
+                    })
+                  }
+                />
+              </StyledFormSection>
+            </StyledYoutubeDetailsBox>
+          </StyledYoutubeDetailsSection>
           <StyledFormButtonWrapperLeft>
             <StyledButtonSecondary
               type="button"

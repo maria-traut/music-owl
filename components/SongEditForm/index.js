@@ -2,8 +2,9 @@ import {
   StyledFormSection,
   StyledLabel,
   StyledInput,
-  StyledMessageAndButtonWrapper,
+  StyledYoutubeDetailsBox,
   StyledFormButtonWrapperLeft,
+  StyledYoutubeDetailsSection,
   StyledButtonSecondary,
   StyledMenuItem,
   StyledHint,
@@ -83,46 +84,6 @@ export default function SongEditForm({
                       }}
                     />
                   </StyledFormSection>
-
-                  <YoutubeSearch
-                    song={song}
-                    songs={songs}
-                    setSongs={setSongs}
-                    index={index}
-                    activeSearchIndex={activeSearchIndex}
-                    setActiveSearchIndex={setActiveSearchIndex}
-                    songSearches={songSearches}
-                    setSongSearches={setSongSearches}
-                    decodeHtml={decodeHtml}
-                    onSongSearch={onSongSearch}
-                    onSongSearchClear={onSongSearchClear}
-                  />
-
-                  <StyledFormSection>
-                    <StyledLabel>
-                      Youtube ID{" "}
-                      <StyledHint>(from the URL after ?v=)</StyledHint>
-                    </StyledLabel>
-                    <StyledInput
-                      maxLength={11}
-                      pattern="^[a-zA-Z0-9_-]{11}$"
-                      title="Youtube ID must be exactly 11 characters."
-                      placeholder="e.g. CGj85pVzRJs"
-                      value={song.youtubeId || song.youtube_id || ""}
-                      onChange={(event) => {
-                        const updated = songs.map((existingSong, i) =>
-                          i === index
-                            ? {
-                                ...existingSong,
-                                youtube_id: event.target.value,
-                              }
-                            : existingSong
-                        );
-                        setSongs(updated);
-                      }}
-                    />
-                  </StyledFormSection>
-
                   <StyledFormSection>
                     <StyledLabel>Note</StyledLabel>
                     <StyledInput
@@ -137,6 +98,48 @@ export default function SongEditForm({
                       }}
                     />
                   </StyledFormSection>
+                  <StyledYoutubeDetailsSection>
+                    <summary>YouTube details</summary>
+                    <StyledYoutubeDetailsBox>
+                      <YoutubeSearch
+                        song={song}
+                        songs={songs}
+                        setSongs={setSongs}
+                        index={index}
+                        activeSearchIndex={activeSearchIndex}
+                        setActiveSearchIndex={setActiveSearchIndex}
+                        songSearches={songSearches}
+                        setSongSearches={setSongSearches}
+                        decodeHtml={decodeHtml}
+                        onSongSearch={onSongSearch}
+                        onSongSearchClear={onSongSearchClear}
+                      />
+                      <StyledFormSection>
+                        <StyledLabel>
+                          Youtube ID{" "}
+                          <StyledHint>(from the URL after ?v=)</StyledHint>
+                        </StyledLabel>
+                        <StyledInput
+                          maxLength={11}
+                          pattern="^[a-zA-Z0-9_-]{11}$"
+                          title="Youtube ID must be exactly 11 characters."
+                          placeholder="e.g. CGj85pVzRJs"
+                          value={song.youtubeId || song.youtube_id || ""}
+                          onChange={(event) => {
+                            const updated = songs.map((existingSong, i) =>
+                              i === index
+                                ? {
+                                    ...existingSong,
+                                    youtube_id: event.target.value,
+                                  }
+                                : existingSong
+                            );
+                            setSongs(updated);
+                          }}
+                        />
+                      </StyledFormSection>
+                    </StyledYoutubeDetailsBox>
+                  </StyledYoutubeDetailsSection>
                   <StyledFormButtonWrapperLeft>
                     <StyledButtonSecondary
                       onClick={() => setSongEditMode(null)}
@@ -151,37 +154,35 @@ export default function SongEditForm({
                   <StyledSongInfo>
                     <StyledSongTitle>{song.title}</StyledSongTitle>
                     <StyledSongArtist>{song.artist}</StyledSongArtist>
-                  </StyledSongInfo>
-                  <StyledMessageAndButtonWrapper>
-                    <KebabMenu
-                      isOpen={activeSongMenu === index}
-                      onOpen={() => setActiveSongMenu(index)}
-                      onClose={() => setActiveSongMenu(null)}
+                  </StyledSongInfo>{" "}
+                  <KebabMenu
+                    isOpen={activeSongMenu === index}
+                    onOpen={() => setActiveSongMenu(index)}
+                    onClose={() => setActiveSongMenu(null)}
+                  >
+                    <StyledMenuItem
+                      type="button"
+                      aria-label="Edit song"
+                      onClick={() => {
+                        setSongEditMode(index);
+                        setActiveSongMenu(null);
+                      }}
                     >
-                      <StyledMenuItem
-                        type="button"
-                        aria-label="Edit song"
-                        onClick={() => {
-                          setSongEditMode(index);
-                          setActiveSongMenu(null);
-                        }}
-                      >
-                        Edit song
-                      </StyledMenuItem>
+                      Edit song
+                    </StyledMenuItem>
 
-                      <StyledMenuItem
-                        type="button"
-                        aria-label="Delete song"
-                        onClick={() => {
-                          onSongDelete(index);
-                          setSongEditMode(null);
-                          setActiveSongMenu(null);
-                        }}
-                      >
-                        Delete song
-                      </StyledMenuItem>
-                    </KebabMenu>
-                  </StyledMessageAndButtonWrapper>
+                    <StyledMenuItem
+                      type="button"
+                      aria-label="Delete song"
+                      onClick={() => {
+                        onSongDelete(index);
+                        setSongEditMode(null);
+                        setActiveSongMenu(null);
+                      }}
+                    >
+                      Delete song
+                    </StyledMenuItem>
+                  </KebabMenu>
                 </StyledSongRow>
               )}
             </StyledSongBlock>

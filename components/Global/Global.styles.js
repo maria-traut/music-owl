@@ -129,7 +129,7 @@ export const StyledFormButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   gap: 0.4rem;
 `;
 
@@ -138,7 +138,7 @@ export const StyledFormButtonWrapperLeft = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 0;
   gap: 0.4rem;
 `;
 
@@ -387,6 +387,7 @@ export const StyledSongBlock = styled(StyledSongForm)`
 
 export const StyledSongRow = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   gap: 12px;
   padding: 10px 0 10px 10px;
@@ -420,6 +421,14 @@ export const StyledSearchResultList = styled.ul`
   gap: 0.5rem;
 `;
 
+export const StyledYoutubeDetailsBox = styled.div`
+  background-color: #fdfbf9;
+  border: 1px solid rgba(26, 58, 82, 0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+`;
+
 export const StyledConfirmDialog = styled.div`
   background-color: #fefdfb;
   padding: 1.5rem;
@@ -429,4 +438,30 @@ export const StyledConfirmDialog = styled.div`
   justify-content: space-between;
   gap: 1rem;
   margin-top: 1.5rem;
+`;
+
+export const StyledTextButton = styled.button`
+  margin-top: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  min-height: 44px;
+  border-radius: 6px;
+
+  transition: background 120ms ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  &:active {
+    background: rgba(0, 0, 0, 0.1);
+  }
+`;
+
+export const StyledYoutubeDetailsSection = styled.details`
+  margin: 0.5rem 0 1rem 0;
 `;

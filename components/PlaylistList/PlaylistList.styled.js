@@ -12,7 +12,7 @@ export const StyledPlaylistList = styled.ul`
 export const StyledPlaylist = styled.li`
   list-style: none;
   width: 100%;
-  padding: 1rem 1rem 1rem 1.5rem;
+  padding: 0.5rem 1rem 1rem 1.5rem;
   border: 3px solid ${({ $color }) => $color}88;
   border-radius: var(--radius-card);
   position: relative;
