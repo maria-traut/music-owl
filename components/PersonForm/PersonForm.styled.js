@@ -4,7 +4,6 @@ import { StyledInput } from "../Global/Global.styles";
 export const StyledInputAndColorFlex = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
   align-items: flex-end;
   margin-bottom: 0.5rem;
 `;
@@ -12,7 +11,6 @@ export const StyledInputAndColorFlex = styled.div`
 export const StyledInputAndButtonFlex = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
   align-items: flex-end;
 `;
 

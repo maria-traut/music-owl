@@ -55,7 +55,7 @@ export default function YoutubeSearch({
         </StyledTextButton>
       </StyledFormButtonWrapperLeft>
       {activeSearchIndex === index && (
-        <li>
+        <ul>
           {songSearches[song.uid]?.results?.map((result) => (
             <li key={result.id.videoId}>
               <button
@@ -87,7 +87,7 @@ export default function YoutubeSearch({
               </button>
             </li>
           ))}
-        </li>
+        </ul>
       )}
     </StyledFormSection>
   );
