@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   StyledFormButtonWrapperLeft,
   StyledButtonSecondary,
@@ -6,8 +6,7 @@ import {
   StyledFormSection,
   StyledLabel,
   StyledInput,
-  StyledErrorMessage,
-  StyledSongMaxErrorMessage,
+  StyledPlaylistSongErrorMessage,
   StyledSongForm,
   StyledHint,
   StyledYoutubeDetailsBox,
@@ -34,6 +33,12 @@ export default function SongCreateForm({
 }) {
   const [userTriedToAddMax, setUserTriedToAddMax] = useState(false);
 
+  useEffect(() => {
+    if (songs.length < 20) {
+      setUserTriedToAddMax(false);
+    }
+  }, [songs.length]);
+
   const handleAddSongClick = () => {
     if (songs.length >= 20) {
       setUserTriedToAddMax(true);
@@ -47,9 +52,9 @@ export default function SongCreateForm({
       {!songAddMode ? (
         <>
           {userTriedToAddMax && (
-            <StyledSongMaxErrorMessage>
+            <StyledPlaylistSongErrorMessage>
               A playlist can contain a maximum of 20 songs.
-            </StyledSongMaxErrorMessage>
+            </StyledPlaylistSongErrorMessage>
           )}
           <StyledFormButtonWrapperLeft>
             <StyledButtonTertiary
@@ -115,7 +120,9 @@ export default function SongCreateForm({
           </StyledFormSection>
 
           {searchError && (
-            <StyledErrorMessage role="alert">{searchError}</StyledErrorMessage>
+            <StyledPlaylistSongErrorMessage role="alert">
+              {searchError}
+            </StyledPlaylistSongErrorMessage>
           )}
           <StyledYoutubeDetailsSection>
             <summary>YouTube details</summary>

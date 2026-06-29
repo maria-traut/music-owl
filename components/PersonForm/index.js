@@ -8,6 +8,7 @@ import {
 } from "../Global/Global.styles";
 import {
   StyledInputAndButtonFlex,
+  StyledInputAndColorFlex,
   StyledInputName,
   StyledInputYear,
   StyledInputColor,
@@ -24,7 +25,7 @@ export default function PersonForm({
     <form onSubmit={onSubmit}>
       <StyledFieldset>
         {!updateMode ? <legend>Add a Person</legend> : <legend>Edit</legend>}
-        <StyledInputAndButtonFlex>
+        <StyledInputAndColorFlex>
           <StyledFormSection>
             <StyledLabel htmlFor="name">
               Name<span aria-hidden>*</span>
@@ -50,7 +51,7 @@ export default function PersonForm({
               defaultValue={defaultValues?.color ?? "#e8a838"}
             />
           </StyledFormSection>
-        </StyledInputAndButtonFlex>
+        </StyledInputAndColorFlex>
         <StyledInputAndButtonFlex>
           <StyledFormSection>
             <StyledLabel htmlFor="birth_year">
