@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   StyledFormButtonWrapperLeft,
   StyledButtonSecondary,
@@ -6,6 +7,7 @@ import {
   StyledLabel,
   StyledInput,
   StyledErrorMessage,
+  StyledSongMaxErrorMessage,
   StyledSongForm,
   StyledHint,
   StyledYoutubeDetailsBox,
@@ -15,6 +17,7 @@ import {
 import NewSongSearch from "../NewSongSearch";
 
 export default function SongCreateForm({
+  songs,
   songAddMode,
   setSongAddMode,
   setSongError,
@@ -29,21 +32,35 @@ export default function SongCreateForm({
   decodeHtml,
   searchError,
 }) {
+  const [userTriedToAddMax, setUserTriedToAddMax] = useState(false);
+
+  const handleAddSongClick = () => {
+    if (songs.length >= 20) {
+      setUserTriedToAddMax(true);
+      return;
+    }
+    setSongAddMode(true);
+    setSongError(null);
+  };
   return (
     <>
       {!songAddMode ? (
-        <StyledFormButtonWrapperLeft>
-          <StyledButtonTertiary
-            type="button"
-            aria-label="Add song"
-            onClick={() => {
-              setSongAddMode(true);
-              setSongError(null);
-            }}
-          >
-            + New Song
-          </StyledButtonTertiary>
-        </StyledFormButtonWrapperLeft>
+        <>
+          {userTriedToAddMax && (
+            <StyledSongMaxErrorMessage>
+              A playlist can contain a maximum of 20 songs.
+            </StyledSongMaxErrorMessage>
+          )}
+          <StyledFormButtonWrapperLeft>
+            <StyledButtonTertiary
+              type="button"
+              aria-label="Add song"
+              onClick={handleAddSongClick}
+            >
+              + New Song
+            </StyledButtonTertiary>
+          </StyledFormButtonWrapperLeft>
+        </>
       ) : (
         <StyledSongForm>
           <StyledFormSection>
@@ -144,6 +161,7 @@ export default function SongCreateForm({
                 const success = onSongAdd();
                 if (success) setSongAddMode(false);
               }}
+              disabled={songs.length >= 20}
             >
               Add to playlist
             </StyledButtonSecondary>

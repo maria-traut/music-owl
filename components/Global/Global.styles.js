@@ -51,6 +51,13 @@ export const StyledErrorMessage = styled.p`
   display: inline-block;
   margin-top: 2rem;
 `;
+export const StyledSongMaxErrorMessage = styled.p`
+  color: salmon;
+  display: block;
+  text-align: center;
+  margin: 2rem auto 0;
+  padding: 0 1rem 1rem 1rem;
+`;
 
 export const StyledBackLink = styled(Link)`
   text-decoration: none;

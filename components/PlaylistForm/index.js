@@ -255,6 +255,7 @@ export default function PlaylistForm({
         />
 
         <SongCreateForm
+          songs={songs}
           songAddMode={songAddMode}
           setSongAddMode={setSongAddMode}
           setSongError={setSongError}
