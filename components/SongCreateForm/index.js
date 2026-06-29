@@ -125,7 +125,7 @@ export default function SongCreateForm({
             </StyledPlaylistSongErrorMessage>
           )}
           <StyledYoutubeDetailsSection>
-            <summary>YouTube details</summary>
+            <summary>Add Video Source</summary>
             <StyledYoutubeDetailsBox>
               <NewSongSearch
                 currentSong={currentSong}

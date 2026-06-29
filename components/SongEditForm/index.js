@@ -99,7 +99,7 @@ export default function SongEditForm({
                     />
                   </StyledFormSection>
                   <StyledYoutubeDetailsSection>
-                    <summary>YouTube details</summary>
+                    <summary>Add Video Source</summary>
                     <StyledYoutubeDetailsBox>
                       <YoutubeSearch
                         song={song}
