@@ -2,9 +2,8 @@ import {
   StyledFormSection,
   StyledLabel,
   StyledInput,
-  StyledButtonWrapper,
-  StyledButtonSecondary,
-  StyledSearchResultList,
+  StyledFormButtonWrapperLeft,
+  StyledTextButton,
 } from "../Global/Global.styles";
 
 export default function YoutubeSearch({
@@ -40,23 +39,23 @@ export default function YoutubeSearch({
           }))
         }
       />
-      <StyledButtonWrapper>
-        <StyledButtonSecondary
+      <StyledFormButtonWrapperLeft>
+        <StyledTextButton
+          type="button"
+          onClick={() => onSongSearch(song.uid, index)}
+        >
+          Go
+        </StyledTextButton>
+        <StyledTextButton
           type="button"
           disabled={!songSearches[song.uid]?.query}
           onClick={() => onSongSearchClear(song.uid)}
         >
           Clear
-        </StyledButtonSecondary>
-        <StyledButtonSecondary
-          type="button"
-          onClick={() => onSongSearch(song.uid, index)}
-        >
-          Go
-        </StyledButtonSecondary>
-      </StyledButtonWrapper>
+        </StyledTextButton>
+      </StyledFormButtonWrapperLeft>
       {activeSearchIndex === index && (
-        <StyledSearchResultList>
+        <ul>
           {songSearches[song.uid]?.results?.map((result) => (
             <li key={result.id.videoId}>
               <button
@@ -88,7 +87,7 @@ export default function YoutubeSearch({
               </button>
             </li>
           ))}
-        </StyledSearchResultList>
+        </ul>
       )}
     </StyledFormSection>
   );

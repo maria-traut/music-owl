@@ -10,10 +10,10 @@ export const StyledPlaylistList = styled.ul`
 `;
 
 export const StyledPlaylist = styled.li`
+  background-color: ${({ $color }) => $color}4D;
   list-style: none;
   width: 100%;
-  padding: 1rem 1rem 1rem 1.5rem;
-  border: 3px solid ${({ $color }) => $color}88;
+  padding: 0.5rem 1rem 1rem 1.5rem;
   border-radius: var(--radius-card);
   position: relative;
 `;
@@ -34,7 +34,7 @@ export const StyledSongList = styled.ul`
   display: flex;
   flex-direction: column;
   list-style: none;
-  gap: 0.7rem;
+  gap: 0.5rem;
   padding: 0;
   margin: 0;
 `;
@@ -43,15 +43,15 @@ export const StyledLinkNoteWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  min-height: 2rem;
   gap: 0.5rem;
   padding-right: 0.5rem;
+  min-height: 2rem;
 `;
 
 export const StyledYoutubeLink = styled.a`
   text-decoration: none;
   color: inherit;
-  background-color: lightgrey;
+  background-color: #fbf8f3;
   border-radius: 50%;
   padding-left: 3px;
   width: 1.5rem;
@@ -60,12 +60,14 @@ export const StyledYoutubeLink = styled.a`
   align-items: center;
   justify-content: center;
   line-height: 1;
+  flex-shrink: 0;
 `;
 
 export const StyledPlaylistNote = styled.p`
   font-size: 0.8rem;
   font-style: italic;
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
+  margin: 0.3rem;
 `;
 
 export const StyledPlaylistSongTitle = styled.p`
@@ -74,7 +76,6 @@ export const StyledPlaylistSongTitle = styled.p`
 
 export const StyledPlaylistSongArtist = styled.p`
   font-size: 12px;
-  color: var(--color-text-secondary);
   margin: 0;
 `;
 

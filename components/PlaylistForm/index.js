@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  StyledFieldset,
+  StyledPlaylistFieldset,
   StyledFormButtonWrapper,
   StyledButtonPrimary,
   StyledButtonSecondary,
@@ -14,6 +14,7 @@ import SongCreateForm from "../SongCreateForm";
 import SongEditForm from "../SongEditForm";
 
 export default function PlaylistForm({
+  color,
   onSubmit,
   onCancel,
   defaultValues,
@@ -154,7 +155,6 @@ export default function PlaylistForm({
   function handleSongAdd() {
     if (!currentSong.title || !currentSong.artist) {
       setSongError("Please enter at least a title and an artist.");
-      setTimeout(() => setSongError(false), 3000);
       return false;
     }
     if (isDuplicate(currentSong)) {
@@ -224,7 +224,7 @@ export default function PlaylistForm({
 
   return (
     <form onSubmit={handlePlaylistDataCollect}>
-      <StyledFieldset>
+      <StyledPlaylistFieldset $color={color}>
         {!editPlaylistId ? (
           <legend>Create a Playlist</legend>
         ) : (
@@ -235,9 +235,6 @@ export default function PlaylistForm({
           setCurrentPlaylistTitle={setCurrentPlaylistTitle}
         />
         <StyledH4>Songs</StyledH4>
-        {songError && (
-          <StyledErrorMessage role="alert">{songError}</StyledErrorMessage>
-        )}
 
         <SongEditForm
           defaultValues={defaultValues}
@@ -258,6 +255,7 @@ export default function PlaylistForm({
         />
 
         <SongCreateForm
+          songs={songs}
           songAddMode={songAddMode}
           setSongAddMode={setSongAddMode}
           setSongError={setSongError}
@@ -272,7 +270,9 @@ export default function PlaylistForm({
           decodeHtml={decodeHtml}
           searchError={searchError}
         />
-
+        {songError && (
+          <StyledErrorMessage role="alert">{songError}</StyledErrorMessage>
+        )}
         <StyledFormButtonWrapper>
           <StyledButtonSecondary
             type="button"
@@ -285,7 +285,7 @@ export default function PlaylistForm({
             Save
           </StyledButtonPrimary>
         </StyledFormButtonWrapper>
-      </StyledFieldset>
+      </StyledPlaylistFieldset>
     </form>
   );
 }

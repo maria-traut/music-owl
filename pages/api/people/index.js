@@ -11,8 +11,10 @@ export default async function handler(request, response) {
     }
     if (request.method === "POST") {
       const personData = request.body;
-      await Person.create(personData);
-      return response.status(201).json({ status: "Person created." });
+      const newPerson = await Person.create(personData);
+      return response
+        .status(201)
+        .json({ newPerson, status: "Person created." });
     }
   } catch (error) {
     return response.status(500).json({

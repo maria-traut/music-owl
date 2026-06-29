@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   StyledFormButtonWrapperLeft,
   StyledButtonSecondary,
@@ -5,14 +6,17 @@ import {
   StyledFormSection,
   StyledLabel,
   StyledInput,
-  StyledErrorMessage,
+  StyledPlaylistSongErrorMessage,
   StyledSongForm,
   StyledHint,
+  StyledYoutubeDetailsBox,
+  StyledYoutubeDetailsSection,
 } from "../Global/Global.styles";
 
 import NewSongSearch from "../NewSongSearch";
 
 export default function SongCreateForm({
+  songs,
   songAddMode,
   setSongAddMode,
   setSongError,
@@ -27,21 +31,41 @@ export default function SongCreateForm({
   decodeHtml,
   searchError,
 }) {
+  const [userTriedToAddMax, setUserTriedToAddMax] = useState(false);
+
+  useEffect(() => {
+    if (songs.length < 20) {
+      setUserTriedToAddMax(false);
+    }
+  }, [songs.length]);
+
+  const handleAddSongClick = () => {
+    if (songs.length >= 20) {
+      setUserTriedToAddMax(true);
+      return;
+    }
+    setSongAddMode(true);
+    setSongError(null);
+  };
   return (
     <>
       {!songAddMode ? (
-        <StyledFormButtonWrapperLeft>
-          <StyledButtonTertiary
-            type="button"
-            aria-label="Add song"
-            onClick={() => {
-              setSongAddMode(true);
-              setSongError(null);
-            }}
-          >
-            + New Song
-          </StyledButtonTertiary>
-        </StyledFormButtonWrapperLeft>
+        <>
+          {userTriedToAddMax && (
+            <StyledPlaylistSongErrorMessage>
+              A playlist can contain a maximum of 20 songs.
+            </StyledPlaylistSongErrorMessage>
+          )}
+          <StyledFormButtonWrapperLeft>
+            <StyledButtonTertiary
+              type="button"
+              aria-label="Add song"
+              onClick={handleAddSongClick}
+            >
+              + New Song
+            </StyledButtonTertiary>
+          </StyledFormButtonWrapperLeft>
+        </>
       ) : (
         <StyledSongForm>
           <StyledFormSection>
@@ -79,41 +103,6 @@ export default function SongCreateForm({
               }
             />
           </StyledFormSection>
-          {searchError && (
-            <StyledErrorMessage role="alert">{searchError}</StyledErrorMessage>
-          )}
-
-          <NewSongSearch
-            currentSong={currentSong}
-            setCurrentSong={setCurrentSong}
-            newSongSearchQuery={newSongSearchQuery}
-            setNewSongSearchQuery={setNewSongSearchQuery}
-            newSongSearchResults={newSongSearchResults}
-            setNewSongSearchResults={setNewSongSearchResults}
-            onNewSongSearch={onNewSongSearch}
-            decodeHtml={decodeHtml}
-          />
-
-          <StyledFormSection>
-            <StyledLabel>
-              Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>
-            </StyledLabel>
-            <StyledInput
-              type="text"
-              id="youtubeId"
-              name="youtubeId"
-              placeholder="e.g. CGj85pVzRJs"
-              maxLength={30}
-              title="Youtube ID must be between 1 and 30 characters."
-              value={currentSong.youtubeId}
-              onChange={(event) =>
-                setCurrentSong({
-                  ...currentSong,
-                  youtubeId: event.target.value,
-                })
-              }
-            />
-          </StyledFormSection>
 
           <StyledFormSection>
             <StyledLabel htmlFor="note">Note</StyledLabel>
@@ -129,6 +118,48 @@ export default function SongCreateForm({
               }
             />
           </StyledFormSection>
+
+          {searchError && (
+            <StyledPlaylistSongErrorMessage role="alert">
+              {searchError}
+            </StyledPlaylistSongErrorMessage>
+          )}
+          <StyledYoutubeDetailsSection>
+            <summary>Add Video Source</summary>
+            <StyledYoutubeDetailsBox>
+              <NewSongSearch
+                currentSong={currentSong}
+                setCurrentSong={setCurrentSong}
+                newSongSearchQuery={newSongSearchQuery}
+                setNewSongSearchQuery={setNewSongSearchQuery}
+                newSongSearchResults={newSongSearchResults}
+                setNewSongSearchResults={setNewSongSearchResults}
+                onNewSongSearch={onNewSongSearch}
+                decodeHtml={decodeHtml}
+              />
+
+              <StyledFormSection>
+                <StyledLabel>
+                  Youtube ID <StyledHint>(from the URL after ?v=)</StyledHint>
+                </StyledLabel>
+                <StyledInput
+                  type="text"
+                  id="youtubeId"
+                  name="youtubeId"
+                  placeholder="e.g. CGj85pVzRJs"
+                  maxLength={30}
+                  title="Youtube ID must be between 1 and 30 characters."
+                  value={currentSong.youtubeId}
+                  onChange={(event) =>
+                    setCurrentSong({
+                      ...currentSong,
+                      youtubeId: event.target.value,
+                    })
+                  }
+                />
+              </StyledFormSection>
+            </StyledYoutubeDetailsBox>
+          </StyledYoutubeDetailsSection>
           <StyledFormButtonWrapperLeft>
             <StyledButtonSecondary
               type="button"
@@ -137,6 +168,7 @@ export default function SongCreateForm({
                 const success = onSongAdd();
                 if (success) setSongAddMode(false);
               }}
+              disabled={songs.length >= 20}
             >
               Add to playlist
             </StyledButtonSecondary>

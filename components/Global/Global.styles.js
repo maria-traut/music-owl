@@ -31,14 +31,32 @@ export const StyledH4 = styled.h4`
 `;
 
 export const StyledMessage = styled.p`
-  display: inline-block;
-  margin-top: 2rem;
+  display: block;
+  text-align: center;
+  margin: 2rem auto 0;
+  padding: 2rem 1rem;
+  max-width: 400px;
+`;
+
+export const StyledConfirmMessage = styled.p`
+  display: block;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
 `;
 
 export const StyledErrorMessage = styled.p`
   color: salmon;
   display: inline-block;
   margin-top: 2rem;
+`;
+export const StyledPlaylistSongErrorMessage = styled.p`
+  color: salmon;
+  display: block;
+  text-align: center;
+  margin: 2rem auto 0;
+  padding: 0 1rem 2rem 1rem;
 `;
 
 export const StyledBackLink = styled(Link)`
@@ -68,6 +86,14 @@ export const StyledFieldset = styled.fieldset`
   padding: 1rem 0.7rem 0.7rem 0.7rem;
 `;
 
+export const StyledPlaylistFieldset = styled.fieldset`
+  border-radius: 15px;
+  border: 3px solid ${({ $color }) => $color}4D;
+  background-color: transparent;
+  margin-top: 1rem;
+  padding: 1rem 0.7rem 0.7rem 0.7rem;
+`;
+
 export const StyledLabel = styled.label`
   display: block;
   font-size: 11px;
@@ -83,8 +109,8 @@ export const StyledFormSection = styled.div`
 
 export const StyledInput = styled.input`
   font-size: 16px;
-  padding: 12px 14px;
-  min-height: 48px;
+  padding: 10px 14px;
+  min-height: 40px;
   border-radius: 8px;
   border: 1px solid #e0e0e0;
   -webkit-appearance: none;
@@ -118,25 +144,26 @@ export const StyledFormButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   gap: 0.4rem;
 `;
 
 export const StyledFormButtonWrapperLeft = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 0;
   gap: 0.4rem;
 `;
 
 // buttons
 
 export const StyledMessageAndButtonWrapper = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 1rem;
 `;
 
 export const StyledButtonWrapper = styled.div`
@@ -375,6 +402,7 @@ export const StyledSongBlock = styled(StyledSongForm)`
 
 export const StyledSongRow = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   gap: 12px;
   padding: 10px 0 10px 10px;
@@ -404,6 +432,51 @@ export const StyledSearchResultList = styled.ul`
   flex-direction: column;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 0.5rem 0;
   gap: 0.5rem;
+`;
+
+export const StyledYoutubeDetailsBox = styled.div`
+  background-color: #fdfbf9;
+  border: 1px solid rgba(26, 58, 82, 0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+`;
+
+export const StyledConfirmDialog = styled.div`
+  background-color: #fefdfb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+`;
+
+export const StyledTextButton = styled.button`
+  margin-top: 0;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  min-height: 44px;
+  border-radius: 6px;
+
+  transition: background 120ms ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  &:active {
+    background: rgba(0, 0, 0, 0.1);
+  }
+`;
+
+export const StyledYoutubeDetailsSection = styled.details`
+  margin: 0.5rem 0 1rem 0;
 `;

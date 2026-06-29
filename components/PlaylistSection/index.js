@@ -32,6 +32,7 @@ export default function PlaylistSection({
 
       {activeMode === "playlist form" && (
         <PlaylistForm
+          color={color}
           onSubmit={(data) => onPlaylistCreate(data)}
           onCancel={() => setActiveMode(null)}
         />

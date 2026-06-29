@@ -19,8 +19,9 @@ import {
   StyledButtonDanger,
   StyledButtonSecondary,
   StyledMessage,
+  StyledConfirmMessage,
   StyledButtonWrapper,
-  StyledMessageAndButtonWrapper,
+  StyledConfirmDialog,
   StyledMenuItem,
   StyledMenuWrapper,
 } from "../Global/Global.styles";
@@ -43,16 +44,24 @@ export default function PlaylistList({
   const [editPlaylistId, setEditPlaylistId] = useState(null);
   const [showMenuId, setShowMenuId] = useState(null);
 
-  if (isLoading) return <p>Loading ...</p>;
-  if (error) return <p>An error occurred.</p>;
-  if (!playlists) return <p>Playlists could not be loaded.</p>;
-  if (playlists.length === 0) return <p>No playlists yet.</p>;
+  if (isLoading) return <StyledMessage>Loading ...</StyledMessage>;
+  if (error) return <StyledMessage>An error occurred.</StyledMessage>;
+  if (!playlists)
+    return <StyledMessage>Playlists could not be loaded.</StyledMessage>;
+  if (playlists.length === 0)
+    return (
+      <StyledMessage>
+        No playlists yet. Start creating one to bring music and memories
+        together.
+      </StyledMessage>
+    );
 
   return (
     <StyledPlaylistList>
       {playlists.map((playlist) =>
         editPlaylistId === playlist._id ? (
           <PlaylistForm
+            color={color}
             key={playlist._id}
             defaultValues={playlist}
             onSubmit={async (data) => {
@@ -65,16 +74,11 @@ export default function PlaylistList({
         ) : (
           <StyledPlaylist key={playlist._id} $color={color}>
             {deletePlaylistId === playlist._id && (
-              <StyledMessageAndButtonWrapper>
-                <StyledMessage>Delete this playlist?</StyledMessage>
+              <StyledConfirmDialog>
+                <StyledConfirmMessage>
+                  Delete this playlist?
+                </StyledConfirmMessage>
                 <StyledButtonWrapper>
-                  <StyledButtonSecondary
-                    type="button"
-                    aria-label="Cancel deletion"
-                    onClick={() => setDeletePlaylistId(null)}
-                  >
-                    No
-                  </StyledButtonSecondary>
                   <StyledButtonDanger
                     type="button"
                     aria-label="Confirm deletion"
@@ -82,8 +86,15 @@ export default function PlaylistList({
                   >
                     Yes
                   </StyledButtonDanger>
+                  <StyledButtonSecondary
+                    type="button"
+                    aria-label="Cancel deletion"
+                    onClick={() => setDeletePlaylistId(null)}
+                  >
+                    No
+                  </StyledButtonSecondary>
                 </StyledButtonWrapper>
-              </StyledMessageAndButtonWrapper>
+              </StyledConfirmDialog>
             )}
             <StyledPlaylistHeader>
               <StyledPlaylistTitle>
