@@ -18,9 +18,9 @@ export default function AppInfo() {
         <StyledH2>What Is Music Owl?</StyledH2>
         <p>
           Music has the power to reach people even when words no longer can.
-          Music Owl helps you build playlists for people living with memory loss
-          — so the songs that shaped their life can bring them back, even just
-          for a moment.
+          Music Owl helps you create personalized playlists for the people you
+          love — ideally before memory loss sets in — so the songs that shaped
+          their lives can bring them back, even just for a moment.
         </p>
         <p>Here is what you can do:</p>
         <StyledLinkWrapper>

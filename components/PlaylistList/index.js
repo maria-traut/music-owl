@@ -19,8 +19,9 @@ import {
   StyledButtonDanger,
   StyledButtonSecondary,
   StyledMessage,
+  StyledConfirmMessage,
   StyledButtonWrapper,
-  StyledMessageAndButtonWrapper,
+  StyledConfirmDialog,
   StyledMenuItem,
   StyledMenuWrapper,
 } from "../Global/Global.styles";
@@ -73,16 +74,11 @@ export default function PlaylistList({
         ) : (
           <StyledPlaylist key={playlist._id} $color={color}>
             {deletePlaylistId === playlist._id && (
-              <StyledMessageAndButtonWrapper>
-                <StyledMessage>Delete this playlist?</StyledMessage>
+              <StyledConfirmDialog>
+                <StyledConfirmMessage>
+                  Delete this playlist?
+                </StyledConfirmMessage>
                 <StyledButtonWrapper>
-                  <StyledButtonSecondary
-                    type="button"
-                    aria-label="Cancel deletion"
-                    onClick={() => setDeletePlaylistId(null)}
-                  >
-                    No
-                  </StyledButtonSecondary>
                   <StyledButtonDanger
                     type="button"
                     aria-label="Confirm deletion"
@@ -90,8 +86,15 @@ export default function PlaylistList({
                   >
                     Yes
                   </StyledButtonDanger>
+                  <StyledButtonSecondary
+                    type="button"
+                    aria-label="Cancel deletion"
+                    onClick={() => setDeletePlaylistId(null)}
+                  >
+                    No
+                  </StyledButtonSecondary>
                 </StyledButtonWrapper>
-              </StyledMessageAndButtonWrapper>
+              </StyledConfirmDialog>
             )}
             <StyledPlaylistHeader>
               <StyledPlaylistTitle>

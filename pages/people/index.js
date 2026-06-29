@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useSWR from "swr";
 import PersonForm from "@/components/PersonForm";
 import PersonList from "@/components/PersonList";
 import {
   StyledMain,
   StyledIntroSection,
-  StyledMessage,
-  StyledDivider,
   StyledButtonWrapper,
   StyledButtonPrimary,
   StyledH2,
+  StyledDivider,
 } from "@/components/Global/Global.styles";
 import toast from "react-hot-toast";
 

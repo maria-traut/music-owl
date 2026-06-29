@@ -155,7 +155,6 @@ export default function PlaylistForm({
   function handleSongAdd() {
     if (!currentSong.title || !currentSong.artist) {
       setSongError("Please enter at least a title and an artist.");
-      setTimeout(() => setSongError(false), 3000);
       return false;
     }
     if (isDuplicate(currentSong)) {
@@ -236,9 +235,6 @@ export default function PlaylistForm({
           setCurrentPlaylistTitle={setCurrentPlaylistTitle}
         />
         <StyledH4>Songs</StyledH4>
-        {songError && (
-          <StyledErrorMessage role="alert">{songError}</StyledErrorMessage>
-        )}
 
         <SongEditForm
           defaultValues={defaultValues}
@@ -273,7 +269,9 @@ export default function PlaylistForm({
           decodeHtml={decodeHtml}
           searchError={searchError}
         />
-
+        {songError && (
+          <StyledErrorMessage role="alert">{songError}</StyledErrorMessage>
+        )}
         <StyledFormButtonWrapper>
           <StyledButtonSecondary
             type="button"
